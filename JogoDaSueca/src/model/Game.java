@@ -147,7 +147,6 @@ public class Game {
                 cards.add(c);
             }
         }
-        System.out.println(cards.size());
         return cards;
     }
 
@@ -202,6 +201,10 @@ public class Game {
         CardPlayed winnerCard = rounds.get(currentRound).getWinnerCard(this.trump);
         int score = rounds.get(currentRound).getRoundScore();
         winnerCard.getPlayer().getTeam().addScore(score);
+        
+        System.out.println("WINNER TEAM: " + winnerCard.getPlayer().getTeam().toString());
+        System.out.println("WINNER CARD: " + winnerCard.getCard().toString());
+        System.out.println("ROUND SCORE : " + score);
 
         if (currentRound == 9) {
             endGame();
@@ -214,8 +217,8 @@ public class Game {
         if (rounds.get(currentRound).getRoundSuit() == card.getSuit()) {
             return true;
         } else {
-            System.out.println(!activePlayer.hasCardsFromSuit(card.getSuit()));
-            return !activePlayer.hasCardsFromSuit(card.getSuit());
+            System.out.println(!activePlayer.hasCardsFromSuit(rounds.get(currentRound).getRoundSuit()));
+            return !activePlayer.hasCardsFromSuit(rounds.get(currentRound).getRoundSuit());
         }
     }
 

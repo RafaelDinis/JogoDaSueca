@@ -31,13 +31,9 @@ public class JavaApplication1 {
         team2.setPlayer2(player4);
         Game game = new Game(team1, team2);
         
-        System.out.println("CARDS" + player1.getCards().toString() + " " + player1.getCards().size());
-        System.out.println("CARDS" + player3.getCards().toString() + " " + player3.getCards().size());
-        System.out.println("CARDS" + player2.getCards().toString() + " " + player2.getCards().size());
-        System.out.println("CARDS" + player4.getCards().toString() + " " + player4.getCards().size());
         
         for (int i = 0; i < 10; i++) {
-            System.out.println("TRUMP is " + game.getTrump().toString());
+            System.out.println("\nTRUMP is " + game.getTrump().toString());
             System.out.println("CURRENT ROUND : " + (game.getCurrentRound()+1));
             for (int j = 0; j < 4; j++) {
                 Boolean validPlay = true;
@@ -47,11 +43,10 @@ public class JavaApplication1 {
                 do{
                     Scanner in = new Scanner(System.in);
                     int num = in.nextInt() - 1;
-                    System.out.println("CARD PLAYED -> " + game.getActivePlayer().getCards().get(num).toString());                
+                    System.out.println("CARD PLAYED -> " + game.getActivePlayer().getCards().get(num).toString() + "\n");                
                     validPlay = game.playCard(game.getActivePlayer().getCards().get(num));
                 } while(!validPlay);
             }
-            System.out.println("ROUND SCORE : " + game.getRounds().get(game.getCurrentRound()).getRoundScore());
         }
 
     }

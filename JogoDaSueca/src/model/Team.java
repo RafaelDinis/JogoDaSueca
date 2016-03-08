@@ -45,6 +45,13 @@ public class Team {
     public void addScore(int score){
         this.finalScore = finalScore + score;
     }
+
+    @Override
+    public String toString() {
+        return getPlayer1().getName() + ", " + getPlayer2().getName() + ", score:" + getFinalScore();
+    }
+    
+    
    
     
     
