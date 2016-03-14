@@ -66,14 +66,14 @@ public class Round {
 
     public CardPlayed getWinnerCard(Suit trump) {
         CardPlayed winnerCard = new CardPlayed(new Card(), null);
-        winnerCard.getCard().setValue(0);
+        winnerCard.getCard().setWeight(0);
 
         if (trumpPlayed) {
             winnerCard = getHighestTrump(trump);
         }
 
         for (CardPlayed card : cards) {
-            if (card.getCard().getSuit() == roundSuit && card.getCard().getValue() >= winnerCard.getCard().getValue()) {
+            if (card.getCard().getSuit() == roundSuit && card.getCard().getWeight() >= winnerCard.getCard().getWeight()) {
                 winnerCard = card;
             }
         }
@@ -84,11 +84,11 @@ public class Round {
 
     private CardPlayed getHighestTrump(Suit trump) {
         CardPlayed winnerCard = new CardPlayed(new Card(), null);
-        winnerCard.getCard().setValue(0);
+        winnerCard.getCard().setWeight(0);
 
         for (CardPlayed card : cards) {
             if (card.getCard().getSuit() == trump) {
-                if (card.getCard().getValue() >= winnerCard.getCard().getValue()) {
+                if (card.getCard().getWeight()>= winnerCard.getCard().getWeight()) {
                     winnerCard = card;
                 }
             }

@@ -12,9 +12,9 @@ package model;
 public class Card {
 
     private Suit suit;
-    private Player player;
     private PossibleCards card;
     private int value;
+    private int weight;
 
     public Card() {
 
@@ -26,14 +26,6 @@ public class Card {
 
     public void setSuit(Suit suit) {
         this.suit = suit;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public PossibleCards getCard() {
@@ -50,6 +42,14 @@ public class Card {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     public void giveValue(PossibleCards card) {

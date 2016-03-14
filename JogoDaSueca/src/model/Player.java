@@ -63,4 +63,16 @@ public class Player {
     public void removeCardFromHand(Card card) {
         this.cards.remove(card);
     }
+    
+    public String getCardToString(){
+        StringBuilder string = new StringBuilder();
+        int i = 1;
+        for(Card c:cards){
+            string.append(" " + i + "-");
+            string.append(c.toString());
+            i++;
+        }
+        
+        return string.toString();
+    }
 }

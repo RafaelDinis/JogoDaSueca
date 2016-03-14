@@ -24,14 +24,14 @@ public enum PossibleCards {
                 return PossibleCards.FIVE;
             case 4:
                 return PossibleCards.SIX;
-            case 5:
-                return PossibleCards.SEVEN;
-            case 6:
+            case 5:                
                 return PossibleCards.QUEEN;
-            case 7:
+            case 6:
                 return PossibleCards.JACK;
-            case 8:
+            case 7:
                 return PossibleCards.KING;
+            case 8:
+                return PossibleCards.SEVEN;
             case 9:
                 return PossibleCards.ACE;
             default: 

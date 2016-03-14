@@ -127,21 +127,25 @@ public class Game {
                 if (i == 0) {
                     c.setSuit(Suit.CLUBS);
                     c.setCard(PossibleCards.generateCardFromInt(j));
+                    c.setWeight(j+1);
                     c.giveValue(c.getCard());
                 }
                 if (i == 1) {
                     c.setSuit(Suit.DIAMONDS);
                     c.setCard(PossibleCards.generateCardFromInt(j));
+                    c.setWeight(j+1);
                     c.giveValue(c.getCard());
                 }
                 if (i == 2) {
                     c.setSuit(Suit.HEARTS);
                     c.setCard(PossibleCards.generateCardFromInt(j));
+                    c.setWeight(j+1);
                     c.giveValue(c.getCard());
                 }
                 if (i == 3) {
                     c.setSuit(Suit.SPADES);
                     c.setCard(PossibleCards.generateCardFromInt(j));
+                    c.setWeight(j+1);
                     c.giveValue(c.getCard());
                 }
                 cards.add(c);
@@ -217,7 +221,6 @@ public class Game {
         if (rounds.get(currentRound).getRoundSuit() == card.getSuit()) {
             return true;
         } else {
-            System.out.println(!activePlayer.hasCardsFromSuit(rounds.get(currentRound).getRoundSuit()));
             return !activePlayer.hasCardsFromSuit(rounds.get(currentRound).getRoundSuit());
         }
     }
@@ -241,7 +244,10 @@ public class Game {
     }
 
     private void endGame() {
-        //TO DO
+        System.out.println("\nGAME END");
+        System.out.println("Team1 score: " + team1.getFinalScore());
+        System.out.println("Team2 score: " + team2.getFinalScore());
+        System.exit(0);
     }
     
 

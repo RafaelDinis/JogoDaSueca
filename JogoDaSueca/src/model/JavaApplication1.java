@@ -30,25 +30,39 @@ public class JavaApplication1 {
         team2.setPlayer1(player3);
         team2.setPlayer2(player4);
         Game game = new Game(team1, team2);
-        
-        
+
         for (int i = 0; i < 10; i++) {
             System.out.println("\nTRUMP is " + game.getTrump().toString());
-            System.out.println("CURRENT ROUND : " + (game.getCurrentRound()+1));
+            System.out.println("CURRENT ROUND : " + (game.getCurrentRound() + 1));
             for (int j = 0; j < 4; j++) {
                 Boolean validPlay = true;
+                Boolean validNumber = false;
                 System.out.println("\n" + game.getActivePlayer().getName() + " playing");
-                System.out.println("CARDS" + game.getActivePlayer().getCards().toString());
+                System.out.println("CARDS --> " + game.getActivePlayer().getCardToString());
 
-                do{
+                do {
                     Scanner in = new Scanner(System.in);
-                    int num = in.nextInt() - 1;
-                    System.out.println("CARD PLAYED -> " + game.getActivePlayer().getCards().get(num).toString() + "\n");                
-                    validPlay = game.playCard(game.getActivePlayer().getCards().get(num));
-                } while(!validPlay);
+                    int num = in.nextInt();
+                    validNumber = checkIndex(num, game);
+                    if (validNumber) {
+                        num = num - 1;
+                        System.out.println("CARD PLAYED -> " + game.getActivePlayer().getCards().get(num).toString() + "\n");
+                        validPlay = game.playCard(game.getActivePlayer().getCards().get(num));
+                    }
+                } while (!validPlay || !validNumber);
             }
         }
 
     }
+
+    public static boolean checkIndex(int num, Game game) {
+        if (num >= 1 && num <= game.getActivePlayer().getCards().size()) {
+            return true;
+        } else {
+            System.out.println("INVALID INDEX!");
+            return false;
+        }
+    }
+    
 
 }
