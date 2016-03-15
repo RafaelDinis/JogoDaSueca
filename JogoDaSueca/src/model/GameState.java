@@ -5,8 +5,10 @@
  */
 package model;
 
+import common.SuecaState;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,11 +16,10 @@ import java.util.Random;
  *
  * @author Yeezus
  */
-public class Game {
+public class GameState extends SuecaState{
 
     private Team team1;
     private Team team2;
-    private ArrayList<Round> rounds;
     private Team winnerTeam;
     private Suit trump;
     private ArrayList<Card> deck;
@@ -26,17 +27,18 @@ public class Game {
     private int activePlayerNumber;
     private int currentRound;
 
-    Game(Team team1, Team team2) {
+    public GameState(Team team1, Team team2) {
         this.team1 = team1;
         this.team2 = team2;
         this.deck = generateCards();
+        playedCards = new LinkedList<>();
+        rounds = new LinkedList<>();
         shuffleDeck();
         giveCards();
         this.trump = team1.getPlayer1().getCards().get(0).getSuit();
         this.activePlayer = team1.getPlayer1();
         this.activePlayerNumber = 1;
         this.currentRound = 0;
-        this.rounds = new ArrayList<>();
         rounds.add(new Round(currentRound));
     }
 
@@ -95,9 +97,6 @@ public class Game {
         this.team2 = team2;
     }
 
-    public ArrayList<Round> getRounds() {
-        return rounds;
-    }
 
     public int getActivePlayerNumber() {
         return activePlayerNumber;
@@ -107,9 +106,6 @@ public class Game {
         return currentRound;
     }
 
-    public void setRounds(ArrayList<Round> rounds) {
-        this.rounds = rounds;
-    }
 
     public Team getWinnerTeam() {
         return winnerTeam;
@@ -196,6 +192,7 @@ public class Game {
         }
 
         if (rounds.get(currentRound).getCards().size() == 4) {
+            System.out.println("ROUND CARDS --> " + rounds.get(currentRound).getCardsToString());
             endRound();
         }
         return true;

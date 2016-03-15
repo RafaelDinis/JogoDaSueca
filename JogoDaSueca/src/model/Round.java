@@ -104,5 +104,13 @@ public class Round {
         this.roundScore = score;
         return score;
     }
+    
+    public String getCardsToString(){
+        StringBuilder string = new StringBuilder();
+        for(CardPlayed c:cards){
+            string.append(c.getCard().toString() + "      ");
+        }
+        return string.toString();
+    }
 
 }

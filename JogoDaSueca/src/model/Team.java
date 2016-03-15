@@ -5,6 +5,8 @@
  */
 package model;
 
+import agent.Agent;
+
 /**
  *
  * @author Yeezus
@@ -12,6 +14,8 @@ package model;
 public class Team {
     private Player player1;
     private Player player2;
+    private Agent agent1;
+    private Agent agent2;
     private int finalScore;
 
     public Team() {
@@ -45,6 +49,23 @@ public class Team {
     public void addScore(int score){
         this.finalScore = finalScore + score;
     }
+
+    public Agent getAgent1() {
+        return agent1;
+    }
+
+    public void setAgent1(Agent agent1) {
+        this.agent1 = agent1;
+    }
+
+    public Agent getAgent2() {
+        return agent2;
+    }
+
+    public void setAgent2(Agent agent2) {
+        this.agent2 = agent2;
+    }
+    
 
     @Override
     public String toString() {

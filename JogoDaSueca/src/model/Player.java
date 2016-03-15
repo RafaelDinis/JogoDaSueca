@@ -6,6 +6,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -14,13 +16,13 @@ import java.util.ArrayList;
 public class Player {
 
     private String name;
-    private ArrayList<Card> cards;
+    private List<Card> cards;
     private Team team;
 
     public Player(String name, Team team) {
         this.name = name;
         this.team = team;
-        cards = new ArrayList<>();
+        cards = new LinkedList<>();
     }
 
     public String getName() {
@@ -31,7 +33,7 @@ public class Player {
         this.name = name;
     }
 
-    public ArrayList<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 
