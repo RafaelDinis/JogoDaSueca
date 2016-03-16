@@ -43,6 +43,7 @@ public class JavaApplication1 {
         Player player4 = new Player("gajo4", team2);
         team2.setPlayer1(player3);
         team2.setPlayer2(player4);
+        
         GameState game = new GameState(team1, team2);
         agent1.notifyNewGame((LinkedList<Card>) player1.getCards());
         agent2.notifyNewGame((LinkedList<Card>) player2.getCards());
@@ -76,14 +77,22 @@ public class JavaApplication1 {
             }
         }*/
         System.out.println("\nTRUMP is " + game.getTrump().toString());
+        Boolean validPlay = true;
         for (int i = 0; i < 10; i++) {
             System.out.println("CURRENT ROUND : " + (game.getCurrentRound() + 1));
             for(Agent agent: players){                
-                Move move = agent.play(game.getRounds().get(game.getCurrentRound()));
-                game.playCard(move.getCard());
+                do{
+                    Move move = agent.play(game.getRounds().get(game.getCurrentRound()));
+                    validPlay = game.playCard(move.getCard());
+                } while (!validPlay);
+                
             }
-            System.out.println(agent1.getCurrentState().getAgentCards().size() + agent2.getCurrentState().getAgentCards().size() + agent3.getCurrentState().getAgentCards().size()+ agent4.getCurrentState().getAgentCards().size());
+           // System.out.println(agent1.getCurrentState().getAgentCards().size() + agent2.getCurrentState().getAgentCards().size() + agent3.getCurrentState().getAgentCards().size()+ agent4.getCurrentState().getAgentCards().size());
+            //System.out.println(game.getTeam1().getPlayer1().getCards().size() + game.getTeam1().getPlayer2().getCards().size() + game.getTeam2().getPlayer1().getCards().size() + game.getTeam2().getPlayer2().getCards().size());
             
+            System.out.println(agent1.getCurrentState().getAgentCards().size());
+            System.out.println(game.getTeam1().getPlayer1().getCards().size());
+        
         }
 
     }

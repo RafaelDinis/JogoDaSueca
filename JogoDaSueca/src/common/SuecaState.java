@@ -7,6 +7,7 @@ package common;
 
 import java.util.LinkedList;
 import model.Card;
+import model.Player;
 import model.PossibleCards;
 import model.Round;
 import model.Suit;
@@ -36,7 +37,7 @@ public class SuecaState {
     /**
      * List of all cards
      */  
-    private static LinkedList<Card> allCards;
+    protected static LinkedList<Card> allCards;
     
     /**
      * Inicialization of the allCards list.
@@ -84,6 +85,11 @@ public class SuecaState {
      */     
     protected LinkedList<Round> rounds;
     
+    /**
+     * Number of the current round
+     */
+    protected int currentRound;
+    
     public SuecaState(){
        
         //initialize();
@@ -100,6 +106,14 @@ public class SuecaState {
 
     public void setRounds(LinkedList<Round> rounds) {
         this.rounds = rounds;
+    }
+    
+    protected boolean validateCard(Card card, Suit roundSuit, Player activePlayer) {
+        if (roundSuit == card.getSuit()) {
+            return true;
+        } else {
+            return !activePlayer.hasCardsFromSuit(roundSuit);
+        }
     }
     
     

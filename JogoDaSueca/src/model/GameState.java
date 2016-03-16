@@ -25,12 +25,13 @@ public class GameState extends SuecaState{
     private ArrayList<Card> deck;
     private Player activePlayer;
     private int activePlayerNumber;
-    private int currentRound;
+    //private int currentRound;
 
     public GameState(Team team1, Team team2) {
         this.team1 = team1;
         this.team2 = team2;
-        this.deck = generateCards();
+        //this.deck = generateCards();
+        
         playedCards = new LinkedList<>();
         rounds = new LinkedList<>();
         shuffleDeck();
@@ -115,7 +116,7 @@ public class GameState extends SuecaState{
         this.winnerTeam = winnerTeam;
     }
 
-    public static ArrayList<Card> generateCards() {
+    /*public static ArrayList<Card> generateCards() {
         ArrayList<Card> cards = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
@@ -148,15 +149,15 @@ public class GameState extends SuecaState{
             }
         }
         return cards;
-    }
+    }*/
 
     private void shuffleDeck() {
-        Collections.shuffle(deck);
+        Collections.shuffle(allCards);
     }
 
     private void giveCards() {
         int i = 0;
-        for (Card card : deck) {
+        for (Card card : allCards) {
             if (i < 10) {
                 team1.getPlayer1().receiveCard(card);
             } else if (i >= 10 && i < 20) {
@@ -179,7 +180,7 @@ public class GameState extends SuecaState{
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
             nextPlayer();
-        } else if (validateCard(card)) {
+        } else if (super.validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             activePlayer.removeCardFromHand(card);
             if (card.getSuit() == trump) {
@@ -214,13 +215,13 @@ public class GameState extends SuecaState{
 
     }
 
-    private boolean validateCard(Card card) {
+    /*private boolean validateCard(Card card) {
         if (rounds.get(currentRound).getRoundSuit() == card.getSuit()) {
             return true;
         } else {
             return !activePlayer.hasCardsFromSuit(rounds.get(currentRound).getRoundSuit());
         }
-    }
+    }*/
 
     private void nextRound() {
         this.activePlayer = rounds.get(currentRound).getWinnerPlayer();
