@@ -21,12 +21,6 @@ public class AgentState extends SuecaState {
         this.agentCards = agentCards;
     }  
     
-    public LinkedList<Move> playerCardsToMoves(Round round){
-        LinkedList<Move> possibleMoves = new LinkedList<>();
-        for(Card c: agentCards){
-            possibleMoves.add(new Move(c, round));
-        }
-        return  possibleMoves;
-    }
+    
 
 }

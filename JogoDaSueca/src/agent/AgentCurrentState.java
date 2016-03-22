@@ -37,6 +37,7 @@ public class AgentCurrentState extends AgentState {
         }
         return possibleMoves;
     }
+    
 
     public LinkedList<Card> getAgentCards() {
         return agentCards;
@@ -46,5 +47,22 @@ public class AgentCurrentState extends AgentState {
         this.agentCards = agentCards;
     }
     
+    public LinkedList<Move> playerCardsToMoves(Round round){
+        LinkedList<Move> possibleMoves = new LinkedList<>();
+        for(Card c: agentCards){
+            possibleMoves.add(new Move(c, round));
+        }
+        return  possibleMoves;
+    }
+    
+    public Move getHigherCard( LinkedList<Move> possibleMoves){
+        Move move = possibleMoves.get(0);
+        for (Move possibleMove : possibleMoves) {
+            if(possibleMove.getCard().getWeight() > move.getCard().getWeight()){
+                move = possibleMove;
+            }
+        }
+        return move;
+    }
 
 }
