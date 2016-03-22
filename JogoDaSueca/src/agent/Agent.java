@@ -33,12 +33,7 @@ public class Agent{
     }
     
     public void removeCardFromHand(Card card) {
-        Boolean sim = this.currentState.getAgentCards().remove(card);
-        if(sim){
-            System.out.println("REMOVEU");
-        } else{
-            System.out.println("NAO ENCONTROU");
-        }
+        this.currentState.getAgentCards().remove(card);
     }
 
    /* public void notifyAction(Move move) {

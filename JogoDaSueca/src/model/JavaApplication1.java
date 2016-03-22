@@ -46,10 +46,10 @@ public class JavaApplication1 {
         player3.notifyNewGame((LinkedList<Card>) player3.getCards());
         player4.notifyNewGame((LinkedList<Card>) player4.getCards());
         
-        System.out.println("agent1 CARDS --> " + player1.getCurrentState().getAgentCards().toString());
+        /*System.out.println("agent1 CARDS --> " + player1.getCurrentState().getAgentCards().toString());
         System.out.println("agent3 CARDS --> " + player3.getCurrentState().getAgentCards().toString());
         System.out.println("agent2 CARDS --> " + player2.getCurrentState().getAgentCards().toString());
-        System.out.println("agent4 CARDS --> " + player4.getCurrentState().getAgentCards().toString());
+        System.out.println("agent4 CARDS --> " + player4.getCurrentState().getAgentCards().toString());*/
         
         /*for (int i = 0; i < 10; i++) {
             System.out.println("\nTRUMP is " + game.getTrump().toString());
@@ -72,6 +72,7 @@ public class JavaApplication1 {
                 } while (!validPlay || !validNumber);
             }
         }*/
+        
         System.out.println("\nTRUMP is " + game.getTrump().toString());
         Boolean validPlay = true;
         for (int i = 0; i < 10; i++) {
@@ -79,9 +80,8 @@ public class JavaApplication1 {
             for(int j = 0; j < 4; j++){ 
                 Player player = players.get(game.getActivePlayerNumber()-1);
                 do{
-                    System.out.println(player.getName() + " PLAYING");
                     System.out.println(game.getRounds().get(game.getCurrentRound()).getCardsToString());                    
-                    System.out.println(player.getCardToString() + "\n");
+                    System.out.println(player.getName() + " PLAYING ----> " + player.getCardToString() + "\n");
                     Move move = player.play(game.getRounds().get(game.getCurrentRound()));
                     validPlay = game.playCard(move.getCard());
                     

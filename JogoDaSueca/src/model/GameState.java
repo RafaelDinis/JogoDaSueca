@@ -170,7 +170,6 @@ public class GameState extends SuecaState {
     }
 
     public Boolean playCard(Card card) {
-        System.out.println("PLAYED CARD ->" + card.toString() + "\n");
         if (rounds.get(currentRound).getCards().isEmpty()) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             rounds.get(currentRound).setRoundSuit(card.getSuit());
