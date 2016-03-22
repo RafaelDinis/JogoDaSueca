@@ -239,6 +239,7 @@ public class GameState extends SuecaState{
         }
         currentRound++;
         rounds.add(new Round(currentRound));
+        System.out.println("nova ronda");
     }
 
     private void endGame() {

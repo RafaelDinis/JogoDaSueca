@@ -5,6 +5,7 @@
  */
 package model;
 
+import agent.Agent;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author Yeezus
  */
-public class Player {
+public class Player extends Agent{
 
     private String name;
     private List<Card> cards;
