@@ -5,6 +5,7 @@
  */
 package model;
 
+import agent.Agent;
 import common.SuecaState;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +17,7 @@ import java.util.Random;
  *
  * @author Yeezus
  */
-public class GameState extends SuecaState{
+public class GameState extends SuecaState {
 
     private Team team1;
     private Team team2;
@@ -31,7 +32,7 @@ public class GameState extends SuecaState{
         this.team1 = team1;
         this.team2 = team2;
         //this.deck = generateCards();
-        
+
         playedCards = new LinkedList<>();
         rounds = new LinkedList<>();
         shuffleDeck();
@@ -98,7 +99,6 @@ public class GameState extends SuecaState{
         this.team2 = team2;
     }
 
-
     public int getActivePlayerNumber() {
         return activePlayerNumber;
     }
@@ -106,7 +106,6 @@ public class GameState extends SuecaState{
     public int getCurrentRound() {
         return currentRound;
     }
-
 
     public Team getWinnerTeam() {
         return winnerTeam;
@@ -150,7 +149,6 @@ public class GameState extends SuecaState{
         }
         return cards;
     }*/
-
     private void shuffleDeck() {
         Collections.shuffle(allCards);
     }
@@ -172,6 +170,7 @@ public class GameState extends SuecaState{
     }
 
     public Boolean playCard(Card card) {
+        System.out.println("PLAYED CARD ->" + card.toString() + "\n");
         if (rounds.get(currentRound).getCards().isEmpty()) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             rounds.get(currentRound).setRoundSuit(card.getSuit());
@@ -188,7 +187,8 @@ public class GameState extends SuecaState{
             }
             nextPlayer();
         } else {
-            System.out.println("INVALID CARD \n");
+            System.out.println("\nINVALID CARD");
+            System.out.println("CARD ->" + card.toString() + "\n");
             return false;
         }
 
@@ -203,7 +203,7 @@ public class GameState extends SuecaState{
         CardPlayed winnerCard = rounds.get(currentRound).getWinnerCard(this.trump);
         int score = rounds.get(currentRound).getRoundScore();
         winnerCard.getPlayer().getTeam().addScore(score);
-        
+
         System.out.println("WINNER TEAM: " + winnerCard.getPlayer().getTeam().toString());
         System.out.println("WINNER CARD: " + winnerCard.getCard().toString());
         System.out.println("ROUND SCORE : " + score);
@@ -222,7 +222,6 @@ public class GameState extends SuecaState{
             return !activePlayer.hasCardsFromSuit(rounds.get(currentRound).getRoundSuit());
         }
     }*/
-
     private void nextRound() {
         this.activePlayer = rounds.get(currentRound).getWinnerPlayer();
 
@@ -232,10 +231,12 @@ public class GameState extends SuecaState{
             } else {
                 this.activePlayerNumber = 3;
             }
-        } else if (activePlayer.getTeam().getPlayer1() == activePlayer) {
-            this.activePlayerNumber = 2;
-        } else {
-            this.activePlayerNumber = 4;
+        } else if (activePlayer.getTeam() == team2) {
+            if (activePlayer.getTeam().getPlayer1() == activePlayer) {
+                this.activePlayerNumber = 2;
+            } else {
+                this.activePlayerNumber = 4;
+            }
         }
         currentRound++;
         rounds.add(new Round(currentRound));
@@ -248,6 +249,5 @@ public class GameState extends SuecaState{
         System.out.println("Team2 score: " + team2.getFinalScore());
         System.exit(0);
     }
-    
 
 }

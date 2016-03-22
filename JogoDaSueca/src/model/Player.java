@@ -63,9 +63,9 @@ public class Player extends Agent{
         return false;
     }
 
-    public void removeCardFromHand(Card card) {
+    /*public void removeCardFromHand(Card card) {
         this.cards.remove(card);
-    }
+    }*/
     
     public String getCardToString(){
         StringBuilder string = new StringBuilder();

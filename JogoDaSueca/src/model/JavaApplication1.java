@@ -74,15 +74,17 @@ public class JavaApplication1 {
         }*/
         System.out.println("\nTRUMP is " + game.getTrump().toString());
         Boolean validPlay = true;
-        for (int i = 0; i < 2; i++) {
-            System.out.println("CURRENT ROUND : " + (game.getCurrentRound() + 1));
-            for(Player player: players){                
+        for (int i = 0; i < 10; i++) {
+            System.out.println("\n                      CURRENT ROUND : " + (game.getCurrentRound() + 1));
+            for(int j = 0; j < 4; j++){ 
+                Player player = players.get(game.getActivePlayerNumber()-1);
                 do{
+                    System.out.println(player.getName() + " PLAYING");
+                    System.out.println(game.getRounds().get(game.getCurrentRound()).getCardsToString());                    
+                    System.out.println(player.getCardToString() + "\n");
                     Move move = player.play(game.getRounds().get(game.getCurrentRound()));
                     validPlay = game.playCard(move.getCard());
                     
-                    System.out.println(game.getRounds().get(game.getCurrentRound()).getCardsToString());
-                    System.out.println(player.getCards().size());
                 } while (!validPlay);
                 
             }

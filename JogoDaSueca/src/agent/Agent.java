@@ -31,6 +31,15 @@ public class Agent{
     public Move play(Round round) {
         return algorithm.takeDecision(currentState, round);
     }
+    
+    public void removeCardFromHand(Card card) {
+        Boolean sim = this.currentState.getAgentCards().remove(card);
+        if(sim){
+            System.out.println("REMOVEU");
+        } else{
+            System.out.println("NAO ENCONTROU");
+        }
+    }
 
    /* public void notifyAction(Move move) {
         currentState.placePiece(action.getLine(), action.getColumn());
