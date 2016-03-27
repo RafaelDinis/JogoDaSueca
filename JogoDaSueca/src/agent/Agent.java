@@ -4,6 +4,8 @@ import common.Move;
 import java.util.LinkedList;
 import java.util.Random;
 import model.Card;
+import model.GameState;
+import model.Player;
 import model.Round;
 
 
@@ -21,11 +23,11 @@ public class Agent{
         random = new Random();
         alfabeta = new AlphaBeta();
         randomAlgorithm = new RandomAlgorithm();
-        useRandomAlgorithm();
+        useAlfabeta();
     }
 
-    public void notifyNewGame(LinkedList<Card> agentCards) {
-        currentState = new AgentCurrentState(agentCards);
+    public void notifyNewGame(GameState state, LinkedList<Card> agentCards, LinkedList<Card> teammateCards, LinkedList<Card> opponent1Cards, LinkedList<Card> opponent2Cards) {
+        currentState = new AgentCurrentState(state, agentCards, teammateCards, opponent1Cards, opponent2Cards);
     }
 
     public Move play(Round round) {
@@ -41,7 +43,7 @@ public class Agent{
     }*/
 
      public final void useAlfabeta() {
-        algorithm = handsSimulator;
+        algorithm = alfabeta;
         algorithm.setRandom(random);
     }
 

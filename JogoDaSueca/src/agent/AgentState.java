@@ -10,7 +10,7 @@ import model.Round;
 public class AgentState extends SuecaState {
     
      /**
-     * List of the agent's pieces.
+     * List of the agents cards.
      */    
     protected LinkedList<Card> agentCards;
     
@@ -20,7 +20,5 @@ public class AgentState extends SuecaState {
     public AgentState(LinkedList<Card> agentCards) {
         this.agentCards = agentCards;
     }  
-    
-    
-
+      
 }

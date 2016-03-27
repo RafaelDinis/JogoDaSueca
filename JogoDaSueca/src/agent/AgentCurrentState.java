@@ -7,9 +7,9 @@ package agent;
 
 import common.Move;
 import java.util.LinkedList;
-import java.util.List;
 import model.Card;
-import model.CardPlayed;
+import model.GameState;
+import model.Player;
 import model.Round;
 
 /**
@@ -18,8 +18,19 @@ import model.Round;
  */
 public class AgentCurrentState extends AgentState {
 
-    public AgentCurrentState(LinkedList<Card> agentCards) {
+    private LinkedList<Card> teammateCards;
+    private LinkedList<Card> opponent1Cards;
+    private LinkedList<Card> opponent2Cards;
+    private Player currentPlayer;
+    private GameState game;
+    
+    public AgentCurrentState(GameState game, LinkedList<Card> agentCards, LinkedList<Card> teammateCards, LinkedList<Card> opponent1Cards, LinkedList<Card> opponent2Cards) {
         super(agentCards);
+        this.teammateCards = teammateCards;
+        this.opponent1Cards = opponent1Cards;
+        this.opponent2Cards = opponent2Cards;
+        this.currentPlayer = game.getActivePlayer();
+        this.game = game;
     }
 
     public LinkedList<Move> getAgentPossibleMoves(Round round) {
@@ -65,4 +76,12 @@ public class AgentCurrentState extends AgentState {
         return move;
     }
 
+    public AgentSearchState getAgentSearchState() {
+        return new AgentSearchState(game, game.getActivePlayer(), (LinkedList<Card>) opponent1Cards, (LinkedList<Card>) opponent2Cards
+                , (LinkedList<Card>) teammateCards, (LinkedList<Card>) agentCards);
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 }
