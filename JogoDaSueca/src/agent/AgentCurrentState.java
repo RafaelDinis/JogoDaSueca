@@ -23,32 +23,31 @@ public class AgentCurrentState extends AgentState {
     private LinkedList<Card> opponent2Cards;
     private Player currentPlayer;
     private GameState game;
-    
+
     public AgentCurrentState(GameState game, LinkedList<Card> agentCards, LinkedList<Card> teammateCards, LinkedList<Card> opponent1Cards, LinkedList<Card> opponent2Cards) {
         super(agentCards);
-        this.teammateCards = teammateCards;
-        this.opponent1Cards = opponent1Cards;
-        this.opponent2Cards = opponent2Cards;
+        this.teammateCards = (LinkedList<Card>) teammateCards;
+        this.opponent1Cards = (LinkedList<Card>) opponent1Cards;
+        this.opponent2Cards = (LinkedList<Card>) opponent2Cards;
         this.currentPlayer = game.getActivePlayer();
         this.game = game;
     }
 
     public LinkedList<Move> getAgentPossibleMoves(Round round) {
         LinkedList<Move> possibleMoves = new LinkedList<>();
-        for (Card c : agentCards) {           
-                if (round.getCards().isEmpty()) {
-                    return playerCardsToMoves(round);
-                }
-                if (c.getSuit() == round.getRoundSuit()) {
-                    possibleMoves.add(new Move(c, round));
-                }
+        for (Card c : agentCards) {
+            if (round.getCards().isEmpty()) {
+                return playerCardsToMoves(round);
+            }
+            if (c.getSuit() == round.getRoundSuit()) {
+                possibleMoves.add(new Move(c, round));
+            }
         }
-        if(possibleMoves.isEmpty()){
+        if (possibleMoves.isEmpty()) {
             return playerCardsToMoves(round);
         }
         return possibleMoves;
     }
-    
 
     public LinkedList<Card> getAgentCards() {
         return agentCards;
@@ -57,19 +56,19 @@ public class AgentCurrentState extends AgentState {
     public void setAgentCards(LinkedList<Card> agentCards) {
         this.agentCards = agentCards;
     }
-    
-    public LinkedList<Move> playerCardsToMoves(Round round){
+
+    public LinkedList<Move> playerCardsToMoves(Round round) {
         LinkedList<Move> possibleMoves = new LinkedList<>();
-        for(Card c: agentCards){
+        for (Card c : agentCards) {
             possibleMoves.add(new Move(c, round));
         }
-        return  possibleMoves;
+        return possibleMoves;
     }
-    
-    public Move getHigherCard( LinkedList<Move> possibleMoves){
+
+    public Move getHigherCard(LinkedList<Move> possibleMoves) {
         Move move = possibleMoves.get(0);
         for (Move possibleMove : possibleMoves) {
-            if(possibleMove.getCard().getWeight() > move.getCard().getWeight()){
+            if (possibleMove.getCard().getWeight() > move.getCard().getWeight()) {
                 move = possibleMove;
             }
         }
@@ -77,8 +76,7 @@ public class AgentCurrentState extends AgentState {
     }
 
     public AgentSearchState getAgentSearchState() {
-        return new AgentSearchState(game, game.getActivePlayer(), (LinkedList<Card>) opponent1Cards, (LinkedList<Card>) opponent2Cards
-                , (LinkedList<Card>) teammateCards, (LinkedList<Card>) agentCards);
+        return new AgentSearchState(game, game.getActivePlayer(), (LinkedList<Card>) opponent1Cards, (LinkedList<Card>) opponent2Cards, (LinkedList<Card>) teammateCards, (LinkedList<Card>) agentCards);
     }
 
     public Player getCurrentPlayer() {

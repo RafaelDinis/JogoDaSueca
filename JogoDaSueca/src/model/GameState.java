@@ -6,7 +6,6 @@
 package model;
 
 import common.SuecaState;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -20,7 +19,7 @@ public class GameState extends SuecaState {
     private Team team2;
     private Team winnerTeam;
     private Suit trump;
-    private ArrayList<Card> deck;
+    private LinkedList<Card> deck;
     private Player activePlayer;
     private int activePlayerNumber;
     //private int currentRound;
@@ -245,5 +244,17 @@ public class GameState extends SuecaState {
         System.out.println("Team2 score: " + team2.getFinalScore());
         System.exit(0);
     }
+
+    @Override
+    public GameState clone(){
+        GameState g = new GameState(team1, team2);
+        g.setActivePlayer(activePlayer);
+        g.setTrump(trump);
+        g.setRounds(rounds);
+        g.setWinnerTeam(winnerTeam);
+        return g;
+    }
+    
+    
 
 }

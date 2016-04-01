@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import model.Card;
 import model.GameState;
 import model.Player;
-import model.Suit;
 
 public class AgentSearchState extends AgentState {
 

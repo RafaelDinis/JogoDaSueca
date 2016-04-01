@@ -6,7 +6,6 @@
 package model;
 
 import agent.Agent;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  *
  * @author Yeezus
  */
-public class Player extends Agent{
+public class Player extends Agent {
 
     private String name;
     private List<Card> cards;
@@ -25,7 +24,7 @@ public class Player extends Agent{
         this.team = team;
         cards = new LinkedList<>();
     }
-
+    
     public String getName() {
         return name;
     }
@@ -38,7 +37,7 @@ public class Player extends Agent{
         return cards;
     }
 
-    public void setCards(ArrayList<Card> cards) {
+    public void setCards(LinkedList<Card> cards) {
         this.cards = cards;
     }
 
@@ -66,16 +65,17 @@ public class Player extends Agent{
     /*public void removeCardFromHand(Card card) {
         this.cards.remove(card);
     }*/
-    
-    public String getCardToString(){
+    public String getCardToString() {
         StringBuilder string = new StringBuilder();
         int i = 1;
-        for(Card c:cards){
+        for (Card c : cards) {
             string.append(" " + i + "-");
             string.append(c.toString());
             i++;
         }
-        
+
         return string.toString();
     }
+
+
 }
