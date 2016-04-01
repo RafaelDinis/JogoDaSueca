@@ -1,7 +1,6 @@
 package agent;
 
 import common.Move;
-import java.util.LinkedList;
 import java.util.List;
 import model.Round;
 
@@ -34,14 +33,17 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         }
         return minimaxValues;
     }*/
-
     private double maxValue(AgentSearchState state, double alpha, double beta, int depth) {
         if (depth == depthLimit) {
             return state.evaluate();
         }
         for (AgentSearchState s : state.getSucessors()) {
-            alpha = Math.max(alpha, maxValue(s, alpha, beta, depth + 1));
-
+            if (s.getCurrentPlayer() == state.getCurrentPlayer() || s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
+                alpha = Math.max(alpha, maxValue(s, alpha, beta, depth + 1));
+            } else{
+                alpha = Math.max(alpha, minValue(s, alpha, beta, depth + 1));
+            }
+            
             if (alpha >= beta) {
                 return alpha;
             }
@@ -54,7 +56,11 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
             return state.evaluate();
         }
         for (AgentSearchState s : state.getSucessors()) {
-            beta = Math.min(beta, minValue(s, alpha, beta, depth + 1));
+            if (s.getCurrentPlayer() != state.getCurrentPlayer() || s.getCurrentPlayer().getTeam() != state.getCurrentPlayer().getTeam()) {
+                beta = Math.min(beta, minValue(s, alpha, beta, depth + 1));
+            } else {
+                beta = Math.min(beta, maxValue(s, alpha, beta, depth + 1));
+            }
 
             if (beta <= alpha) {
                 return beta;
@@ -70,10 +76,10 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         double moveValue, max = Double.NEGATIVE_INFINITY;
         Move nextMove = null;
         for (AgentSearchState s : successors) {
-            if (s.getCurrentPlayer() == currentState.getCurrentPlayer()) {
-                moveValue = maxValue(s, max, Double.POSITIVE_INFINITY, 1);
+            if (s.getCurrentPlayer() == currentState.getCurrentPlayer() || s.getCurrentPlayer().getTeam() == currentState.getCurrentPlayer().getTeam()) {
+                moveValue = maxValue(s, max, Double.POSITIVE_INFINITY, 1 /*(1*4) + (4 - (round.getCards().size()))*/);
             } else {
-                moveValue = minValue(s, max, Double.POSITIVE_INFINITY, 1);
+                moveValue = minValue(s, max, Double.POSITIVE_INFINITY, 1 /*(1*4) + (4 - (round.getCards().size()))*/);
             }
             if (nextMove == null || moveValue > max) {
                 max = moveValue;
@@ -84,3 +90,4 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
     }
 
 }
+

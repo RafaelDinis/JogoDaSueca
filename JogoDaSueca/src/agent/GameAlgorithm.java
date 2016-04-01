@@ -10,7 +10,7 @@ public abstract class GameAlgorithm <S extends AgentState>{
     /**
      * The maximum depth search level from the current state (current state has level 0).
      */     
-    protected int depthLimit = 4;
+    protected int depthLimit = 8;
     /**
      * The number of hands to be simulated by the agent each time it must take a decision.
      */    
