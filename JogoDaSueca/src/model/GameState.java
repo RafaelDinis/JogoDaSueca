@@ -5,13 +5,9 @@
  */
 package model;
 
-import agent.Agent;
 import common.SuecaState;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -23,7 +19,7 @@ public class GameState extends SuecaState {
     private Team team2;
     private Team winnerTeam;
     private Suit trump;
-    private ArrayList<Card> deck;
+    private LinkedList<Card> deck;
     private Player activePlayer;
     private int activePlayerNumber;
     //private int currentRound;
@@ -42,6 +38,10 @@ public class GameState extends SuecaState {
         this.activePlayerNumber = 1;
         this.currentRound = 0;
         rounds.add(new Round(currentRound));
+    }
+    
+    private GameState(){
+        
     }
 
     public Suit getTrump() {
@@ -248,5 +248,19 @@ public class GameState extends SuecaState {
         System.out.println("Team2 score: " + team2.getFinalScore());
         System.exit(0);
     }
+
+    @Override
+    public GameState clone(){
+        GameState g = new GameState();
+        g.setTeam1(team1.clone());
+        g.setTeam2(team2.clone());
+        g.setActivePlayer(activePlayer.clone());
+        g.setTrump(trump);
+        g.setRounds((LinkedList<Round>) rounds.clone());
+        g.setWinnerTeam(winnerTeam);
+        return g;
+    }
+    
+    
 
 }

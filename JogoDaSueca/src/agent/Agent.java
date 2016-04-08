@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Random;
 import model.Card;
 import model.GameState;
-import model.Player;
 import model.Round;
 
 
@@ -24,10 +23,11 @@ public class Agent{
         alfabeta = new AlphaBeta();
         randomAlgorithm = new RandomAlgorithm();
         useAlfabeta();
+        //useRandomAlgorithm();
     }
 
-    public void notifyNewGame(GameState state, LinkedList<Card> agentCards, LinkedList<Card> teammateCards, LinkedList<Card> opponent1Cards, LinkedList<Card> opponent2Cards) {
-        currentState = new AgentCurrentState(state, agentCards, teammateCards, opponent1Cards, opponent2Cards);
+    public void notifyNewGame(GameState state, LinkedList<Card> cards) {
+        currentState = new AgentCurrentState(state, cards);
     }
 
     public Move play(Round round) {
@@ -36,6 +36,18 @@ public class Agent{
     
     public void removeCardFromHand(Card card) {
         this.currentState.getAgentCards().remove(card);
+        /*LinkedList<Card> cards = (LinkedList) currentState.getAgentCards().clone();
+        for(Card c : cards){
+            if(c.getCard() == card.getCard() && c.getSuit() == card.getSuit()){
+                currentState.getAgentCards().remove(c);
+            }
+        }*/
+    }
+    
+    public void removeCardFromHandSearch(Card card){
+        for(Card c : currentState.getAgentCards()){
+            
+        }
     }
 
    /* public void notifyAction(Move move) {

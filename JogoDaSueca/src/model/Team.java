@@ -53,6 +53,17 @@ public class Team {
     public String toString() {
         return getPlayer1().getName() + ", " + getPlayer2().getName() + ", score:" + getFinalScore();
     } 
+
+    @Override
+    protected Team clone() {
+        Team t = new Team();
+        t.setFinalScore(finalScore);
+        t.setPlayer1(player1.clone());
+        t.setPlayer2(player2.clone());
+        return t;
+    }
+    
+    
     
     
 }

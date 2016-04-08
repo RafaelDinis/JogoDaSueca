@@ -5,24 +5,18 @@ import java.util.LinkedList;
 import model.Card;
 import model.GameState;
 import model.Player;
-import model.Suit;
 
 public class AgentSearchState extends AgentState {
 
-    private Move move = null;
+    private Move move;
     private Player currentPlayer;
-    private LinkedList<Card> opponent1Cards;
-    private LinkedList<Card> opponent2Cards;
-    private LinkedList<Card> teammateCards;
     private GameState game;
 
-    public AgentSearchState(GameState game, Player currentPlayer, LinkedList<Card> opponent1Cards, LinkedList<Card> opponent2Cards, LinkedList<Card> teammateCards, LinkedList<Card> agentCards) {
-        super(agentCards);
-        this.currentPlayer = currentPlayer;
-        this.opponent1Cards = opponent1Cards;
-        this.opponent2Cards = opponent2Cards;
-        this.teammateCards = teammateCards;
-        this.game = game;
+    public AgentSearchState(GameState game, Player current) {  
+        super(current.getCards());
+        this.game = game;      
+        this.currentPlayer = current;
+        
     }
 
     public Move getMove() {
@@ -31,12 +25,13 @@ public class AgentSearchState extends AgentState {
 
     public LinkedList<AgentSearchState> getSucessors() {
         LinkedList<AgentSearchState> sucessors = new LinkedList<>();
-        LinkedList<Card> cards = (LinkedList<Card>) agentCards.clone();
+        LinkedList<Card> cards = (LinkedList<Card>) currentPlayer.getCards().clone();
         for (Card c : cards) {
             if (super.validateCard(c, game.getRounds().get(game.getCurrentRound()).getRoundSuit(), currentPlayer)) {
-                AgentSearchState sucessor = (AgentSearchState) clone();
-                currentPlayer.removeCardFromHand(c);
-                sucessor.move = new Move(c, game.getRounds().get(game.getCurrentRound()));
+                GameState g = game.clone();
+                AgentSearchState sucessor = new AgentSearchState(g, g.getActivePlayer());
+                currentPlayer.getCards().remove(c);
+                sucessor.move = new Move(c, g.getRounds().get(g.getCurrentRound()));
                 sucessors.add(sucessor);
             }
         }
@@ -54,7 +49,7 @@ public class AgentSearchState extends AgentState {
     private Boolean getWinner() {
         double agentTeamScore = 0;
         double opponentTeamScore = 0;
-        for (Card card : opponent1Cards) {
+        /*for (Card card : opponent1Cards) {
             opponentTeamScore += card.getValue();
         }
 
@@ -74,17 +69,26 @@ public class AgentSearchState extends AgentState {
             return true;
         } else if (agentTeamScore < opponentTeamScore) {
             return false;
-        }
-        return false;
+        }*/
+        return true;
     }
-
+/*
     @Override
     protected AgentSearchState clone() {
         return new AgentSearchState(game, currentPlayer, opponent1Cards, opponent2Cards, teammateCards, agentCards);
     }
-
+*/
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
+    public GameState getGame() {
+        return game;
+    }
+
+    public void setGame(GameState game) {
+        this.game = game;
+    }
+    
 
 }

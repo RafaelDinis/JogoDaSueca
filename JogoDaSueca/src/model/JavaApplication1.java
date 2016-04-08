@@ -41,10 +41,10 @@ public class JavaApplication1 {
         players.add(player4);
         
         GameState game = new GameState(team1, team2);
-        player1.notifyNewGame(game, (LinkedList<Card>) player1.getCards(), (LinkedList<Card>) player2.getCards(), (LinkedList<Card>) player3.getCards(), (LinkedList<Card>) player4.getCards());
-        player2.notifyNewGame(game, (LinkedList<Card>) player2.getCards(), (LinkedList<Card>) player1.getCards(), (LinkedList<Card>) player3.getCards(), (LinkedList<Card>) player4.getCards());
-        player3.notifyNewGame(game, (LinkedList<Card>) player3.getCards(), (LinkedList<Card>) player4.getCards(), (LinkedList<Card>) player1.getCards(), (LinkedList<Card>) player2.getCards());
-        player4.notifyNewGame(game, (LinkedList<Card>) player4.getCards(), (LinkedList<Card>) player3.getCards(), (LinkedList<Card>) player1.getCards(), (LinkedList<Card>) player2.getCards());
+        player1.notifyNewGame(game, player1.getCards());
+        player2.notifyNewGame(game, player2.getCards());
+        player3.notifyNewGame(game, player3.getCards());
+        player4.notifyNewGame(game, player4.getCards());
         
         /*System.out.println("agent1 CARDS --> " + player1.getCurrentState().getAgentCards().toString());
         System.out.println("agent3 CARDS --> " + player3.getCurrentState().getAgentCards().toString());

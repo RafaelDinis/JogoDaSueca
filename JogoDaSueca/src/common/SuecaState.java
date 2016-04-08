@@ -114,7 +114,7 @@ public class SuecaState {
         } else {
             return !activePlayer.hasCardsFromSuit(roundSuit);
         }
-    }
+    }   
     
     
 }
