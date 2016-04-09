@@ -109,7 +109,7 @@ public class SuecaState {
     }
     
     protected boolean validateCard(Card card, Suit roundSuit, Player activePlayer) {
-        if (roundSuit == card.getSuit()) {
+        if (roundSuit == null || roundSuit == card.getSuit()) {
             return true;
         } else {
             return !activePlayer.hasCardsFromSuit(roundSuit);

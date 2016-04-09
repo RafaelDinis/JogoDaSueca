@@ -27,6 +27,7 @@ public class AgentSearchState extends AgentState {
         LinkedList<AgentSearchState> sucessors = new LinkedList<>();
         LinkedList<Card> cards = (LinkedList<Card>) currentPlayer.getCards().clone();
         for (Card c : cards) {
+ //           System.out.println(game.getCurrentRound());
             if (super.validateCard(c, game.getRounds().get(game.getCurrentRound()).getRoundSuit(), currentPlayer)) {
                 GameState g = game.clone();
                 AgentSearchState sucessor = new AgentSearchState(g, g.getActivePlayer());
