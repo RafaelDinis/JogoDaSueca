@@ -258,6 +258,7 @@ public class GameState extends SuecaState {
         g.setTrump(trump);
         g.setRounds((LinkedList<Round>) rounds.clone());
         g.setWinnerTeam(winnerTeam);
+        g.currentRound = currentRound;
         return g;
     }
     
