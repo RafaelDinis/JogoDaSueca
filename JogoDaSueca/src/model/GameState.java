@@ -19,10 +19,8 @@ public class GameState extends SuecaState {
     private Team team2;
     private Team winnerTeam;
     private Suit trump;
-    private LinkedList<Card> deck;
     private Player activePlayer;
     private int activePlayerNumber;
-    //private int currentRound;
 
     public GameState(Team team1, Team team2) {
         this.team1 = team1;
@@ -173,14 +171,16 @@ public class GameState extends SuecaState {
         if (rounds.get(currentRound).getCards().isEmpty()) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             rounds.get(currentRound).setRoundSuit(card.getSuit());
-            activePlayer.removeCardFromHand(card);
+            //activePlayer.removeCardFromHand(card);
+            activePlayer.getCards().remove(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
             nextPlayer();
         } else if (super.validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
-            activePlayer.removeCardFromHand(card);
+            //activePlayer.removeCardFromHand(card);
+            activePlayer.getCards().remove(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -255,8 +255,9 @@ public class GameState extends SuecaState {
         g.setTeam1(team1.clone());
         g.setTeam2(team2.clone());
         g.setActivePlayer(activePlayer.clone());
+        g.activePlayerNumber = activePlayerNumber;
         g.setTrump(trump);
-        g.setRounds((LinkedList<Round>) rounds.clone());
+        g.setRounds(new LinkedList<>(rounds));
         g.setWinnerTeam(winnerTeam);
         g.currentRound = currentRound;
         return g;

@@ -12,11 +12,11 @@ public class AgentSearchState extends AgentState {
     private Player currentPlayer;
     private GameState game;
 
-    public AgentSearchState(GameState game, Player current) {  
+    public AgentSearchState(GameState game, Player current) {
         super(current.getCards());
-        this.game = game;      
+        this.game = game;
         this.currentPlayer = current;
-        
+
     }
 
     public Move getMove() {
@@ -27,13 +27,16 @@ public class AgentSearchState extends AgentState {
         LinkedList<AgentSearchState> sucessors = new LinkedList<>();
         LinkedList<Card> cards = (LinkedList<Card>) currentPlayer.getCards().clone();
         for (Card c : cards) {
- //           System.out.println(game.getCurrentRound());
             if (super.validateCard(c, game.getRounds().get(game.getCurrentRound()).getRoundSuit(), currentPlayer)) {
                 GameState g = game.clone();
+                System.out.println(g.getRounds().equals(game.getRounds()));
+                System.out.println(g.toString());
+                g.playCard(c);
                 AgentSearchState sucessor = new AgentSearchState(g, g.getActivePlayer());
-                currentPlayer.getCards().remove(c);
+                // currentPlayer.getCards().remove(c);
                 sucessor.move = new Move(c, g.getRounds().get(g.getCurrentRound()));
                 sucessors.add(sucessor);
+
             }
         }
         return sucessors;
@@ -73,12 +76,13 @@ public class AgentSearchState extends AgentState {
         }*/
         return true;
     }
-/*
+
+    /*
     @Override
     protected AgentSearchState clone() {
         return new AgentSearchState(game, currentPlayer, opponent1Cards, opponent2Cards, teammateCards, agentCards);
     }
-*/
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -90,6 +94,5 @@ public class AgentSearchState extends AgentState {
     public void setGame(GameState game) {
         this.game = game;
     }
-    
 
 }

@@ -6,6 +6,7 @@
 package model;
 
 import agent.Agent;
+import agent.AgentCurrentState;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -81,6 +82,7 @@ public class Player extends Agent {
     public Player clone(){
         Player p = new Player(name, team);
         p.setCards((LinkedList<Card>) cards.clone());
+        //p.setCurrentState(currentState.clone());
         return p;
     }
     

@@ -14,7 +14,7 @@ public class Agent{
     private GameAlgorithm algorithm;   
     private HandsSimulator handsSimulator;
     private RandomAlgorithm randomAlgorithm;
-    private AgentCurrentState currentState;   
+    protected AgentCurrentState currentState;   
     private Random random;
 
     public Agent() {      
@@ -22,12 +22,14 @@ public class Agent{
         random = new Random();
         alfabeta = new AlphaBeta();
         randomAlgorithm = new RandomAlgorithm();
-        useAlfabeta();
-        //useRandomAlgorithm();
     }
 
-    public void notifyNewGame(GameState state, LinkedList<Card> cards) {
+    public void setCurrentState(GameState state, LinkedList<Card> cards) {
         currentState = new AgentCurrentState(state, cards);
+    }
+    
+    public void setCurrentState(AgentCurrentState state){
+        currentState = state;
     }
 
     public Move play(Round round) {
@@ -36,6 +38,7 @@ public class Agent{
     
     public void removeCardFromHand(Card card) {
         this.currentState.getAgentCards().remove(card);
+        
         /*LinkedList<Card> cards = (LinkedList) currentState.getAgentCards().clone();
         for(Card c : cards){
             if(c.getCard() == card.getCard() && c.getSuit() == card.getSuit()){
@@ -67,7 +70,6 @@ public class Agent{
     
     public AgentCurrentState getCurrentState(){
         return currentState;
-    }
-    
+    }    
     
 }

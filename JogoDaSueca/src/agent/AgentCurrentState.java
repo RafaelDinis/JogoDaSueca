@@ -26,8 +26,8 @@ public class AgentCurrentState extends AgentState {
 
     public AgentCurrentState(GameState game, LinkedList<Card> cards) {
         super(cards);
-        this.currentPlayer = game.getActivePlayer();
-        this.game = game;
+        this.currentPlayer = game.getActivePlayer().clone();
+        this.game = game.clone();
     }
 
     public LinkedList<Move> getAgentPossibleMoves(Round round) {
@@ -74,11 +74,19 @@ public class AgentCurrentState extends AgentState {
 
     public AgentSearchState getAgentSearchState() {
         Player p = game.getActivePlayer().clone();
-        AgentSearchState a = new AgentSearchState(game.clone(), p);
+        GameState g = game.clone();
+        AgentSearchState a = new AgentSearchState(g, p);
         return a;
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
+    @Override
+    public AgentCurrentState clone(){
+        return new AgentCurrentState(game.clone(), (LinkedList<Card>) agentCards.clone());
+    }
+    
+    
 }

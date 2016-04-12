@@ -25,11 +25,15 @@ public class JavaApplication1 {
 
         Player player1 = new Player("gajo1", team1);
         Player player2 = new Player("gajo2", team1);
+        player1.useAlfabeta();
+        player2.useAlfabeta();
         team1.setPlayer1(player1);
         team1.setPlayer2(player2);
 
         Player player3 = new Player("gajo3", team2);
         Player player4 = new Player("gajo4", team2);
+        player3.useRandomAlgorithm();
+        player4.useRandomAlgorithm();
         team2.setPlayer1(player3);
         team2.setPlayer2(player4);
 
@@ -66,13 +70,14 @@ public class JavaApplication1 {
                 } while (!validPlay || !validNumber);
             }
         }*/
+
         System.out.println("\nTRUMP is " + game.getTrump().toString());
         Boolean validPlay = true;
         for (int i = 0; i < 10; i++) {
-            player1.notifyNewGame(game, player1.getCards());
-            player2.notifyNewGame(game, player2.getCards());
-            player3.notifyNewGame(game, player3.getCards());
-            player4.notifyNewGame(game, player4.getCards());
+            player1.setCurrentState(game, player1.getCards());
+            player2.setCurrentState(game, player2.getCards());
+            player3.setCurrentState(game, player3.getCards());
+            player4.setCurrentState(game, player4.getCards());
             System.out.println("\n                      CURRENT ROUND : " + (game.getCurrentRound() + 1));
             for (int j = 0; j < 4; j++) {
                 Player player = players.get(game.getActivePlayerNumber() - 1);

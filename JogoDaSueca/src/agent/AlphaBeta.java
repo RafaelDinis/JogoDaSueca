@@ -79,9 +79,9 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         Move nextMove = null;
         for (AgentSearchState s : successors) {
             if (s.getCurrentPlayer() == currentState.getCurrentPlayer() || s.getCurrentPlayer().getTeam() == currentState.getCurrentPlayer().getTeam()) {
-                moveValue = maxValue(s, max, Double.POSITIVE_INFINITY, /*1 OU (1*4) + (4 - (s.getGame().getRounds().size()))*/ depthLimit);
+                moveValue = maxValue(s, max, Double.POSITIVE_INFINITY, depthLimit);
             } else {
-                moveValue = minValue(s, max, Double.POSITIVE_INFINITY, /*1 OU (1*4) + (4 - (s.getGame().getRounds().size()))*/ depthLimit);
+                moveValue = minValue(s, max, Double.POSITIVE_INFINITY, depthLimit);
             }
             if (nextMove == null || moveValue > max) {
                 max = moveValue;
