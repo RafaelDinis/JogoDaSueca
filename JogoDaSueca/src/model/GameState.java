@@ -39,7 +39,7 @@ public class GameState extends SuecaState {
     }
     
     private GameState(){
-        
+        rounds = new LinkedList<>();
     }
 
     public Suit getTrump() {
@@ -210,17 +210,11 @@ public class GameState extends SuecaState {
         if (currentRound == 9) {
             endGame();
         }
+        
         nextRound();
 
     }
-
-    /*private boolean validateCard(Card card) {
-        if (rounds.get(currentRound).getRoundSuit() == card.getSuit()) {
-            return true;
-        } else {
-            return !activePlayer.hasCardsFromSuit(rounds.get(currentRound).getRoundSuit());
-        }
-    }*/
+    
     private void nextRound() {
         this.activePlayer = rounds.get(currentRound).getWinnerPlayer();
 
@@ -239,7 +233,7 @@ public class GameState extends SuecaState {
         }
         currentRound++;
         rounds.add(new Round(currentRound));
-        System.out.println("nova ronda");
+        //System.out.println("\n nova ronda \n");
     }
 
     private void endGame() {
@@ -257,10 +251,68 @@ public class GameState extends SuecaState {
         g.setActivePlayer(activePlayer.clone());
         g.activePlayerNumber = activePlayerNumber;
         g.setTrump(trump);
-        g.setRounds(new LinkedList<>(rounds));
+        for(Round r : rounds){
+            g.getRounds().add(r.clone());
+        }
+        //g.setRounds((LinkedList<Round>) rounds.clone());
         g.setWinnerTeam(winnerTeam);
         g.currentRound = currentRound;
+        //System.out.println("CLONE ROUND--> " + currentRound+1);
         return g;
+    }
+    
+    public Boolean playCardSimulation(Card card) {
+        if (rounds.get(currentRound).getCards().isEmpty()) {
+            rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
+            rounds.get(currentRound).setRoundSuit(card.getSuit());
+            //activePlayer.removeCardFromHand(card);
+            activePlayer.getCards().remove(card);
+            if (card.getSuit() == trump) {
+                rounds.get(currentRound).setTrumpPlayed(true);
+            }
+            nextPlayer();
+        } else if (super.validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
+            rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
+            //activePlayer.removeCardFromHand(card);
+            activePlayer.getCards().remove(card);
+            if (card.getSuit() == trump) {
+                rounds.get(currentRound).setTrumpPlayed(true);
+            }
+            nextPlayer();
+        } else {
+            System.out.println("\nINVALID CARD");
+            System.out.println("CARD ->" + card.toString() + "\n");
+            return false;
+        }
+
+        if (rounds.get(currentRound).getCards().size() == 4) {
+            endRoundSimulation();
+        }
+        return true;
+    }
+    
+    private void endRoundSimulation() {
+        CardPlayed winnerCard = rounds.get(currentRound).getWinnerCard(this.trump);
+        int score = rounds.get(currentRound).getRoundScore();
+        winnerCard.getPlayer().getTeam().addScore(score);
+
+        /*System.out.println("WINNER TEAM: " + winnerCard.getPlayer().getTeam().toString());
+        System.out.println("WINNER CARD: " + winnerCard.getCard().toString());
+        System.out.println("ROUND SCORE : " + score);*/
+
+        if (currentRound == 9) {
+            endGame();
+            System.out.println("ACABOU O JOGO");
+        }
+        nextRound();
+
+    }
+    
+    public void updateGameState() {
+        team1.getPlayer1().setCurrentState(this, team1.getPlayer1().getCards());
+        team2.getPlayer1().setCurrentState(this, team2.getPlayer1().getCards());
+        team1.getPlayer2().setCurrentState(this, team1.getPlayer2().getCards());
+        team2.getPlayer2().setCurrentState(this, team2.getPlayer2().getCards());
     }
     
     

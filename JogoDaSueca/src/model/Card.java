@@ -80,4 +80,16 @@ public class Card {
         return suit.toString() + " " + card.toString();
     }
 
+    @Override
+    protected Card clone() {
+        Card c = new Card();
+        c.setCard(card);
+        c.setSuit(suit);
+        c.setValue(value);
+        c.setWeight(weight);
+        return c; 
+    }
+    
+    
+
 }

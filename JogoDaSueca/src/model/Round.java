@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class Round {
 
     private int roundNumber;
-    private ArrayList<CardPlayed> cards;
+    private LinkedList<CardPlayed> cards;
     private int roundScore;
     private Team winnerTeam;
     private Player winnerPlayer;
@@ -23,7 +24,7 @@ public class Round {
 
     public Round(int roundNumber) {
         this.roundNumber = roundNumber;
-        this.cards = new ArrayList<>();
+        this.cards = new LinkedList<>();
         this.roundScore = 0;
         this.trumpPlayed = false;
     }
@@ -56,13 +57,20 @@ public class Round {
         this.roundNumber = roundNumber;
     }
 
-    public ArrayList<CardPlayed> getCards() {
+    public LinkedList<CardPlayed> getCards() {
         return cards;
     }
 
-    public void setCards(ArrayList<CardPlayed> cards) {
+    public void setCards(LinkedList<CardPlayed> cards) {
         this.cards = cards;
     }
+
+    public void setRoundScore(int roundScore) {
+        this.roundScore = roundScore;
+    }
+    
+    
+    
 
     public CardPlayed getWinnerCard(Suit trump) {
         CardPlayed winnerCard = new CardPlayed(new Card(), null);
@@ -112,5 +120,18 @@ public class Round {
         }
         return string.toString();
     }
+
+    @Override
+    protected Round clone() {
+        Round r = new Round(roundNumber);
+        r.setCards((LinkedList<CardPlayed>) cards.clone());
+        r.setRoundSuit(roundSuit);
+        r.setTrumpPlayed(trumpPlayed);
+        r.setRoundScore(roundScore);
+        r.setRoundNumber(roundNumber);
+        return r; 
+    }
+    
+    
 
 }

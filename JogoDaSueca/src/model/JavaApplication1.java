@@ -45,11 +45,12 @@ public class JavaApplication1 {
 
         GameState game = new GameState(team1, team2);
 
-        /*System.out.println("agent1 CARDS --> " + player1.getCurrentState().getAgentCards().toString());
-        System.out.println("agent3 CARDS --> " + player3.getCurrentState().getAgentCards().toString());
-        System.out.println("agent2 CARDS --> " + player2.getCurrentState().getAgentCards().toString());
-        System.out.println("agent4 CARDS --> " + player4.getCurrentState().getAgentCards().toString());*/
- /*for (int i = 0; i < 10; i++) {
+        System.out.println("agent1 CARDS --> " + player1.getCardToString());        
+        System.out.println("agent3 CARDS --> " + player3.getCardToString());
+        System.out.println("agent2 CARDS --> " + player2.getCardToString());
+        System.out.println("agent4 CARDS --> " + player4.getCardToString());
+        
+        /*for (int i = 0; i < 10; i++) {
             System.out.println("\nTRUMP is " + game.getTrump().toString());
             System.out.println("CURRENT ROUND : " + (game.getCurrentRound() + 1));
             for (int j = 0; j < 4; j++) {
@@ -74,10 +75,7 @@ public class JavaApplication1 {
         System.out.println("\nTRUMP is " + game.getTrump().toString());
         Boolean validPlay = true;
         for (int i = 0; i < 10; i++) {
-            player1.setCurrentState(game, player1.getCards());
-            player2.setCurrentState(game, player2.getCards());
-            player3.setCurrentState(game, player3.getCards());
-            player4.setCurrentState(game, player4.getCards());
+            game.updateGameState();
             System.out.println("\n                      CURRENT ROUND : " + (game.getCurrentRound() + 1));
             for (int j = 0; j < 4; j++) {
                 Player player = players.get(game.getActivePlayerNumber() - 1);
@@ -86,6 +84,7 @@ public class JavaApplication1 {
                     System.out.println(player.getName() + " PLAYING ----> " + player.getCardToString() + "\n");
                     Move move = player.play(game.getRounds().get(game.getCurrentRound()));
                     validPlay = game.playCard(move.getCard());
+                    game.updateGameState();
 
                 } while (!validPlay);
 
@@ -107,5 +106,7 @@ public class JavaApplication1 {
             return false;
         }
     }
+
+    
 
 }

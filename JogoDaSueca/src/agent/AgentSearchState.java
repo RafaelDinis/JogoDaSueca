@@ -29,9 +29,10 @@ public class AgentSearchState extends AgentState {
         for (Card c : cards) {
             if (super.validateCard(c, game.getRounds().get(game.getCurrentRound()).getRoundSuit(), currentPlayer)) {
                 GameState g = game.clone();
-                System.out.println(g.getRounds().equals(game.getRounds()));
-                System.out.println(g.toString());
-                g.playCard(c);
+                //System.out.println(g.getRounds().equals(game.getRounds()));
+                //System.out.println(g.getRounds().toString());
+                //System.out.println(game.getRounds().toString());
+                g.playCardSimulation(c);
                 AgentSearchState sucessor = new AgentSearchState(g, g.getActivePlayer());
                 // currentPlayer.getCards().remove(c);
                 sucessor.move = new Move(c, g.getRounds().get(g.getCurrentRound()));

@@ -34,6 +34,14 @@ public class CardPlayed {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    @Override
+    protected CardPlayed clone() {
+        CardPlayed c = new CardPlayed(card.clone(), player.clone());
+        return c; 
+    }
+    
+    
     
     
     
