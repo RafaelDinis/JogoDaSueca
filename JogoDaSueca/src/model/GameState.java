@@ -231,6 +231,7 @@ public class GameState extends SuecaState {
                 this.activePlayerNumber = 4;
             }
         }
+        System.out.println(currentRound);
         currentRound++;
         rounds.add(new Round(currentRound));
         //System.out.println("\n nova ronda \n");

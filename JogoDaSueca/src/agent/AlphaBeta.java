@@ -39,7 +39,7 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         }
         for (AgentSearchState s : state.getSucessors()) {
             //System.out.println(s.getCurrentPlayer().getTeam() != state.getCurrentPlayer().getTeam());
-            if (s.getCurrentPlayer() == state.getCurrentPlayer() || s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
+            if (s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
                 alpha = Math.max(alpha, maxValue(s, alpha, beta, depth + 1));
             } else{
                 alpha = Math.max(alpha, minValue(s, alpha, beta, depth + 1));
@@ -58,13 +58,13 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         }
         for (AgentSearchState s : state.getSucessors()) {
             //System.out.println(s.getCurrentPlayer().getTeam() != state.getCurrentPlayer().getTeam());
-            if (s.getCurrentPlayer() != state.getCurrentPlayer() || s.getCurrentPlayer().getTeam() != state.getCurrentPlayer().getTeam()) {
+            if (s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
                 beta = Math.min(beta, minValue(s, alpha, beta, depth + 1));
             } else {
                 beta = Math.min(beta, maxValue(s, alpha, beta, depth + 1));
             }
 
-            if (beta <= alpha) {
+            if (alpha >= beta) {
                 return beta;
             }
         }
@@ -75,12 +75,12 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
     public Move takeDecision(AgentCurrentState currentState, Round round) {
         System.out.println(currentState.getCurrentPlayer().getCards().size());
         currentState.getAgentSearchState();        
-        setSearchDepth((1*4) + (4 - (currentState.getAgentSearchState().getGame().getRounds().size())));
+        //setSearchDepth((1*4) + (4 - (currentState.getAgentSearchState().getGame().getRounds().size())));
         List<AgentSearchState> successors = (List<AgentSearchState>) currentState.getAgentSearchState().getSucessors();
         double moveValue, max = Double.NEGATIVE_INFINITY;
         Move nextMove = null;
         for (AgentSearchState s : successors) {
-            if (s.getCurrentPlayer() == currentState.getCurrentPlayer() || s.getCurrentPlayer().getTeam() == currentState.getCurrentPlayer().getTeam()) {
+            if (s.getCurrentPlayer().getTeam() == currentState.getCurrentPlayer().getTeam()) { //
                 moveValue = maxValue(s, max, Double.POSITIVE_INFINITY, 1);
             } else {
                 moveValue = minValue(s, max, Double.POSITIVE_INFINITY, 1);
@@ -90,6 +90,7 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
                 nextMove = s.getMove();
             }
         }
+        System.out.println("FINAL MOVE ->" + nextMove.getCard().toString());
         return nextMove;
     }
 

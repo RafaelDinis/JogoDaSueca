@@ -28,6 +28,7 @@ public class AgentSearchState extends AgentState {
         LinkedList<Card> cards = (LinkedList<Card>) currentPlayer.getCards().clone();
         for (Card c : cards) {
             if (super.validateCard(c, game.getRounds().get(game.getCurrentRound()).getRoundSuit(), currentPlayer)) {
+                System.out.println("sucessor for round " + game.getCurrentRound() + " card played -> " + c.toString());
                 GameState g = game.clone();
                 //System.out.println(g.getRounds().equals(game.getRounds()));
                 //System.out.println(g.getRounds().toString());
