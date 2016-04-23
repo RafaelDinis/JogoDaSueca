@@ -46,12 +46,6 @@ public class Agent{
             }
         }*/
     }
-    
-    public void removeCardFromHandSearch(Card card){
-        for(Card c : currentState.getAgentCards()){
-            
-        }
-    }
 
    /* public void notifyAction(Move move) {
         currentState.placePiece(action.getLine(), action.getColumn());

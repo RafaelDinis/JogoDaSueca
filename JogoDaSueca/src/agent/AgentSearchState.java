@@ -26,20 +26,24 @@ public class AgentSearchState extends AgentState {
     public LinkedList<AgentSearchState> getSucessors() {
         LinkedList<AgentSearchState> sucessors = new LinkedList<>();
         LinkedList<Card> cards = (LinkedList<Card>) currentPlayer.getCards().clone();
+        int i = 0;
         for (Card c : cards) {
+            //System.out.println(i);
             if (super.validateCard(c, game.getRounds().get(game.getCurrentRound()).getRoundSuit(), currentPlayer)) {
-                System.out.println("sucessor for round " + game.getCurrentRound() + " card played -> " + c.toString());
-                GameState g = game.clone();
-                //System.out.println(g.getRounds().equals(game.getRounds()));
-                //System.out.println(g.getRounds().toString());
-                //System.out.println(game.getRounds().toString());
-                g.playCardSimulation(c);
-                AgentSearchState sucessor = new AgentSearchState(g, g.getActivePlayer());
-                // currentPlayer.getCards().remove(c);
-                sucessor.move = new Move(c, g.getRounds().get(g.getCurrentRound()));
-                sucessors.add(sucessor);
-
+                //System.out.println("sucessor for round " + game.getCurrentRound() + " card played -> " + c.toString());
+                if(!(game.getCurrentRound() == 0 && c.getSuit().equals(game.getTrump()))){
+                    GameState g = game.clone();
+                    //System.out.println(g.getRounds().equals(game.getRounds()));
+                    //System.out.println(g.getRounds().toString());
+                    //System.out.println(game.getRounds().toString());
+                    g.playCardSimulation(c);
+                    AgentSearchState sucessor = new AgentSearchState(g, g.getActivePlayer());
+                    // currentPlayer.getCards().remove(c);
+                    sucessor.move = new Move(c, g.getRounds().get(g.getCurrentRound()));
+                    sucessors.add(sucessor);
+                }
             }
+            i++;
         }
         return sucessors;
     }
@@ -53,29 +57,23 @@ public class AgentSearchState extends AgentState {
     }
 
     private Boolean getWinner() {
-        double agentTeamScore = 0;
-        double opponentTeamScore = 0;
-        /*for (Card card : opponent1Cards) {
-            opponentTeamScore += card.getValue();
+        //double agentTeamScore = 0;
+        //double opponentTeamScore = 0;                
+        if(game.getTeam1().belongsToTeam(currentPlayer)){
+            if(currentPlayer.getTeam().getFinalScore() > game.getTeam2().getFinalScore()){
+                return true;
+            } else{
+                return false;
+            }
         }
-
-        for (Card card : opponent2Cards) {
-            opponentTeamScore += card.getValue();
+        
+        if(game.getTeam2().belongsToTeam(currentPlayer)){
+            if(currentPlayer.getTeam().getFinalScore() > game.getTeam1().getFinalScore()){
+                return true;
+            } else{
+                return false;
+            }
         }
-
-        for (Card card : agentCards) {
-            agentTeamScore += card.getValue();
-        }
-
-        for (Card card : teammateCards) {
-            agentTeamScore += card.getValue();
-        }
-
-        if (agentTeamScore > opponentTeamScore) {
-            return true;
-        } else if (agentTeamScore < opponentTeamScore) {
-            return false;
-        }*/
         return true;
     }
 

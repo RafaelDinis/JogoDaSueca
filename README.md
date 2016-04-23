@@ -1,2 +1,0 @@
-# JogoDaSueca
-Projeto Final EI

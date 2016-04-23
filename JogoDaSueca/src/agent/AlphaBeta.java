@@ -73,14 +73,18 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
 
     @Override
     public Move takeDecision(AgentCurrentState currentState, Round round) {
-        System.out.println(currentState.getCurrentPlayer().getCards().size());
-        currentState.getAgentSearchState();        
-        //setSearchDepth((1*4) + (4 - (currentState.getAgentSearchState().getGame().getRounds().size())));
+        //System.out.println("PLAYER CARDS --> " + currentState.getCurrentPlayer().getCards().size());
+        //currentState.getAgentSearchState();
+        
+        int depth = (1*4) + 4-(currentState.getAgentSearchState().getGame().getRounds().get(currentState.getAgentSearchState().getGame().getCurrentRound()).getCards().size());
+        //System.out.println("DEPHT --> " + depth);
+        setSearchDepth(depth);
+        
         List<AgentSearchState> successors = (List<AgentSearchState>) currentState.getAgentSearchState().getSucessors();
         double moveValue, max = Double.NEGATIVE_INFINITY;
         Move nextMove = null;
         for (AgentSearchState s : successors) {
-            if (s.getCurrentPlayer().getTeam() == currentState.getCurrentPlayer().getTeam()) { //
+            if (s.getCurrentPlayer().getTeam() == currentState.getCurrentPlayer().getTeam()) { 
                 moveValue = maxValue(s, max, Double.POSITIVE_INFINITY, 1);
             } else {
                 moveValue = minValue(s, max, Double.POSITIVE_INFINITY, 1);

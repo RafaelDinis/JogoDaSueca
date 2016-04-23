@@ -48,6 +48,13 @@ public class Team {
         this.finalScore = finalScore + score;
     }
     
+    public boolean belongsToTeam(Player player){
+        if(player1.getName().equalsIgnoreCase(player.getName()) || player2.getName().equalsIgnoreCase(player.getName())){
+            return true;
+        } else{
+            return false;
+        }
+    }
 
     @Override
     public String toString() {

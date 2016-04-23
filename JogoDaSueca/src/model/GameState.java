@@ -231,7 +231,7 @@ public class GameState extends SuecaState {
                 this.activePlayerNumber = 4;
             }
         }
-        System.out.println(currentRound);
+        //System.out.println(currentRound);
         currentRound++;
         rounds.add(new Round(currentRound));
         //System.out.println("\n nova ronda \n");
@@ -255,10 +255,8 @@ public class GameState extends SuecaState {
         for(Round r : rounds){
             g.getRounds().add(r.clone());
         }
-        //g.setRounds((LinkedList<Round>) rounds.clone());
         g.setWinnerTeam(winnerTeam);
         g.currentRound = currentRound;
-        //System.out.println("CLONE ROUND--> " + currentRound+1);
         return g;
     }
     
@@ -295,15 +293,16 @@ public class GameState extends SuecaState {
     private void endRoundSimulation() {
         CardPlayed winnerCard = rounds.get(currentRound).getWinnerCard(this.trump);
         int score = rounds.get(currentRound).getRoundScore();
-        winnerCard.getPlayer().getTeam().addScore(score);
+        //winnerCard.getPlayer().getTeam().addScore(score);
 
         /*System.out.println("WINNER TEAM: " + winnerCard.getPlayer().getTeam().toString());
         System.out.println("WINNER CARD: " + winnerCard.getCard().toString());
         System.out.println("ROUND SCORE : " + score);*/
 
         if (currentRound == 9) {
-            endGame();
-            System.out.println("ACABOU O JOGO");
+            //System.out.println("ACABOU O JOGO");
+            //endGame();
+            
         }
         nextRound();
 
@@ -314,8 +313,6 @@ public class GameState extends SuecaState {
         team2.getPlayer1().setCurrentState(this, team2.getPlayer1().getCards());
         team1.getPlayer2().setCurrentState(this, team1.getPlayer2().getCards());
         team2.getPlayer2().setCurrentState(this, team2.getPlayer2().getCards());
-    }
-    
-    
+    }    
 
 }
