@@ -16,7 +16,6 @@ public class AgentSearchState extends AgentState {
         super(current.getCards());
         this.game = game;
         this.currentPlayer = current;
-
     }
 
     public Move getMove() {

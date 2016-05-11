@@ -100,6 +100,22 @@ public class SuecaState {
         rounds.clear();
     }
 
+    public static LinkedList<Card> getAllCards() {
+        return allCards;
+    }
+
+    public static void setAllCards(LinkedList<Card> allCards) {
+        SuecaState.allCards = allCards;
+    }
+
+    public LinkedList<Card> getPlayedCards() {
+        return playedCards;
+    }
+
+    public void setPlayedCards(LinkedList<Card> playedCards) {
+        this.playedCards = playedCards;
+    }
+
     public LinkedList<Round> getRounds() {
         return rounds;
     }

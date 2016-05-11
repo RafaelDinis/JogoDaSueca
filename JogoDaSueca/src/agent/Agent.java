@@ -7,17 +7,16 @@ import model.Card;
 import model.GameState;
 import model.Round;
 
-
-public class Agent{
+public class Agent {
 
     private AlphaBeta alfabeta;
-    private GameAlgorithm algorithm;   
+    private GameAlgorithm algorithm;
     private HandsSimulator handsSimulator;
     private RandomAlgorithm randomAlgorithm;
-    protected AgentCurrentState currentState;   
+    protected AgentCurrentState currentState;
     private Random random;
 
-    public Agent() {      
+    public Agent() {
         handsSimulator = new HandsSimulator();
         random = new Random();
         alfabeta = new AlphaBeta();
@@ -27,18 +26,18 @@ public class Agent{
     public void setCurrentState(GameState state, LinkedList<Card> cards) {
         currentState = new AgentCurrentState(state, cards);
     }
-    
-    public void setCurrentState(AgentCurrentState state){
+
+    public void setCurrentState(AgentCurrentState state) {
         currentState = state;
     }
 
     public Move play(Round round) {
         return algorithm.takeDecision(currentState, round);
     }
-    
+
     public void removeCardFromHand(Card card) {
         this.currentState.getAgentCards().remove(card);
-        
+
         /*LinkedList<Card> cards = (LinkedList) currentState.getAgentCards().clone();
         for(Card c : cards){
             if(c.getCard() == card.getCard() && c.getSuit() == card.getSuit()){
@@ -47,12 +46,13 @@ public class Agent{
         }*/
     }
 
-   /* public void notifyAction(Move move) {
+    /* public void notifyAction(Move move) {
         currentState.placePiece(action.getLine(), action.getColumn());
     }*/
-
-     public final void useAlfabeta() {
-        algorithm = alfabeta;
+    public final void useAlfabeta() {
+        /*algorithm = alfabeta;
+        algorithm.setRandom(random);*/
+        algorithm = handsSimulator;
         algorithm.setRandom(random);
     }
 
@@ -61,9 +61,8 @@ public class Agent{
         algorithm.setRandom(random);
     }
 
-    
-    public AgentCurrentState getCurrentState(){
+    public AgentCurrentState getCurrentState() {
         return currentState;
-    }    
-    
+    }
+
 }

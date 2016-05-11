@@ -6,7 +6,9 @@
 package agent;
 
 import common.Move;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 import model.Card;
 import model.GameState;
 import model.Player;
@@ -79,14 +81,73 @@ public class AgentCurrentState extends AgentState {
         return a;
     }
 
+    public AgentSearchState getAgentSearchState(LinkedList<Card> opponent1Cards, LinkedList<Card> opponent2Cards, LinkedList<Card> teammateCards) {
+        Player p = game.getActivePlayer().clone();
+        GameState g = game.clone();
+        AgentSearchState a = new AgentSearchState(g, p);
+        a.setOpponent1Cards(opponent1Cards);
+        a.setOpponent2Cards(opponent2Cards);
+        a.setTeammateCards(teammateCards);
+        return a;
+    }
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
     @Override
-    public AgentCurrentState clone(){
+    public AgentCurrentState clone() {
         return new AgentCurrentState(game.clone(), (LinkedList<Card>) agentCards.clone());
     }
-    
-    
+
+    /**
+     * SIZE DAS LISTAS DE CARTAS ADIVINHADAS TÁ MAL 
+     * 
+     * 
+     */
+    public LinkedList<AgentSearchState> buildGuessedCurrentStates(Random random) {
+        LinkedList<AgentSearchState> guessedCurrentStates = new LinkedList<>();
+        int numPossibleOpponentHands = 100;
+        LinkedList<Card> possibleCards = game.getAllCards();
+
+        if (!game.getPlayedCards().isEmpty()) {
+            for (Card c : game.getPlayedCards()) {
+                possibleCards.remove(c);
+            }
+        }
+
+        for (Card c : agentCards) {
+            possibleCards.remove(c);
+        }
+
+        LinkedList<Card> guessedOpponent1Cards = new LinkedList<>();
+        LinkedList<Card> guessedOpponent2Cards = new LinkedList<>();
+        LinkedList<Card> guessedTeammateCards = new LinkedList<>();
+
+        for (int i = 0; i < numPossibleOpponentHands; i++) {
+            for (int j = 0; j < opponent1Cards.size(); j++) {
+                guessedOpponent1Cards.add(possibleCards.get(random.nextInt()));
+            }
+
+            for (int j = 0; j < opponent2Cards.size(); j++) {
+                Card c = possibleCards.get(random.nextInt());
+                while (guessedOpponent1Cards.contains(c)) {
+                    c = possibleCards.get(random.nextInt());
+                }
+                guessedOpponent2Cards.add(c);
+            }
+
+            for (int j = 0; j < teammateCards.size(); j++) {
+                Card c = possibleCards.get(random.nextInt());
+                while (guessedOpponent1Cards.contains(c) || guessedOpponent2Cards.contains(c)) {
+                    c = possibleCards.get(random.nextInt());
+                }
+                guessedTeammateCards.add(c);
+            }
+            guessedCurrentStates.add(getAgentSearchState(guessedOpponent1Cards, guessedOpponent2Cards, guessedTeammateCards));
+        }
+
+        return guessedCurrentStates;
+    }
+
 }

@@ -1,6 +1,7 @@
 package agent;
 
 import common.Move;
+import java.util.LinkedList;
 import java.util.List;
 import model.Round;
 
@@ -18,21 +19,24 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
      * values. It is called when the agent doesn't know exactly what pieces its
      * opponent has.
      *
+     * @param state
      * @param successors
      * @return
      */
-    /*public double[] minimaxValues(LinkedList<AgentSearchState> successors) {
+    
+    public double[] minimaxValues(AgentSearchState state, LinkedList<AgentSearchState> successors) {
         double[] minimaxValues = new double[successors.size()];
         int i = 0;
         for (AgentSearchState s : successors) {
-            if (s.getCurrentPlayer() == ) {
+            if (s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
                 minimaxValues[i++] = maxValue(s, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
-            } else if (s.getCurrentPlayer() == Player.OPPONENT) {
+            } else{
                 minimaxValues[i++] = minValue(s, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
             }
         }
         return minimaxValues;
-    }*/
+    }
+
     private double maxValue(AgentSearchState state, double alpha, double beta, int depth) {
         if (depth == depthLimit) {
             return state.evaluate();
@@ -41,10 +45,10 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
             //System.out.println(s.getCurrentPlayer().getTeam() != state.getCurrentPlayer().getTeam());
             if (s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
                 alpha = Math.max(alpha, maxValue(s, alpha, beta, depth + 1));
-            } else{
+            } else {
                 alpha = Math.max(alpha, minValue(s, alpha, beta, depth + 1));
             }
-            
+
             if (alpha >= beta) {
                 return alpha;
             }
@@ -75,16 +79,16 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
     public Move takeDecision(AgentCurrentState currentState, Round round) {
         //System.out.println("PLAYER CARDS --> " + currentState.getCurrentPlayer().getCards().size());
         //currentState.getAgentSearchState();
-        
-        int depth = (1*4) + 4-(currentState.getAgentSearchState().getGame().getRounds().get(currentState.getAgentSearchState().getGame().getCurrentRound()).getCards().size());
+
+        int depth = (1 * 4) + 4 - (currentState.getAgentSearchState().getGame().getRounds().get(currentState.getAgentSearchState().getGame().getCurrentRound()).getCards().size());
         //System.out.println("DEPHT --> " + depth);
         setSearchDepth(depth);
-        
+
         List<AgentSearchState> successors = (List<AgentSearchState>) currentState.getAgentSearchState().getSucessors();
         double moveValue, max = Double.NEGATIVE_INFINITY;
         Move nextMove = null;
         for (AgentSearchState s : successors) {
-            if (s.getCurrentPlayer().getTeam() == currentState.getCurrentPlayer().getTeam()) { 
+            if (s.getCurrentPlayer().getTeam() == currentState.getCurrentPlayer().getTeam()) {
                 moveValue = maxValue(s, max, Double.POSITIVE_INFINITY, 1);
             } else {
                 moveValue = minValue(s, max, Double.POSITIVE_INFINITY, 1);
@@ -99,4 +103,3 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
     }
 
 }
-

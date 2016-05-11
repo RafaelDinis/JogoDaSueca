@@ -41,29 +41,27 @@ public class HandsSimulator extends GameAlgorithm<AgentCurrentState> {
      */
     @Override
     public Move takeDecision(AgentCurrentState currentState, Round round) {
-        /*int numOfAgentPossibleMoves = currentState.getAgentPossibleMoves().size();
+        int numOfAgentPossibleMoves = currentState.getAgentCards().size();
         double[] sums = new double[numOfAgentPossibleMoves];
         LinkedList<AgentSearchState> sucessors = null;
 
-        if (currentState.getNumberOfOpponentPossiblePieces() == currentState.getNumberOfOpponentPieces()) {
+        /*if (currentState.getNumberOfOpponentPossiblePieces() == currentState.getNumberOfOpponentPieces()) {
             //case 2
             AgentSearchState state = currentState.getAgentSearchState(currentState.getOpponentPossiblePieces());
             return alphaBeta.takeDecision(state);
-        } else {
-            //case 1
-            LinkedList<AgentSearchState> states = currentState.buildGuessedCurrentStates(handsLimit, random);
-            for (AgentSearchState state : states) {
-                sucessors = state.getSucessors();
-                double[] values = new double[numOfAgentPossibleMoves];
-                values = alphaBeta.minimaxValues(sucessors);
-                for (int i = 0; i < numOfAgentPossibleMoves; i++) {
-                    sums[i] += values[i];
-                }
+        } else {*/
+        //case 1
+        LinkedList<AgentSearchState> states = currentState.buildGuessedCurrentStates(random);
+        for (AgentSearchState state : states) {
+            sucessors = state.getSucessors();
+            double[] values = new double[numOfAgentPossibleMoves];
+            values = alphaBeta.minimaxValues(state, sucessors);
+            for (int i = 0; i < numOfAgentPossibleMoves; i++) {
+                sums[i] += values[i];
             }
-            int maxIndex = getMaxIndex(sums, numOfAgentPossibleMoves);
-            return sucessors.get(maxIndex).getMove();
-        }*/
-        return null;
+        }
+        int maxIndex = getMaxIndex(sums, numOfAgentPossibleMoves);
+        return sucessors.get(maxIndex).getMove();
     }
 
     @Override

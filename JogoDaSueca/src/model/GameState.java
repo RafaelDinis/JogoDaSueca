@@ -37,8 +37,8 @@ public class GameState extends SuecaState {
         this.currentRound = 0;
         rounds.add(new Round(currentRound));
     }
-    
-    private GameState(){
+
+    private GameState() {
         rounds = new LinkedList<>();
     }
 
@@ -111,7 +111,7 @@ public class GameState extends SuecaState {
 
     public void setWinnerTeam(Team winnerTeam) {
         this.winnerTeam = winnerTeam;
-    }
+    }    
 
     /*public static ArrayList<Card> generateCards() {
         ArrayList<Card> cards = new ArrayList<>();
@@ -173,6 +173,7 @@ public class GameState extends SuecaState {
             rounds.get(currentRound).setRoundSuit(card.getSuit());
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
+            this.playedCards.add(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -181,6 +182,7 @@ public class GameState extends SuecaState {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
+            this.playedCards.add(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -210,11 +212,11 @@ public class GameState extends SuecaState {
         if (currentRound == 9) {
             endGame();
         }
-        
+
         nextRound();
 
     }
-    
+
     private void nextRound() {
         this.activePlayer = rounds.get(currentRound).getWinnerPlayer();
 
@@ -245,27 +247,29 @@ public class GameState extends SuecaState {
     }
 
     @Override
-    public GameState clone(){
+    public GameState clone() {
         GameState g = new GameState();
         g.setTeam1(team1.clone());
         g.setTeam2(team2.clone());
         g.setActivePlayer(activePlayer.clone());
         g.activePlayerNumber = activePlayerNumber;
         g.setTrump(trump);
-        for(Round r : rounds){
+        for (Round r : rounds) {
             g.getRounds().add(r.clone());
         }
         g.setWinnerTeam(winnerTeam);
         g.currentRound = currentRound;
+        g.setPlayedCards((LinkedList<Card>) this.getPlayedCards().clone());
         return g;
     }
-    
+
     public Boolean playCardSimulation(Card card) {
         if (rounds.get(currentRound).getCards().isEmpty()) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             rounds.get(currentRound).setRoundSuit(card.getSuit());
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
+            this.playedCards.add(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -274,6 +278,7 @@ public class GameState extends SuecaState {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
+            this.playedCards.add(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -289,7 +294,7 @@ public class GameState extends SuecaState {
         }
         return true;
     }
-    
+
     private void endRoundSimulation() {
         CardPlayed winnerCard = rounds.get(currentRound).getWinnerCard(this.trump);
         int score = rounds.get(currentRound).getRoundScore();
@@ -298,21 +303,20 @@ public class GameState extends SuecaState {
         /*System.out.println("WINNER TEAM: " + winnerCard.getPlayer().getTeam().toString());
         System.out.println("WINNER CARD: " + winnerCard.getCard().toString());
         System.out.println("ROUND SCORE : " + score);*/
-
         if (currentRound == 9) {
             //System.out.println("ACABOU O JOGO");
             //endGame();
-            
+
         }
         nextRound();
 
     }
-    
+
     public void updateGameState() {
         team1.getPlayer1().setCurrentState(this, team1.getPlayer1().getCards());
         team2.getPlayer1().setCurrentState(this, team2.getPlayer1().getCards());
         team1.getPlayer2().setCurrentState(this, team1.getPlayer2().getCards());
         team2.getPlayer2().setCurrentState(this, team2.getPlayer2().getCards());
-    }    
+    }
 
 }

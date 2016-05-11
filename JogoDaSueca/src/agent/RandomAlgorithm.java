@@ -6,9 +6,7 @@
 package agent;
 
 import common.Move;
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import model.Round;
 
 /**
