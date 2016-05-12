@@ -111,42 +111,8 @@ public class GameState extends SuecaState {
 
     public void setWinnerTeam(Team winnerTeam) {
         this.winnerTeam = winnerTeam;
-    }    
+    }
 
-    /*public static ArrayList<Card> generateCards() {
-        ArrayList<Card> cards = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 10; j++) {
-                Card c = new Card();
-                if (i == 0) {
-                    c.setSuit(Suit.CLUBS);
-                    c.setCard(PossibleCards.generateCardFromInt(j));
-                    c.setWeight(j+1);
-                    c.giveValue(c.getCard());
-                }
-                if (i == 1) {
-                    c.setSuit(Suit.DIAMONDS);
-                    c.setCard(PossibleCards.generateCardFromInt(j));
-                    c.setWeight(j+1);
-                    c.giveValue(c.getCard());
-                }
-                if (i == 2) {
-                    c.setSuit(Suit.HEARTS);
-                    c.setCard(PossibleCards.generateCardFromInt(j));
-                    c.setWeight(j+1);
-                    c.giveValue(c.getCard());
-                }
-                if (i == 3) {
-                    c.setSuit(Suit.SPADES);
-                    c.setCard(PossibleCards.generateCardFromInt(j));
-                    c.setWeight(j+1);
-                    c.giveValue(c.getCard());
-                }
-                cards.add(c);
-            }
-        }
-        return cards;
-    }*/
     private void shuffleDeck() {
         Collections.shuffle(allCards);
     }
@@ -318,5 +284,47 @@ public class GameState extends SuecaState {
         team1.getPlayer2().setCurrentState(this, team1.getPlayer2().getCards());
         team2.getPlayer2().setCurrentState(this, team2.getPlayer2().getCards());
     }
+
+    public int getNumberOfCardsOfPlayer(Player player) {
+        if (rounds.get(currentRound).getCards().size() > 0) {
+            for (CardPlayed c : rounds.get(currentRound).getCards()) {
+                if(c.getPlayer().getName().equalsIgnoreCase(player.getName())){
+                    return 10-currentRound-1;
+                }
+            }
+            return 10-currentRound;
+        }
+        return 0;
+    }
+    
+    public LinkedList<Player> getOpponentTeam(Player player){
+        LinkedList<Player> players = new LinkedList<>();
+        if(!team1.belongsToTeam(player)){
+            players.add(team1.getPlayer1().clone());
+            players.add(team1.getPlayer2().clone());            
+        } else if(!team2.belongsToTeam(player)){
+            players.add(team2.getPlayer1().clone());
+            players.add(team2.getPlayer2().clone());
+        }        
+        return players;
+    }
+    
+    public Player getTeammate(Player player){
+        if(team1.belongsToTeam(player)){
+            if(team1.getPlayer1().getName().equalsIgnoreCase(player.getName())){
+                return team1.getPlayer2().clone();
+            } else{
+                return team1.getPlayer1().clone();
+            }
+        } else if(team2.belongsToTeam(player)){
+            if(team2.getPlayer1().getName().equalsIgnoreCase(player.getName())){
+                return team2.getPlayer2().clone();
+            } else{
+                return team2.getPlayer1().clone();
+            }
+        }
+        return null;
+    }
+    
 
 }

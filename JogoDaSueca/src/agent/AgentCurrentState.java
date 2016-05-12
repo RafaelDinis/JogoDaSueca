@@ -20,9 +20,6 @@ import model.Round;
  */
 public class AgentCurrentState extends AgentState {
 
-    private LinkedList<Card> teammateCards;
-    private LinkedList<Card> opponent1Cards;
-    private LinkedList<Card> opponent2Cards;
     private Player currentPlayer;
     private GameState game;
 
@@ -101,13 +98,13 @@ public class AgentCurrentState extends AgentState {
     }
 
     /**
-     * SIZE DAS LISTAS DE CARTAS ADIVINHADAS TÁ MAL 
-     * 
-     * 
+     * SIZE DAS LISTAS DE CARTAS ADIVINHADAS TÁ MAL
+     *
+     *
      */
     public LinkedList<AgentSearchState> buildGuessedCurrentStates(Random random) {
         LinkedList<AgentSearchState> guessedCurrentStates = new LinkedList<>();
-        int numPossibleOpponentHands = 100;
+        int numPossibleOpponentHands = 1;
         LinkedList<Card> possibleCards = game.getAllCards();
 
         if (!game.getPlayedCards().isEmpty()) {
@@ -125,19 +122,18 @@ public class AgentCurrentState extends AgentState {
         LinkedList<Card> guessedTeammateCards = new LinkedList<>();
 
         for (int i = 0; i < numPossibleOpponentHands; i++) {
-            for (int j = 0; j < opponent1Cards.size(); j++) {
+            for (int j = 0; j < game.getNumberOfCardsOfPlayer(game.getOpponentTeam(currentPlayer).getFirst()); j++) {
                 guessedOpponent1Cards.add(possibleCards.get(random.nextInt()));
             }
 
-            for (int j = 0; j < opponent2Cards.size(); j++) {
+            for (int j = 0; j < game.getNumberOfCardsOfPlayer(game.getOpponentTeam(currentPlayer).getLast()); j++) {
                 Card c = possibleCards.get(random.nextInt());
                 while (guessedOpponent1Cards.contains(c)) {
                     c = possibleCards.get(random.nextInt());
                 }
                 guessedOpponent2Cards.add(c);
             }
-
-            for (int j = 0; j < teammateCards.size(); j++) {
+            for (int j = 0; j < game.getNumberOfCardsOfPlayer(game.getTeammate(currentPlayer)); j++) {
                 Card c = possibleCards.get(random.nextInt());
                 while (guessedOpponent1Cards.contains(c) || guessedOpponent2Cards.contains(c)) {
                     c = possibleCards.get(random.nextInt());

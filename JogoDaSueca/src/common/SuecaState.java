@@ -101,7 +101,7 @@ public class SuecaState {
     }
 
     public static LinkedList<Card> getAllCards() {
-        return allCards;
+        return (LinkedList<Card>) allCards.clone();
     }
 
     public static void setAllCards(LinkedList<Card> allCards) {
