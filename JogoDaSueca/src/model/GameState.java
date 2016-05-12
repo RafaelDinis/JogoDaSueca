@@ -25,8 +25,6 @@ public class GameState extends SuecaState {
     public GameState(Team team1, Team team2) {
         this.team1 = team1;
         this.team2 = team2;
-        //this.deck = generateCards();
-
         playedCards = new LinkedList<>();
         rounds = new LinkedList<>();
         shuffleDeck();
@@ -41,7 +39,7 @@ public class GameState extends SuecaState {
     private GameState() {
         rounds = new LinkedList<>();
     }
-
+    
     public Suit getTrump() {
         return trump;
     }
@@ -139,7 +137,7 @@ public class GameState extends SuecaState {
             rounds.get(currentRound).setRoundSuit(card.getSuit());
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
-            this.playedCards.add(card);
+            playedCards.add(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -148,7 +146,7 @@ public class GameState extends SuecaState {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
-            this.playedCards.add(card);
+            playedCards.add(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -225,7 +223,8 @@ public class GameState extends SuecaState {
         }
         g.setWinnerTeam(winnerTeam);
         g.currentRound = currentRound;
-        g.setPlayedCards((LinkedList<Card>) this.getPlayedCards().clone());
+        //System.out.println(playedCards.size());
+        g.setPlayedCards((LinkedList<Card>) playedCards.clone());
         return g;
     }
 
@@ -235,7 +234,7 @@ public class GameState extends SuecaState {
             rounds.get(currentRound).setRoundSuit(card.getSuit());
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
-            this.playedCards.add(card);
+            playedCards.add(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -244,7 +243,7 @@ public class GameState extends SuecaState {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
-            this.playedCards.add(card);
+            playedCards.add(card);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
