@@ -101,11 +101,12 @@ public class AgentCurrentState extends AgentState {
      * SIZE DAS LISTAS DE CARTAS ADIVINHADAS TÁ MAL
      *
      *
+     * @return 
      */
     public LinkedList<AgentSearchState> buildGuessedCurrentStates() {
         LinkedList<AgentSearchState> guessedCurrentStates = new LinkedList<>();
-        int numPossibleOpponentHands = 3;
-        LinkedList<Card> possibleCards = game.getAllCards();
+        int numPossibleOpponentHands = 4;
+        LinkedList<Card> possibleCards = GameState.getAllCards();
         Random random = new Random();
 
         if (!game.getPlayedCards().isEmpty()) {
