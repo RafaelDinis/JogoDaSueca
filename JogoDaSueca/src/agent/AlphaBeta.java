@@ -32,7 +32,6 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
             if (s.getCurrentPlayer().getTeam().getName().equals(state.getCurrentPlayer().getTeam().getName())) {
                 minimaxValues[i++] = maxValue(s, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
             } else {
-                //FICA ENCRAVADO NESTE MIN VALUE
                 minimaxValues[i++] = minValue(s, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
             }
         }

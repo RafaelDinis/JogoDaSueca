@@ -1,7 +1,6 @@
 package agent;
 
 import common.Move;
-import java.util.Collections;
 import java.util.LinkedList;
 import model.Round;
 
@@ -43,6 +42,7 @@ public class HandsSimulator extends GameAlgorithm<AgentCurrentState> {
     public Move takeDecision(AgentCurrentState currentState, Round round) {
         int numOfAgentPossibleMoves = currentState.getAgentCards().size();
         double[] sums = new double[numOfAgentPossibleMoves];
+        double[] values = new double[numOfAgentPossibleMoves];
         LinkedList<AgentSearchState> sucessors = null;
 
         /*if (currentState.getNumberOfOpponentPossiblePieces() == currentState.getNumberOfOpponentPieces()) {
@@ -51,16 +51,15 @@ public class HandsSimulator extends GameAlgorithm<AgentCurrentState> {
             return alphaBeta.takeDecision(state);
         } else {*/
         //case 1
-        LinkedList<AgentSearchState> states = currentState.buildGuessedCurrentStates(random);
+        LinkedList<AgentSearchState> states = currentState.buildGuessedCurrentStates();
         for (AgentSearchState state : states) {
             sucessors = state.getSucessors();
-            double[] values = new double[numOfAgentPossibleMoves];
             values = alphaBeta.minimaxValues(state, sucessors);
-            for (int i = 0; i < numOfAgentPossibleMoves; i++) {
+            for (int i = 0; i < values.length; i++) {
                 sums[i] += values[i];
             }
         }
-        int maxIndex = getMaxIndex(sums, numOfAgentPossibleMoves);
+        int maxIndex = getMaxIndex(sums, values.length);
         return sucessors.get(maxIndex).getMove();
     }
 
