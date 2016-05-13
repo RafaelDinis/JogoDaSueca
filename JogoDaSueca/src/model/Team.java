@@ -15,6 +15,15 @@ public class Team {
     private Player player1;
     private Player player2;
     private int finalScore;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Team() {
     }
@@ -67,6 +76,7 @@ public class Team {
         t.setFinalScore(finalScore);
         t.setPlayer1(player1.clone());
         t.setPlayer2(player2.clone());
+        t.setName(name);
         return t;
     }
     

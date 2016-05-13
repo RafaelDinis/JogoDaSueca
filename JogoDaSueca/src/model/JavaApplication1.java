@@ -29,6 +29,7 @@ public class JavaApplication1 {
         player2.useAlfabeta();
         team1.setPlayer1(player1);
         team1.setPlayer2(player2);
+        team1.setName("equipa1");
 
         Player player3 = new Player("gajo3", team2);
         Player player4 = new Player("gajo4", team2);
@@ -36,6 +37,7 @@ public class JavaApplication1 {
         player4.useRandomAlgorithm();
         team2.setPlayer1(player3);
         team2.setPlayer2(player4);
+        team2.setName("equipa2");
 
         LinkedList<Player> players = new LinkedList<>();
         players.add(player1);

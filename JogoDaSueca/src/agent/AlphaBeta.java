@@ -23,15 +23,15 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
      * @param successors
      * @return
      */
-    
     public double[] minimaxValues(AgentSearchState state, LinkedList<AgentSearchState> successors) {
         double[] minimaxValues = new double[successors.size()];
         int i = 0;
+        int depth = (1 * 4) + 4 - (state.getGame().getRounds().get(state.getGame().getCurrentRound()).getCards().size());
+        setSearchDepth(depth);
         for (AgentSearchState s : successors) {
-            //ISTO TA SEMPRE FALSO
-            if (s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
+            if (s.getCurrentPlayer().getTeam().getName().equals(state.getCurrentPlayer().getTeam().getName())) {
                 minimaxValues[i++] = maxValue(s, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
-            } else{
+            } else {
                 //FICA ENCRAVADO NESTE MIN VALUE
                 minimaxValues[i++] = minValue(s, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
             }
@@ -45,7 +45,7 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         }
         for (AgentSearchState s : state.getSucessors()) {
             //System.out.println(s.getCurrentPlayer().getTeam() != state.getCurrentPlayer().getTeam());
-            if (s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
+            if (s.getCurrentPlayer().getTeam().getName().equals(state.getCurrentPlayer().getTeam().getName())) {
                 alpha = Math.max(alpha, maxValue(s, alpha, beta, depth + 1));
             } else {
                 alpha = Math.max(alpha, minValue(s, alpha, beta, depth + 1));
@@ -64,7 +64,7 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         }
         for (AgentSearchState s : state.getSucessors()) {
             //System.out.println(s.getCurrentPlayer().getTeam() != state.getCurrentPlayer().getTeam());
-            if (s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
+            if (s.getCurrentPlayer().getTeam().getName().equals(state.getCurrentPlayer().getTeam().getName())) {
                 beta = Math.min(beta, minValue(s, alpha, beta, depth + 1));
             } else {
                 beta = Math.min(beta, maxValue(s, alpha, beta, depth + 1));
@@ -83,7 +83,6 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         //currentState.getAgentSearchState();
 
         int depth = (1 * 4) + 4 - (currentState.getAgentSearchState().getGame().getRounds().get(currentState.getAgentSearchState().getGame().getCurrentRound()).getCards().size());
-        //System.out.println("DEPHT --> " + depth);
         setSearchDepth(depth);
 
         List<AgentSearchState> successors = (List<AgentSearchState>) currentState.getAgentSearchState().getSucessors();
