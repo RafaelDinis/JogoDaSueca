@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 import model.Card;
+import model.CardPlayed;
 import model.GameState;
 import model.Player;
 import model.Round;
@@ -108,8 +109,8 @@ public class AgentCurrentState extends AgentState {
         LinkedList<Card> possibleCards = game.getAllCards();
 
         if (!game.getPlayedCards().isEmpty()) {
-            for (Card c : game.getPlayedCards()) {
-                possibleCards.remove(c);
+            for (CardPlayed c : game.getPlayedCards()) {
+                possibleCards.remove(c.getCard());
             }
         }
 

@@ -28,6 +28,7 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         double[] minimaxValues = new double[successors.size()];
         int i = 0;
         for (AgentSearchState s : successors) {
+            //FICA ENCRAVADO AQUI 
             if (s.getCurrentPlayer().getTeam() == state.getCurrentPlayer().getTeam()) {
                 minimaxValues[i++] = maxValue(s, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
             } else{

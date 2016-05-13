@@ -56,19 +56,11 @@ public class AgentSearchState extends AgentState {
         //double agentTeamScore = 0;
         //double opponentTeamScore = 0;                
         if(game.getTeam1().belongsToTeam(currentPlayer)){
-            if(currentPlayer.getTeam().getFinalScore() > game.getTeam2().getFinalScore()){
-                return true;
-            } else{
-                return false;
-            }
+            return currentPlayer.getTeam().getFinalScore() > game.getTeam2().getFinalScore();
         }
         
         if(game.getTeam2().belongsToTeam(currentPlayer)){
-            if(currentPlayer.getTeam().getFinalScore() > game.getTeam1().getFinalScore()){
-                return true;
-            } else{
-                return false;
-            }
+            return currentPlayer.getTeam().getFinalScore() > game.getTeam1().getFinalScore();
         }
         return true;
     }
