@@ -101,11 +101,11 @@ public class AgentCurrentState extends AgentState {
      * SIZE DAS LISTAS DE CARTAS ADIVINHADAS TÁ MAL
      *
      *
-     * @return 
+     * @return
      */
     public LinkedList<AgentSearchState> buildGuessedCurrentStates() {
         LinkedList<AgentSearchState> guessedCurrentStates = new LinkedList<>();
-        int numPossibleOpponentHands = 4;
+        int numPossibleOpponentHands = 10;
         LinkedList<Card> possibleCards = GameState.getAllCards();
         Random random = new Random();
 
@@ -124,6 +124,10 @@ public class AgentCurrentState extends AgentState {
         LinkedList<Card> guessedTeammateCards = new LinkedList<>();
 
         for (int i = 0; i < numPossibleOpponentHands; i++) {
+            guessedOpponent1Cards.clear();
+            guessedTeammateCards.clear();
+            guessedOpponent2Cards.clear();
+            
             for (int j = 0; j < game.getNumberOfCardsOfPlayer(game.getOpponentTeam(currentPlayer).getFirst()); j++) {
                 guessedOpponent1Cards.add(possibleCards.get(random.nextInt(possibleCards.size())));
             }
@@ -142,6 +146,15 @@ public class AgentCurrentState extends AgentState {
                 }
                 guessedTeammateCards.add(c);
             }
+            /*System.out.println("TEAMMATE" + guessedTeammateCards.toString());
+            System.out.println(guessedTeammateCards.size());
+
+            System.out.println("OPPONENT 1" + guessedOpponent1Cards.toString());
+            System.out.println(guessedOpponent1Cards.size());
+
+            System.out.println("OPPONENT 2 " + guessedOpponent2Cards.toString());
+            System.out.println(guessedOpponent2Cards.size());*/
+
             guessedCurrentStates.add(getAgentSearchState(guessedOpponent1Cards, guessedOpponent2Cards, guessedTeammateCards));
         }
 
