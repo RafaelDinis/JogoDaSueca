@@ -50,8 +50,7 @@ public class Agent {
         currentState.placePiece(action.getLine(), action.getColumn());
     }*/
     public final void useAlfabeta() {
-        /*algorithm = alfabeta;
-        algorithm.setRandom(random);*/
+        //algorithm = alfabeta;
         algorithm = handsSimulator;
         algorithm.setRandom(random);
     }

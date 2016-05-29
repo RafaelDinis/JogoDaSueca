@@ -26,9 +26,9 @@ public class AgentSearchState extends AgentState {
         LinkedList<AgentSearchState> sucessors = new LinkedList<>();
         LinkedList<Card> cards = (LinkedList<Card>) currentPlayer.getCards().clone();
         for (Card c : cards) {
-            if (super.validateCard(c, game.getRounds().get(game.getCurrentRound()).getRoundSuit(), currentPlayer)) {
+            if (validateCard(c, game.getRounds().get(game.getCurrentRound()).getRoundSuit(), currentPlayer)) {
                 //System.out.println("sucessor for round " + game.getCurrentRound() + " card played -> " + c.toString());
-                if(!(game.getCurrentRound() == 0 && c.getSuit().equals(game.getTrump()))){
+                //if(!(game.getCurrentRound() == 0 && c.getSuit().equals(game.getTrump()))){
                     GameState g = game.clone();
                     //System.out.println(g.getRounds().equals(game.getRounds()));
                     //System.out.println(g.getRounds().toString());
@@ -38,7 +38,7 @@ public class AgentSearchState extends AgentState {
                     // currentPlayer.getCards().remove(c);
                     sucessor.move = new Move(c, g.getRounds().get(g.getCurrentRound()));
                     sucessors.add(sucessor);
-                }
+                //}
             }
         }
         return sucessors;

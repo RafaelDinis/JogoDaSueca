@@ -143,7 +143,7 @@ public class GameState extends SuecaState {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
             nextPlayer();
-        } else if (super.validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
+        } else if (validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
