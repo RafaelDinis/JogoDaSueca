@@ -16,14 +16,18 @@ import java.util.List;
  */
 public class Player extends Agent {
 
+    private int id;
     private String name;
     private LinkedList<Card> cards;
     private Team team;
+    private GameHistory gameHistory;
 
-    public Player(String name, Team team) {
+    public Player(int id, String name, Team team) {
+        this.id = id;
         this.name = name;
         this.team = team;
         cards = new LinkedList<>();
+        this.gameHistory = new GameHistory(id);
     }
     
     public String getName() {
@@ -54,6 +58,24 @@ public class Player extends Agent {
         this.cards.add(card);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public GameHistory getGameHistory() {
+        return gameHistory;
+    }
+
+    public void setGameHistory(GameHistory gameHistory) {
+        this.gameHistory = gameHistory;
+    }
+    
+    
+
     public boolean hasCardsFromSuit(Suit suit) {
         for (Card card : cards) {
             if (card.getSuit() == suit) {
@@ -80,7 +102,7 @@ public class Player extends Agent {
 
     @Override
     public Player clone(){
-        Player p = new Player(name, team);
+        Player p = new Player(id, name, team);
         p.setCards((LinkedList<Card>) cards.clone());
         //p.setCurrentState(currentState.clone());
         return p;

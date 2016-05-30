@@ -142,6 +142,7 @@ public class GameState extends SuecaState {
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
+            updateGameHistory();
             nextPlayer();
         } else if (validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
@@ -151,6 +152,7 @@ public class GameState extends SuecaState {
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
+            updateGameHistory();
             nextPlayer();
         } else {
             System.out.println("\nINVALID CARD");
@@ -240,6 +242,7 @@ public class GameState extends SuecaState {
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
+            updateGameHistory();
             nextPlayer();
         } else if (super.validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
@@ -249,6 +252,7 @@ public class GameState extends SuecaState {
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
+            updateGameHistory();
             nextPlayer();
         } else {
             System.out.println("\nINVALID CARD");
@@ -325,6 +329,21 @@ public class GameState extends SuecaState {
             }
         }
         return null;
+    }
+
+    private void updateGameHistory() {
+        for (CardPlayed c : rounds.get(currentRound).getCards()) {
+            if(c.getCard().getSuit() != rounds.get(currentRound).getRoundSuit()){
+                
+            }
+        }
+    }
+    
+    private void playerDidntAssist(CardPlayed c){
+        getTeam1().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c);
+        getTeam1().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c);
+        getTeam2().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c);
+        getTeam2().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c);
     }
     
 

@@ -8,6 +8,7 @@ package model;
 import agent.Agent;
 import common.Move;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -23,16 +24,16 @@ public class JavaApplication1 {
         Team team1 = new Team();
         Team team2 = new Team();
 
-        Player player1 = new Player("gajo1", team1);
-        Player player2 = new Player("gajo2", team1);
+        Player player1 = new Player(1, "gajo1", team1);
+        Player player2 = new Player(3, "gajo2", team1);
         player1.useAlfabeta();
         player2.useAlfabeta();
         team1.setPlayer1(player1);
         team1.setPlayer2(player2);
         team1.setName("equipa1");
 
-        Player player3 = new Player("gajo3", team2);
-        Player player4 = new Player("gajo4", team2);
+        Player player3 = new Player(2, "gajo3", team2);
+        Player player4 = new Player(4, "gajo4", team2);
         player3.useRandomAlgorithm();
         player4.useRandomAlgorithm();
         team2.setPlayer1(player3);
@@ -47,7 +48,7 @@ public class JavaApplication1 {
 
         GameState game = new GameState(team1, team2);
 
-        System.out.println("agent1 CARDS --> " + player1.getCardToString());        
+        System.out.println("agent1 CARDS --> " + player1.getCardToString());
         System.out.println("agent3 CARDS --> " + player3.getCardToString());
         System.out.println("agent2 CARDS --> " + player2.getCardToString());
         System.out.println("agent4 CARDS --> " + player4.getCardToString());

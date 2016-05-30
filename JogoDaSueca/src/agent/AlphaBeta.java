@@ -81,7 +81,7 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         //System.out.println("PLAYER CARDS --> " + currentState.getCurrentPlayer().getCards().size());
         //currentState.getAgentSearchState();
 
-        int depth = (2 * 4) + 4 - currentState.getAgentSearchState().getGame().getRounds().get(currentState.getAgentSearchState().getGame().getCurrentRound()).getCards().size();
+        int depth = (1 * 4) + 4 - currentState.getAgentSearchState().getGame().getRounds().get(currentState.getAgentSearchState().getGame().getCurrentRound()).getCards().size();
         setSearchDepth(depth);
 
         List<AgentSearchState> successors = (List<AgentSearchState>) currentState.getAgentSearchState().getSucessors();

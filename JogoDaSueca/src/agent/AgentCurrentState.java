@@ -6,6 +6,8 @@
 package agent;
 
 import common.Move;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Random;
 import model.Card;
@@ -13,6 +15,7 @@ import model.CardPlayed;
 import model.GameState;
 import model.Player;
 import model.Round;
+import model.Suit;
 
 /**
  *
@@ -98,14 +101,14 @@ public class AgentCurrentState extends AgentState {
     }
 
     /**
-     * 
+     *
      *
      *
      * @return
      */
     public LinkedList<AgentSearchState> buildGuessedCurrentStates() {
         LinkedList<AgentSearchState> guessedCurrentStates = new LinkedList<>();
-        int numPossibleOpponentHands = 100;
+        int numPossibleOpponentHands = 10;
         LinkedList<Card> possibleCards = GameState.getAllCards();
         Random random = new Random();
 
@@ -127,8 +130,38 @@ public class AgentCurrentState extends AgentState {
             guessedOpponent1Cards.clear();
             guessedTeammateCards.clear();
             guessedOpponent2Cards.clear();
-            
-            for (int j = 0; j < game.getNumberOfCardsOfPlayer(game.getOpponentTeam(currentPlayer).getFirst()); j++) {
+
+            for (Card card : possibleCards) {
+                int[] playersIds = currentPlayer.getGameHistory().getCardsTogive().get(card.getSuit());
+                HashMap<Integer, Double> cardToPlayerProb = new HashMap<>();
+                for (int j = 0; j < playersIds.length; j++) {
+                    //probabilidade para ser calculada depois conforme o historico de jogo para agora é igual para todos os jogadores
+                    double prob = 1.0 / playersIds.length;
+                    cardToPlayerProb.put(playersIds[j], prob);
+                }
+                Random generator = new Random();
+                double number = generator.nextDouble() * 1.0;
+                double sum = 0;
+                int x=0;
+                while(number > sum){
+                    sum = sum + cardToPlayerProb.get(playersIds[x]);
+                    x++;
+                }
+                
+                int idPlayerFinal = playersIds[x-1];
+                if( (currentPlayer.getId() % 2) == (idPlayerFinal % 2)){
+                    guessedTeammateCards.add(card);
+                } else{
+                    if(nextNumber(currentPlayer.getId()) == idPlayerFinal){
+                        guessedOpponent1Cards.add(card);
+                    } else{
+                        guessedOpponent2Cards.add(card);
+                    }
+                }
+
+            }
+
+            /*for (int j = 0; j < game.getNumberOfCardsOfPlayer(game.getOpponentTeam(currentPlayer).getFirst()); j++) {
                 guessedOpponent1Cards.add(possibleCards.get(random.nextInt(possibleCards.size())));
             }
 
@@ -145,20 +178,28 @@ public class AgentCurrentState extends AgentState {
                     c = possibleCards.get(random.nextInt(possibleCards.size()));
                 }
                 guessedTeammateCards.add(c);
-            }
+            }*/
+
             /*System.out.println("TEAMMATE" + guessedTeammateCards.toString());
-            System.out.println(guessedTeammateCards.size());
+             System.out.println(guessedTeammateCards.size());
 
-            System.out.println("OPPONENT 1" + guessedOpponent1Cards.toString());
-            System.out.println(guessedOpponent1Cards.size());
+             System.out.println("OPPONENT 1" + guessedOpponent1Cards.toString());
+             System.out.println(guessedOpponent1Cards.size());
 
-            System.out.println("OPPONENT 2 " + guessedOpponent2Cards.toString());
-            System.out.println(guessedOpponent2Cards.size());*/
-
+             System.out.println("OPPONENT 2 " + guessedOpponent2Cards.toString());
+             System.out.println(guessedOpponent2Cards.size());*/
             guessedCurrentStates.add(getAgentSearchState(guessedOpponent1Cards, guessedOpponent2Cards, guessedTeammateCards));
         }
 
         return guessedCurrentStates;
     }
-
+    
+    private int nextNumber(int current) {
+        if (current < 4) {
+            current++;
+        } else {
+            current = 1;
+        }
+        return current;
+    }
 }
