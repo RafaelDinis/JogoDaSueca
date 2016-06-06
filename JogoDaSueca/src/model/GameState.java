@@ -334,7 +334,7 @@ public class GameState extends SuecaState {
     private void updateGameHistory() {
         for (CardPlayed c : rounds.get(currentRound).getCards()) {
             if(c.getCard().getSuit() != rounds.get(currentRound).getRoundSuit()){
-                
+                playerDidntAssist(c);
             }
         }
     }

@@ -16,11 +16,11 @@ import java.util.List;
  */
 public class GameHistory {
     
-    private HashMap<Suit, int[]> cardsTogive;
+    private HashMap<Suit, int[]> cardsToGive;
     
 
     public GameHistory(int id) {
-        cardsTogive = new HashMap<>();
+        cardsToGive = new HashMap<>();
         initializeCardsToGive(id);
     }
     
@@ -33,7 +33,7 @@ public class GameHistory {
                 j++;
             }
         }
-        cardsTogive.put(Suit.CLUBS, players);
+        cardsToGive.put(Suit.CLUBS, players);
         
         players = new int[3];
         j = 0;
@@ -43,7 +43,7 @@ public class GameHistory {
                 j++;
             }
         }
-        cardsTogive.put(Suit.HEARTS, players);
+        cardsToGive.put(Suit.HEARTS, players);
         
         players = new int[3];
         j = 0;
@@ -53,7 +53,7 @@ public class GameHistory {
                 j++;
             }
         }
-        cardsTogive.put(Suit.SPADES, players);
+        cardsToGive.put(Suit.SPADES, players);
         
         players = new int[3];
         j = 0;
@@ -63,19 +63,19 @@ public class GameHistory {
                 j++;
             }
         }
-        cardsTogive.put(Suit.DIAMONDS, players);
+        cardsToGive.put(Suit.DIAMONDS, players);
     }
 
     public HashMap<Suit, int[]> getCardsTogive() {
-        return cardsTogive;
+        return cardsToGive;
     }
 
     public void setCardsTogive(HashMap<Suit, int[]> cardsTogive) {
-        this.cardsTogive = cardsTogive;
+        this.cardsToGive = cardsTogive;
     }
     
     public void removePlayerFromCardsToGive(CardPlayed c){
-        int[] playersIds = cardsTogive.get(c.getCard().getSuit());
+        int[] playersIds = cardsToGive.get(c.getCard().getSuit());
         int[] playersFinal = new int[3];
         int j = 0;
         for(int i = 0; i < playersIds.length; i++){
@@ -84,10 +84,7 @@ public class GameHistory {
                 j++;
             }
         }
-        cardsTogive.put(c.getCard().getSuit(), playersFinal);
+        cardsToGive.put(c.getCard().getSuit(), playersFinal);
     }
-    
-    
-    
-    
+      
 }
