@@ -108,7 +108,15 @@ public class AgentCurrentState extends AgentState {
      */
     public LinkedList<AgentSearchState> buildGuessedCurrentStates() {
         LinkedList<AgentSearchState> guessedCurrentStates = new LinkedList<>();
-        int numPossibleOpponentHands = 10;
+        
+        
+        
+        int numPossibleOpponentHands = 10; //AQUUUUUIII
+        
+        
+        
+        
+        
         LinkedList<Card> possibleCards = GameState.getAllCards();
         Random random = new Random();
 

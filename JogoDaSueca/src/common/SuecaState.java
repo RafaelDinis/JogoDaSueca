@@ -13,10 +13,6 @@ import model.PossibleCards;
 import model.Round;
 import model.Suit;
 
-/**
- *
- * @author Yeezus
- */
 public class SuecaState {
     
     /**
@@ -26,7 +22,7 @@ public class SuecaState {
     /**
      * Number of cards per player
      */
-    public static final int CARDS_PER_PLAYER = 12;  
+    public static final int CARDS_PER_PLAYER = 10;  
     /**
      * Number of rounds per game
      */

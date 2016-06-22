@@ -14,11 +14,16 @@ public abstract class GameAlgorithm <S extends AgentState>{
     /**
      * The number of hands to be simulated by the agent each time it must take a decision.
      */    
-    protected int handsLimit;
+    protected int handsLimit = 10;
     /**
      * The random number generator.
      */    
-    protected Random random;    
+    protected Random random; 
+    /**
+     * The number of rounds to simulate.
+     */ 
+    protected int numRounds = 1;
+    
     
     public abstract Move takeDecision(S currentState, Round round);
     

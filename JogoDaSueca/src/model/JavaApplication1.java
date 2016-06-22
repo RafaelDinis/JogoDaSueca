@@ -6,6 +6,7 @@
 package model;
 
 import agent.Agent;
+import agent.GameAlgorithm;
 import common.Move;
 import java.util.LinkedList;
 import java.util.Random;
@@ -47,7 +48,6 @@ public class JavaApplication1 {
         players.add(player4);
 
         GameState game = new GameState(team1, team2);
-
         System.out.println("agent1 CARDS --> " + player1.getCardToString());
         System.out.println("agent3 CARDS --> " + player3.getCardToString());
         System.out.println("agent2 CARDS --> " + player2.getCardToString());

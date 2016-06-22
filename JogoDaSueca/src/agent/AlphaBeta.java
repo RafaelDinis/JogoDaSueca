@@ -26,7 +26,7 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
     public double[] minimaxValues(AgentSearchState state, LinkedList<AgentSearchState> successors) {
         double[] minimaxValues = new double[successors.size()];
         int i = 0;
-        int depth = (1 * 4) + 4 - (state.getGame().getRounds().get(state.getGame().getCurrentRound()).getCards().size());
+        int depth = (numRounds * 4) + 4 - (state.getGame().getRounds().get(state.getGame().getCurrentRound()).getCards().size());
         setSearchDepth(depth);
         for (AgentSearchState s : successors) {
             if (s.getCurrentPlayer().getTeam().getName().equals(state.getCurrentPlayer().getTeam().getName())) {
