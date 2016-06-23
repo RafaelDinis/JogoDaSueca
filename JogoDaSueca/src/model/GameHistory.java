@@ -74,8 +74,8 @@ public class GameHistory {
         this.cardsToGive = cardsTogive;
     }
     
-    public void removePlayerFromCardsToGive(CardPlayed c){
-        int[] playersIds = cardsToGive.get(c.getCard().getSuit());
+    public void removePlayerFromCardsToGive(CardPlayed c, Suit s){
+        int[] playersIds = cardsToGive.get(s);        
         int[] playersFinal = new int[3];
         int j = 0;
         for(int i = 0; i < playersIds.length; i++){
@@ -84,7 +84,46 @@ public class GameHistory {
                 j++;
             }
         }
-        cardsToGive.put(c.getCard().getSuit(), playersFinal);
+        if(j < 4){
+        int[] playersFinal2 = new int[j];
+            for(int i = 0; i < j; i++){
+                 playersFinal2[i]= playersFinal[i];
+            }
+            cardsToGive.put(s, playersFinal2);
+        }else {
+            cardsToGive.put(s, playersFinal);
+        }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        string.append(Suit.CLUBS);
+        for (int i = 0; i < cardsToGive.get(Suit.CLUBS).length; i++) {
+            string.append(" " + cardsToGive.get(Suit.CLUBS)[i] + " ");
+        }
+        string.append("\n");
+        
+        string.append(Suit.DIAMONDS);
+        for (int i = 0; i < cardsToGive.get(Suit.DIAMONDS).length; i++) {
+            string.append(" " + cardsToGive.get(Suit.DIAMONDS)[i] + " ");
+        }
+        string.append("\n");
+        
+        string.append(Suit.HEARTS);
+        for (int i = 0; i < cardsToGive.get(Suit.HEARTS).length; i++) {
+            string.append(" " + cardsToGive.get(Suit.HEARTS)[i] + " ");
+        }
+        string.append("\n");
+        
+        string.append(Suit.SPADES);
+        for (int i = 0; i < cardsToGive.get(Suit.SPADES).length; i++) {
+            string.append(" " + cardsToGive.get(Suit.SPADES)[i] + " ");
+        }
+        string.append("\n"); 
+        return string.toString(); 
+    }
+    
+    
       
 }

@@ -108,15 +108,7 @@ public class AgentCurrentState extends AgentState {
      */
     public LinkedList<AgentSearchState> buildGuessedCurrentStates() {
         LinkedList<AgentSearchState> guessedCurrentStates = new LinkedList<>();
-        
-        
-        
         int numPossibleOpponentHands = 10; //AQUUUUUIII
-        
-        
-        
-        
-        
         LinkedList<Card> possibleCards = GameState.getAllCards();
         Random random = new Random();
 
@@ -142,11 +134,13 @@ public class AgentCurrentState extends AgentState {
             for (Card card : possibleCards) {
                 int[] playersIds = currentPlayer.getGameHistory().getCardsTogive().get(card.getSuit());
                 HashMap<Integer, Double> cardToPlayerProb = new HashMap<>();
+                
                 for (int j = 0; j < playersIds.length; j++) {
                     //probabilidade para ser calculada depois conforme o historico de jogo para agora é igual para todos os jogadores
                     double prob = 1.0 / playersIds.length;
                     cardToPlayerProb.put(playersIds[j], prob);
                 }
+                
                 Random generator = new Random();
                 double number = generator.nextDouble() * 1.0;
                 double sum = 0;
@@ -166,36 +160,7 @@ public class AgentCurrentState extends AgentState {
                         guessedOpponent2Cards.add(card);
                     }
                 }
-
-            }
-
-            /*for (int j = 0; j < game.getNumberOfCardsOfPlayer(game.getOpponentTeam(currentPlayer).getFirst()); j++) {
-                guessedOpponent1Cards.add(possibleCards.get(random.nextInt(possibleCards.size())));
-            }
-
-            for (int j = 0; j < game.getNumberOfCardsOfPlayer(game.getOpponentTeam(currentPlayer).getLast()); j++) {
-                Card c = possibleCards.get(random.nextInt(possibleCards.size()));
-                while (guessedOpponent1Cards.contains(c)) {
-                    c = possibleCards.get(random.nextInt(possibleCards.size()));
-                }
-                guessedOpponent2Cards.add(c);
-            }
-            for (int j = 0; j < game.getNumberOfCardsOfPlayer(game.getTeammate(currentPlayer)); j++) {
-                Card c = possibleCards.get(random.nextInt(possibleCards.size()));
-                while (guessedOpponent1Cards.contains(c) || guessedOpponent2Cards.contains(c)) {
-                    c = possibleCards.get(random.nextInt(possibleCards.size()));
-                }
-                guessedTeammateCards.add(c);
-            }*/
-
-            /*System.out.println("TEAMMATE" + guessedTeammateCards.toString());
-             System.out.println(guessedTeammateCards.size());
-
-             System.out.println("OPPONENT 1" + guessedOpponent1Cards.toString());
-             System.out.println(guessedOpponent1Cards.size());
-
-             System.out.println("OPPONENT 2 " + guessedOpponent2Cards.toString());
-             System.out.println(guessedOpponent2Cards.size());*/
+            }            
             guessedCurrentStates.add(getAgentSearchState(guessedOpponent1Cards, guessedOpponent2Cards, guessedTeammateCards));
         }
 

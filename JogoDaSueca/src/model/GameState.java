@@ -8,6 +8,9 @@ package model;
 import common.SuecaState;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.omg.CORBA.TIMEOUT;
 
 /**
  *
@@ -40,7 +43,7 @@ public class GameState extends SuecaState {
         rounds = new LinkedList<>();
         playedCards = new LinkedList<>();
     }
-    
+
     public Suit getTrump() {
         return trump;
     }
@@ -138,21 +141,23 @@ public class GameState extends SuecaState {
             rounds.get(currentRound).setRoundSuit(card.getSuit());
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
-            playedCards.add(new CardPlayed(card, activePlayer));
+            CardPlayed c = new CardPlayed(card, activePlayer);
+            playedCards.add(c);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory();
+            updateGameHistory(c);
             nextPlayer();
         } else if (validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
-            playedCards.add(new CardPlayed(card, activePlayer));
+            CardPlayed c = new CardPlayed(card, activePlayer);
+            playedCards.add(c);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory();
+            updateGameHistory(c);
             nextPlayer();
         } else {
             System.out.println("\nINVALID CARD");
@@ -226,7 +231,7 @@ public class GameState extends SuecaState {
         }
         g.setWinnerTeam(winnerTeam);
         g.currentRound = currentRound;
-        for(CardPlayed c : playedCards){
+        for (CardPlayed c : playedCards) {
             g.getPlayedCards().add(c.clone());
         }
         return g;
@@ -238,21 +243,23 @@ public class GameState extends SuecaState {
             rounds.get(currentRound).setRoundSuit(card.getSuit());
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
-            playedCards.add(new CardPlayed(card, activePlayer));
+            CardPlayed c = new CardPlayed(card, activePlayer);
+            playedCards.add(c);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory();
+            updateGameHistory(c);
             nextPlayer();
         } else if (super.validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
-            playedCards.add(new CardPlayed(card, activePlayer));
+            CardPlayed c = new CardPlayed(card, activePlayer);
+            playedCards.add(c);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory();
+            updateGameHistory(c);
             nextPlayer();
         } else {
             System.out.println("\nINVALID CARD");
@@ -293,58 +300,57 @@ public class GameState extends SuecaState {
     public int getNumberOfCardsOfPlayer(Player player) {
         if (rounds.get(currentRound).getCards().size() > 0) {
             for (CardPlayed c : rounds.get(currentRound).getCards()) {
-                if(c.getPlayer().getName().equalsIgnoreCase(player.getName())){
-                    return 10-currentRound-1;
+                if (c.getPlayer().getName().equalsIgnoreCase(player.getName())) {
+                    return 10 - currentRound - 1;
                 }
             }
-            return 10-currentRound;
+            return 10 - currentRound;
         }
         return 0;
     }
-    
-    public LinkedList<Player> getOpponentTeam(Player player){
+
+    public LinkedList<Player> getOpponentTeam(Player player) {
         LinkedList<Player> players = new LinkedList<>();
-        if(!team1.belongsToTeam(player)){
+        if (!team1.belongsToTeam(player)) {
             players.add(team1.getPlayer1().clone());
-            players.add(team1.getPlayer2().clone());            
-        } else if(!team2.belongsToTeam(player)){
+            players.add(team1.getPlayer2().clone());
+        } else if (!team2.belongsToTeam(player)) {
             players.add(team2.getPlayer1().clone());
             players.add(team2.getPlayer2().clone());
-        }        
+        }
         return players;
     }
-    
-    public Player getTeammate(Player player){
-        if(team1.belongsToTeam(player)){
-            if(team1.getPlayer1().getName().equalsIgnoreCase(player.getName())){
+
+    public Player getTeammate(Player player) {
+        if (team1.belongsToTeam(player)) {
+            if (team1.getPlayer1().getName().equalsIgnoreCase(player.getName())) {
                 return team1.getPlayer2().clone();
-            } else{
+            } else {
                 return team1.getPlayer1().clone();
             }
-        } else if(team2.belongsToTeam(player)){
-            if(team2.getPlayer1().getName().equalsIgnoreCase(player.getName())){
+        } else if (team2.belongsToTeam(player)) {
+            if (team2.getPlayer1().getName().equalsIgnoreCase(player.getName())) {
                 return team2.getPlayer2().clone();
-            } else{
+            } else {
                 return team2.getPlayer1().clone();
             }
         }
         return null;
     }
 
-    private void updateGameHistory() {
-        for (CardPlayed c : rounds.get(currentRound).getCards()) {
-            if(c.getCard().getSuit() != rounds.get(currentRound).getRoundSuit()){
-                playerDidntAssist(c);
-            }
+    private void updateGameHistory(CardPlayed c) {
+        if (!c.getCard().getSuit().equals(rounds.get(currentRound).getRoundSuit())) {
+            Suit s = rounds.get(currentRound).getRoundSuit();
+            playerDidntAssist(c, s);
         }
     }
-    
-    private void playerDidntAssist(CardPlayed c){
-        getTeam1().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c);
-        getTeam1().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c);
-        getTeam2().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c);
-        getTeam2().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c);
+
+    private void playerDidntAssist(CardPlayed c, Suit s) {
+        getTeam1().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c, s);
+        getTeam1().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c, s);
+        getTeam2().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c, s);
+        getTeam2().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c, s);
+
     }
-    
 
 }

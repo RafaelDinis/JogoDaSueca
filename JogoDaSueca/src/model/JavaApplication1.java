@@ -92,11 +92,6 @@ public class JavaApplication1 {
                 } while (!validPlay);
 
             }
-            // System.out.println(agent1.getCurrentState().getAgentCards().size() + agent2.getCurrentState().getAgentCards().size() + agent3.getCurrentState().getAgentCards().size()+ agent4.getCurrentState().getAgentCards().size());
-            //System.out.println(game.getTeam1().getPlayer1().getCards().size() + game.getTeam1().getPlayer2().getCards().size() + game.getTeam2().getPlayer1().getCards().size() + game.getTeam2().getPlayer2().getCards().size());
-
-            //System.out.println(player1.getCurrentState().getAgentCards().size());
-            //System.out.println(game.getTeam1().getPlayer1().getCards().size());
         }
 
     }
