@@ -8,6 +8,7 @@ package model;
 import agent.Agent;
 import agent.GameAlgorithm;
 import common.Move;
+import static java.lang.Double.max;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
@@ -53,6 +54,24 @@ public class JavaApplication1 {
         System.out.println("agent2 CARDS --> " + player2.getCardToString());
         System.out.println("agent4 CARDS --> " + player4.getCardToString());
         
+        int num = (Math.random() <= 0.5) ? 1 : 2;
+        Card trumpCard = null;
+        if(num == 1){
+            trumpCard = player1.getCards().getFirst();
+        } else{
+            trumpCard = player1.getCards().getLast();
+        }
+        player1.getGameHistory().setTrumpCard(trumpCard);        
+        player2.getGameHistory().setTrumpCard(trumpCard);        
+        player3.getGameHistory().setTrumpCard(trumpCard);        
+        player4.getGameHistory().setTrumpCard(trumpCard);
+        
+        
+        /*System.out.println(player1.getGameHistory().toString());
+        System.out.println(player2.getGameHistory().toString());
+        System.out.println(player3.getGameHistory().toString());
+        System.out.println(player4.getGameHistory().toString());*/
+        
         /*for (int i = 0; i < 10; i++) {
             System.out.println("\nTRUMP is " + game.getTrump().toString());
             System.out.println("CURRENT ROUND : " + (game.getCurrentRound() + 1));
@@ -92,6 +111,10 @@ public class JavaApplication1 {
                 } while (!validPlay);
 
             }
+            /*System.out.println(player1.getGameHistory().toString());
+            System.out.println(player2.getGameHistory().toString());
+            System.out.println(player3.getGameHistory().toString());
+            System.out.println(player4.getGameHistory().toString());*/
         }
 
     }

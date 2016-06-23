@@ -104,6 +104,7 @@ public class Player extends Agent {
     public Player clone(){
         Player p = new Player(id, name, team);
         p.setCards((LinkedList<Card>) cards.clone());
+        p.setGameHistory(gameHistory.clone());
         //p.setCurrentState(currentState.clone());
         return p;
     }

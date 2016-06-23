@@ -113,13 +113,22 @@ public class AgentCurrentState extends AgentState {
         Random random = new Random();
 
         if (!game.getPlayedCards().isEmpty()) {
+            LinkedList<Card> list = (LinkedList<Card>) possibleCards.clone();
             for (CardPlayed c : game.getPlayedCards()) {
-                possibleCards.remove(c.getCard());
+                for (Card p : list) {
+                    if (c.getCard().getCard().equals(p.getCard()) && c.getCard().getSuit().equals(p.getSuit())) {
+                        possibleCards.remove(p);
+                    }
+                }
             }
         }
-
+        LinkedList<Card> list = (LinkedList<Card>) possibleCards.clone();
         for (Card c : agentCards) {
-            possibleCards.remove(c);
+            for (Card p : list) {
+                if (c.getCard().equals(p.getCard()) && c.getSuit().equals(p.getSuit())) {
+                    possibleCards.remove(p);
+                }
+            }
         }
 
         LinkedList<Card> guessedOpponent1Cards = new LinkedList<>();
@@ -132,41 +141,52 @@ public class AgentCurrentState extends AgentState {
             guessedOpponent2Cards.clear();
 
             for (Card card : possibleCards) {
-                int[] playersIds = currentPlayer.getGameHistory().getCardsTogive().get(card.getSuit());
-                HashMap<Integer, Double> cardToPlayerProb = new HashMap<>();
-                
-                for (int j = 0; j < playersIds.length; j++) {
-                    //probabilidade para ser calculada depois conforme o historico de jogo para agora é igual para todos os jogadores
-                    double prob = 1.0 / playersIds.length;
-                    cardToPlayerProb.put(playersIds[j], prob);
-                }
-                
-                Random generator = new Random();
-                double number = generator.nextDouble() * 1.0;
-                double sum = 0;
-                int x=0;
-                while(number > sum){
-                    sum = sum + cardToPlayerProb.get(playersIds[x]);
-                    x++;
-                }
-                
-                int idPlayerFinal = playersIds[x-1];
-                if( (currentPlayer.getId() % 2) == (idPlayerFinal % 2)){
-                    guessedTeammateCards.add(card);
-                } else{
-                    if(nextNumber(currentPlayer.getId()) == idPlayerFinal){
-                        guessedOpponent1Cards.add(card);
-                    } else{
+                if (card.getSuit().equals(currentPlayer.getGameHistory().getTrumpCard().getSuit()) && card.getCard().equals(currentPlayer.getGameHistory().getTrumpCard().getCard())) {
+                    if (currentPlayer.getId() == 3) {
+                        guessedTeammateCards.add(card);
+                    } else if (nextNumber(currentPlayer.getId()) == 3) {
                         guessedOpponent2Cards.add(card);
+                    } else {
+                        guessedOpponent1Cards.add(card);
+                    }
+                } else {
+                    int[] playersIds = currentPlayer.getGameHistory().getCardsTogive().get(card.getSuit());
+                    HashMap<Integer, Double> cardToPlayerProb = new HashMap<>();
+
+                    for (int j = 0; j < playersIds.length; j++) {
+                        //probabilidade para ser calculada depois conforme o historico de jogo para agora é igual para todos os jogadores
+                        double prob = 1.0 / playersIds.length;
+                        cardToPlayerProb.put(playersIds[j], prob);
+                    }
+
+                    Random generator = new Random();
+                    double number = generator.nextDouble() * 1.0;
+                    double sum = 0;
+                    int x = 0;
+                    while (number > sum) {
+                        int id = playersIds[x];
+                        sum = sum + cardToPlayerProb.get(id);
+                        x++;
+                    }
+
+                    int idPlayerFinal = playersIds[x - 1];
+                    if ((currentPlayer.getId() % 2) == (idPlayerFinal % 2)) {
+                        guessedTeammateCards.add(card);
+                    } else {
+                        if (nextNumber(currentPlayer.getId()) == idPlayerFinal) {
+                            guessedOpponent1Cards.add(card);
+                        } else {
+                            guessedOpponent2Cards.add(card);
+                        }
                     }
                 }
-            }            
+            }
             guessedCurrentStates.add(getAgentSearchState(guessedOpponent1Cards, guessedOpponent2Cards, guessedTeammateCards));
         }
 
         return guessedCurrentStates;
     }
-    
+
     private int nextNumber(int current) {
         if (current < 4) {
             current++;

@@ -139,7 +139,6 @@ public class GameState extends SuecaState {
         if (rounds.get(currentRound).getCards().isEmpty()) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             rounds.get(currentRound).setRoundSuit(card.getSuit());
-            //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
             CardPlayed c = new CardPlayed(card, activePlayer);
             playedCards.add(c);
@@ -150,7 +149,6 @@ public class GameState extends SuecaState {
             nextPlayer();
         } else if (validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
-            //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
             CardPlayed c = new CardPlayed(card, activePlayer);
             playedCards.add(c);
