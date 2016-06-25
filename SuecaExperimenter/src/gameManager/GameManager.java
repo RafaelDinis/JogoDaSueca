@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package gameManager;
 
 import agent.Agent;
 import agent.GameAlgorithm;
@@ -12,13 +12,50 @@ import static java.lang.Double.max;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
+import model.Card;
+import model.GameState;
+import model.Player;
+import model.Team;
 
 /**
  *
  * @author Yeezus
  */
-public class JavaApplication1 {
+public class GameManager {
 
+    public static final int RANDOM_ALGORITHM = 1;
+    public static final int ALPHA_BETA = 2;
+    private ExperimentsManagerGUI gui;
+    
+    private int upperTeamRoundsAhead;
+    private int upperTeamHands;
+    private int upperTeamAlgorithm;
+    
+    private int downTeamRoundsAhead;
+    private int downTeamHands;
+    private int downTeamAlgorithm;
+    
+    
+    private int upperTeamWins;
+    private int downTeamWins;
+    private int draws;
+    
+    public GameManager(ExperimentsManagerGUI gui){
+        this.gui = gui;
+    }
+    
+    public void setUpperTeamConfiguration(int upperTeamRoundsAhead, int upperTeamHands, int upperTeamAlgorithm){
+        this.upperTeamRoundsAhead = upperTeamRoundsAhead;
+        this.upperTeamHands = upperTeamHands;
+        this.upperTeamAlgorithm = upperTeamAlgorithm;
+    }
+    
+    public void setDownTeamConfiguration(int downTeamRoundsAhead, int downTeamHands, int downTeamAlgorithm){
+        this.downTeamRoundsAhead = downTeamRoundsAhead;
+        this.downTeamHands = downTeamHands;
+        this.downTeamAlgorithm = downTeamAlgorithm;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -118,6 +155,29 @@ public class JavaApplication1 {
             System.out.println(player4.getGameHistory().toString());*/
         }
 
+    }
+    
+    public void run(int numGames){
+        for (int i = 0; i < numGames; i++) {
+            prepareGame();
+            playGame();
+            
+            /*switch(outcome){
+                case UPPER_PLAYER_WINS: upperPlayerWins++; break;
+                case DOWN_PLAYER_WINS:  downPlayerWins++;  break;
+                default: draws++;
+            }*/
+        }
+        
+        
+    }
+    
+    public void prepareGame(){
+        
+    }
+    
+    public void playGame(){
+        
     }
 
     public static boolean checkIndex(int num, GameState game) {
