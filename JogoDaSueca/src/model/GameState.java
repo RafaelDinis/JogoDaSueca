@@ -25,6 +25,7 @@ public class GameState extends SuecaState {
     private Suit trump;
     private Player activePlayer;
     private int activePlayerNumber;
+    private Card trumpCard;
 
     public GameState(Team team1, Team team2) {
         this.team1 = team1;
@@ -33,9 +34,7 @@ public class GameState extends SuecaState {
         rounds = new LinkedList<>();
         shuffleDeck();
         giveCards();
-        this.trump = team1.getPlayer1().getCards().get(0).getSuit();
-        //this.activePlayer = team1.getPlayer1();
-        //this.activePlayerNumber = 1;
+        
         Random r = new Random();
         this.activePlayerNumber = r.nextInt(4-1) + 1;
         switch(activePlayerNumber){
@@ -48,6 +47,13 @@ public class GameState extends SuecaState {
             case 4 : activePlayer = team2.getPlayer2();
                 break;
         }
+        int num = (Math.random() <= 0.5) ? 1 : 2;
+        if(num == 1){
+            trumpCard = activePlayer.getCards().getFirst();
+        } else{
+            trumpCard = activePlayer.getCards().getLast();
+        }
+        this.trump = trumpCard.getSuit();
         this.currentRound = 0;
         rounds.add(new Round(currentRound));
     }
@@ -131,6 +137,15 @@ public class GameState extends SuecaState {
     private void shuffleDeck() {
         Collections.shuffle(allCards);
     }
+
+    public Card getTrumpCard() {
+        return trumpCard;
+    }
+
+    public void setTrumpCard(Card trumpCard) {
+        this.trumpCard = trumpCard;
+    }
+    
 
     private void giveCards() {
         int i = 0;

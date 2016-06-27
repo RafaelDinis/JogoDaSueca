@@ -19,8 +19,9 @@ public class Agent {
     public Agent() {
         handsSimulator = new HandsSimulator();
         random = new Random();
-        alfabeta = new AlphaBeta();
+        //alfabeta = new AlphaBeta();
         randomAlgorithm = new RandomAlgorithm();
+        useAlfabeta();
     }
 
     public void setCurrentState(GameState state, LinkedList<Card> cards) {
@@ -37,20 +38,9 @@ public class Agent {
 
     public void removeCardFromHand(Card card) {
         this.currentState.getAgentCards().remove(card);
-
-        /*LinkedList<Card> cards = (LinkedList) currentState.getAgentCards().clone();
-        for(Card c : cards){
-            if(c.getCard() == card.getCard() && c.getSuit() == card.getSuit()){
-                currentState.getAgentCards().remove(c);
-            }
-        }*/
     }
-
-    /* public void notifyAction(Move move) {
-        currentState.placePiece(action.getLine(), action.getColumn());
-    }*/
+    
     public final void useAlfabeta() {
-        //algorithm = alfabeta;
         algorithm = handsSimulator;
         algorithm.setRandom(random);
     }
@@ -79,15 +69,26 @@ public class Agent {
      */    
     public void setHandsLimit(int handsLimit) {
         algorithm.setHandsLimit(handsLimit);
+        System.out.println("hands " + algorithm.handsLimit);
     }
     
     /**
-     * Sets the number of hands to be simulated by the agent each time it must
+     * Sets the number of rounds to be simulated by the agent each time it must
      * take a decision using the alpha-beta algorithm.
-     * @param handsLimit 
+     * @param roundsLimit 
      */    
     public void setSearchRoundLimit(int roundsLimit) {
         algorithm.setNumRounds(roundsLimit);
+        System.out.println("rounds " + algorithm.numRounds);
     }
+
+    public GameAlgorithm getAlgorithm() {
+        return algorithm;
+    }
+
+    public void setAlgorithm(GameAlgorithm algorithm) {
+        this.algorithm = algorithm;
+    }
+    
 
 }

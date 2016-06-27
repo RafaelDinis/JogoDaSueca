@@ -223,18 +223,11 @@ public class GameManager {
         players.add(player4);
 
         GameState game = new GameState(team1, team2);
-        
-        int num = (Math.random() <= 0.5) ? 1 : 2;
-        Card trumpCard = null;
-        if(num == 1){
-            trumpCard = player1.getCards().getFirst();
-        } else{
-            trumpCard = player1.getCards().getLast();
-        }
-        player1.getGameHistory().setTrumpCard(trumpCard);        
-        player2.getGameHistory().setTrumpCard(trumpCard);        
-        player3.getGameHistory().setTrumpCard(trumpCard);        
-        player4.getGameHistory().setTrumpCard(trumpCard);
+
+        player1.getGameHistory().setTrumpCard(game.getTrumpCard());        
+        player2.getGameHistory().setTrumpCard(game.getTrumpCard());        
+        player3.getGameHistory().setTrumpCard(game.getTrumpCard());        
+        player4.getGameHistory().setTrumpCard(game.getTrumpCard());
         
         return game;
         
@@ -267,7 +260,7 @@ public class GameManager {
     public void configureAgent(Agent agent, int roundsLimit, int handsLimit, int algorithm){
         if (algorithm == RANDOM_ALGORITHM) {
             agent.useRandomAlgorithm();
-        } else {
+        } else { 
             agent.useAlfabeta();
             agent.setSearchRoundLimit(roundsLimit);
             agent.setHandsLimit(handsLimit);

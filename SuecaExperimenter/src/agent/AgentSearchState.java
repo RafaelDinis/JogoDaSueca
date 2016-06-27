@@ -11,6 +11,12 @@ public class AgentSearchState extends AgentState {
     private Move move;
     private Player currentPlayer;
     private GameState game;
+    
+    private LinkedList<Card> opponent1Cards;
+    
+    private LinkedList<Card> opponent2Cards;
+    
+    private LinkedList<Card> teammateCards;
 
     public AgentSearchState(GameState game, Player current) {
         super(current.getCards());
@@ -104,5 +110,30 @@ public class AgentSearchState extends AgentState {
     public void setGame(GameState game) {
         this.game = game;
     }
+    
+     public LinkedList<Card> getOpponent1Cards() {
+        return opponent1Cards;
+    }
+
+    public void setOpponent1Cards(LinkedList<Card> opponent1Cards) {
+        this.opponent1Cards = opponent1Cards;
+    }
+
+    public LinkedList<Card> getOpponent2Cards() {
+        return opponent2Cards;
+    }
+
+    public void setOpponent2Cards(LinkedList<Card> opponent2Cards) {
+        this.opponent2Cards = opponent2Cards;
+    }
+
+    public LinkedList<Card> getTeammateCards() {
+        return teammateCards;
+    }
+
+    public void setTeammateCards(LinkedList<Card> teammateCards) {
+        this.teammateCards = teammateCards;
+    }
+    
 
 }

@@ -7,6 +7,7 @@ package model;
 
 import agent.Agent;
 import agent.AgentCurrentState;
+import agent.HandsSimulator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class Player extends Agent {
         cards = new LinkedList<>();
         this.gameHistory = new GameHistory(id);
     }
-    
+
     public String getName() {
         return name;
     }
@@ -73,8 +74,6 @@ public class Player extends Agent {
     public void setGameHistory(GameHistory gameHistory) {
         this.gameHistory = gameHistory;
     }
-    
-    
 
     public boolean hasCardsFromSuit(Suit suit) {
         for (Card card : cards) {
@@ -101,15 +100,16 @@ public class Player extends Agent {
     }
 
     @Override
-    public Player clone(){
+    public Player clone() {
         Player p = new Player(id, name, team);
         p.setCards((LinkedList<Card>) cards.clone());
         p.setGameHistory(gameHistory.clone());
+        /*if (getAlgorithm() instanceof HandsSimulator) {
+            p.setHandsLimit(getAlgorithm().getHandsLimit());
+            p.setSearchRoundLimit(getAlgorithm().getNumRounds());
+        }*/
         //p.setCurrentState(currentState.clone());
         return p;
     }
-    
-    
-
 
 }

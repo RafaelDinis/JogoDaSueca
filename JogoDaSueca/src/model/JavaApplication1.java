@@ -62,10 +62,10 @@ public class JavaApplication1 {
         } else{
             trumpCard = player1.getCards().getLast();
         }
-        player1.getGameHistory().setTrumpCard(trumpCard);        
-        player2.getGameHistory().setTrumpCard(trumpCard);        
-        player3.getGameHistory().setTrumpCard(trumpCard);        
-        player4.getGameHistory().setTrumpCard(trumpCard);
+        player1.getGameHistory().setTrumpCard(game.getTrumpCard());        
+        player2.getGameHistory().setTrumpCard(game.getTrumpCard());        
+        player3.getGameHistory().setTrumpCard(game.getTrumpCard());        
+        player4.getGameHistory().setTrumpCard(game.getTrumpCard());
         
         
         /*System.out.println(player1.getGameHistory().toString());

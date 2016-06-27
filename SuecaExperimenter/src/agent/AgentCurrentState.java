@@ -106,9 +106,8 @@ public class AgentCurrentState extends AgentState {
      *
      * @return
      */
-    public LinkedList<AgentSearchState> buildGuessedCurrentStates() {
+    public LinkedList<AgentSearchState> buildGuessedCurrentStates(int handsLimit) {
         LinkedList<AgentSearchState> guessedCurrentStates = new LinkedList<>();
-        int numPossibleOpponentHands = 10; //AQUUUUUIII
         LinkedList<Card> possibleCards = GameState.getAllCards();
         Random random = new Random();
 
@@ -135,7 +134,7 @@ public class AgentCurrentState extends AgentState {
         LinkedList<Card> guessedOpponent2Cards = new LinkedList<>();
         LinkedList<Card> guessedTeammateCards = new LinkedList<>();
 
-        for (int i = 0; i < numPossibleOpponentHands; i++) {
+        for (int i = 0; i < handsLimit; i++) {
             guessedOpponent1Cards.clear();
             guessedTeammateCards.clear();
             guessedOpponent2Cards.clear();

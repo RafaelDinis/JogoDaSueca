@@ -11,7 +11,7 @@ import model.Round;
  * player still has pieces but is not able to play any of them and is forced to
  * pass its turn.
  */
-public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
+public class AlphaBeta extends GameAlgorithm<AgentSearchState> {
 
     /**
      * Receives the successors of the current fictitious state (where the
@@ -26,8 +26,13 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
     public double[] minimaxValues(AgentSearchState state, LinkedList<AgentSearchState> successors) {
         double[] minimaxValues = new double[successors.size()];
         int i = 0;
+        
+        System.out.println("numRounds " + numRounds);
+        //System.out.println("handsLimit " + handsLimit);
         int depth = (numRounds * 4) + 4 - (state.getGame().getRounds().get(state.getGame().getCurrentRound()).getCards().size());
+        System.out.println("profundidade " + depth);
         setSearchDepth(depth);
+        
         for (AgentSearchState s : successors) {
             if (s.getCurrentPlayer().getTeam().getName().equals(state.getCurrentPlayer().getTeam().getName())) {
                 minimaxValues[i++] = maxValue(s, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
@@ -76,12 +81,16 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
         return beta;
     }
 
-    @Override
+    /*@Override
     public Move takeDecision(AgentCurrentState currentState, Round round) {
         //System.out.println("PLAYER CARDS --> " + currentState.getCurrentPlayer().getCards().size());
         //currentState.getAgentSearchState();
 
-        int depth = (1 * 4) + 4 - currentState.getAgentSearchState().getGame().getRounds().get(currentState.getAgentSearchState().getGame().getCurrentRound()).getCards().size();
+        //int depth = (1 * 4) + 4 - currentState.getAgentSearchState().getGame().getRounds().get(currentState.getAgentSearchState().getGame().getCurrentRound()).getCards().size();
+        //setSearchDepth(depth);
+        /*System.out.println("numRounds " + numRounds);
+        int depth = (1 * 4) + 4 - (currentState.getAgentSearchState().getGame().getRounds().get(currentState.getAgentSearchState().getGame().getCurrentRound()).getCards().size());
+        System.out.println("profundidade " + depth);
         setSearchDepth(depth);
 
         List<AgentSearchState> successors = (List<AgentSearchState>) currentState.getAgentSearchState().getSucessors();
@@ -98,8 +107,27 @@ public class AlphaBeta extends GameAlgorithm<AgentCurrentState> {
                 nextMove = s.getMove();
             }
         }
-        System.out.println("FINAL MOVE ->" + nextMove.getCard().toString());
+        return nextMove;
+    }*/
+
+    @Override
+    public Move takeDecision(AgentSearchState state, Round round) {
+        List<AgentSearchState> successors = (List<AgentSearchState>) state.getSucessors();
+        double moveValue, max = Double.NEGATIVE_INFINITY;
+        Move nextMove = null;
+        for (AgentSearchState s : successors) {
+            if (s.getCurrentPlayer().getTeam().getName().equals(state.getCurrentPlayer().getTeam().getName())) {
+                moveValue = maxValue(s, max, Double.POSITIVE_INFINITY, 1);
+            } else {
+                moveValue = minValue(s, max, Double.POSITIVE_INFINITY, 1);
+            }
+            if (nextMove == null || moveValue > max) {
+                max = moveValue;
+                nextMove = s.getMove();
+            }
+        }
         return nextMove;
     }
 
+   
 }

@@ -51,7 +51,7 @@ public class HandsSimulator extends GameAlgorithm<AgentCurrentState> {
             return alphaBeta.takeDecision(state);
         } else {*/
         //case 1
-        LinkedList<AgentSearchState> states = currentState.buildGuessedCurrentStates();
+        LinkedList<AgentSearchState> states = currentState.buildGuessedCurrentStates(handsLimit);
         for (AgentSearchState state : states) {
             sucessors = state.getSucessors();
             values = alphaBeta.minimaxValues(state, sucessors);
