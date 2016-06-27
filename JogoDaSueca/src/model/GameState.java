@@ -8,6 +8,7 @@ package model;
 import common.SuecaState;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.omg.CORBA.TIMEOUT;
@@ -33,8 +34,20 @@ public class GameState extends SuecaState {
         shuffleDeck();
         giveCards();
         this.trump = team1.getPlayer1().getCards().get(0).getSuit();
-        this.activePlayer = team1.getPlayer1();
-        this.activePlayerNumber = 1;
+        //this.activePlayer = team1.getPlayer1();
+        //this.activePlayerNumber = 1;
+        Random r = new Random();
+        this.activePlayerNumber = r.nextInt(4-1) + 1;
+        switch(activePlayerNumber){
+            case 1 : activePlayer = team1.getPlayer1(); 
+                break;
+            case 2 : activePlayer = team2.getPlayer1();
+                break;
+            case 3 : activePlayer = team1.getPlayer2();
+                break;
+            case 4 : activePlayer = team2.getPlayer2();
+                break;
+        }
         this.currentRound = 0;
         rounds.add(new Round(currentRound));
     }

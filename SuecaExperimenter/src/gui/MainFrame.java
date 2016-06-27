@@ -147,7 +147,7 @@ public class MainFrame extends JFrame implements ExperimentsManagerGUI {
         runButton.setEnabled(false);
 
         gameManager.setUpperTeamConfiguration(Integer.parseInt(upperTeamRoundsAhead.getText()), Integer.parseInt(upperTeamHands.getText()), (upperTeamAlgorithms.getSelectedIndex() == 0) ? GameManager.RANDOM_ALGORITHM : GameManager.ALPHA_BETA);
-        gameManager.setUpperTeamConfiguration(Integer.parseInt(downTeamRoundsAhead.getText()), Integer.parseInt(downTeamHands.getText()), (downTeamAlgorithms.getSelectedIndex() == 0) ? GameManager.RANDOM_ALGORITHM : GameManager.ALPHA_BETA);
+        gameManager.setDownTeamConfiguration(Integer.parseInt(downTeamRoundsAhead.getText()), Integer.parseInt(downTeamHands.getText()), (downTeamAlgorithms.getSelectedIndex() == 0) ? GameManager.RANDOM_ALGORITHM : GameManager.ALPHA_BETA);
         /*experimentsManager.setUpperPlayerConfiguration(
                 Integer.parseInt(upperPlayerDepth.getText()), Integer.parseInt(upperPlayerHands.getText()), Integer.parseInt(upperPlayerSeed.getText()),
                 (upperPlayerAlgorithms.getSelectedIndex() == 0) ? GameManager.RANDOM_ALGORITHM : GameManager.ALPHA_BETA);

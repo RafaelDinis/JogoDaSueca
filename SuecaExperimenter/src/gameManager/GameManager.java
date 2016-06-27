@@ -40,8 +40,23 @@ public class GameManager {
     private int downTeamWins;
     private int draws;
     
+    
+    private Team team1;
+    private Player player1;
+    private Player player2;
+    
+    private Team team2;    
+    private Player player3;
+    private Player player4;
+    
+    private LinkedList<Player> players;
+    
     public GameManager(ExperimentsManagerGUI gui){
         this.gui = gui;
+        upperTeamWins = 0;
+        downTeamWins = 0;
+        draws = 0;
+                
     }
     
     public void setUpperTeamConfiguration(int upperTeamRoundsAhead, int upperTeamHands, int upperTeamAlgorithm){
@@ -59,7 +74,7 @@ public class GameManager {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Team team1 = new Team();
         Team team2 = new Team();
 
@@ -130,7 +145,7 @@ public class GameManager {
                     }
                 } while (!validPlay || !validNumber);
             }
-        }*/
+        }
 
         System.out.println("\nTRUMP is " + game.getTrump().toString());
         Boolean validPlay = true;
@@ -152,43 +167,111 @@ public class GameManager {
             /*System.out.println(player1.getGameHistory().toString());
             System.out.println(player2.getGameHistory().toString());
             System.out.println(player3.getGameHistory().toString());
-            System.out.println(player4.getGameHistory().toString());*/
+            System.out.println(player4.getGameHistory().toString());
         }
 
-    }
+    }*/
     
     public void run(int numGames){
         for (int i = 0; i < numGames; i++) {
-            prepareGame();
-            playGame();
-            
-            /*switch(outcome){
-                case UPPER_PLAYER_WINS: upperPlayerWins++; break;
-                case DOWN_PLAYER_WINS:  downPlayerWins++;  break;
-                default: draws++;
-            }*/
+            GameState game = prepareGame();
+            int result = playGame(game);
+            switch(result){
+                case 1: upperTeamWins++; break;
+                case 2: downTeamWins++;  break;
+                case 0: draws++; break;
+            }
         }
-        
-        
+        gui.showResults("Upper Team wins: " + upperTeamWins + 
+                "\nDown Team wins: " + downTeamWins + 
+                "\ndraws: " + draws);
+        upperTeamWins = 0;
+        downTeamWins = 0;
+        draws = 0;
     }
     
-    public void prepareGame(){
-        
-    }
-    
-    public void playGame(){
-        
-    }
+    public GameState prepareGame(){
+        team1 = new Team();
+        team2 = new Team();
 
-    public static boolean checkIndex(int num, GameState game) {
-        if (num >= 1 && num <= game.getActivePlayer().getCards().size()) {
-            return true;
+        player1 = new Player(1, "gajo1", team1);
+        player2 = new Player(3, "gajo2", team1);
+        player1.useAlfabeta();
+        player2.useAlfabeta();
+        team1.setPlayer1(player1);
+        team1.setPlayer2(player2);
+        team1.setName("equipa1");
+        configureAgent(player1, upperTeamRoundsAhead, upperTeamHands, upperTeamAlgorithm);
+        configureAgent(player2, upperTeamRoundsAhead, upperTeamHands, upperTeamAlgorithm);
+
+        player3 = new Player(2, "gajo3", team2);
+        player4 = new Player(4, "gajo4", team2);
+        player3.useRandomAlgorithm();
+        player4.useRandomAlgorithm();
+        team2.setPlayer1(player3);
+        team2.setPlayer2(player4);
+        team2.setName("equipa2");
+        configureAgent(player3, downTeamRoundsAhead, downTeamHands, downTeamAlgorithm);
+        configureAgent(player4, downTeamRoundsAhead, downTeamHands, downTeamAlgorithm);
+        
+        
+
+        players = new LinkedList<>();
+        players.add(player1);
+        players.add(player3);
+        players.add(player2);
+        players.add(player4);
+
+        GameState game = new GameState(team1, team2);
+        
+        int num = (Math.random() <= 0.5) ? 1 : 2;
+        Card trumpCard = null;
+        if(num == 1){
+            trumpCard = player1.getCards().getFirst();
+        } else{
+            trumpCard = player1.getCards().getLast();
+        }
+        player1.getGameHistory().setTrumpCard(trumpCard);        
+        player2.getGameHistory().setTrumpCard(trumpCard);        
+        player3.getGameHistory().setTrumpCard(trumpCard);        
+        player4.getGameHistory().setTrumpCard(trumpCard);
+        
+        return game;
+        
+    }
+    
+    public int playGame(GameState game){
+        Boolean validPlay = true;
+        for (int i = 0; i < 10; i++) {
+            game.updateGameState();
+            for (int j = 0; j < 4; j++) {
+                Player player = players.get(game.getActivePlayerNumber() - 1);
+                do {
+                    Move move = player.play(game.getRounds().get(game.getCurrentRound()));
+                    validPlay = game.playCard(move.getCard());
+                    game.updateGameState();
+
+                } while (!validPlay);
+
+            }
+        }
+        if(game.getTeam1().getFinalScore() == game.getTeam2().getFinalScore()){
+            return 0;
+        } else if(game.getTeam1().getFinalScore() > game.getTeam2().getFinalScore()){
+            return 1;
         } else {
-            System.out.println("INVALID INDEX!");
-            return false;
+            return 2;
         }
     }
-
     
+    public void configureAgent(Agent agent, int roundsLimit, int handsLimit, int algorithm){
+        if (algorithm == RANDOM_ALGORITHM) {
+            agent.useRandomAlgorithm();
+        } else {
+            agent.useAlfabeta();
+            agent.setSearchRoundLimit(roundsLimit);
+            agent.setHandsLimit(handsLimit);
+        }
+    }    
 
 }
