@@ -27,10 +27,10 @@ public class AlphaBeta extends GameAlgorithm<AgentSearchState> {
         double[] minimaxValues = new double[successors.size()];
         int i = 0;
         
-        System.out.println("numRounds " + numRounds);
+        //System.out.println("numRounds " + numRounds);
         //System.out.println("handsLimit " + handsLimit);
         int depth = (numRounds * 4) + 4 - (state.getGame().getRounds().get(state.getGame().getCurrentRound()).getCards().size());
-        System.out.println("profundidade " + depth);
+        //System.out.println("profundidade " + depth);
         setSearchDepth(depth);
         
         for (AgentSearchState s : successors) {

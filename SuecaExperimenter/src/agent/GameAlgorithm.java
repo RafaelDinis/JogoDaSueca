@@ -28,7 +28,6 @@ public abstract class GameAlgorithm <S extends AgentState>{
     public abstract Move takeDecision(S currentState, Round round);
     
     public void setSearchDepth(int depthLimit){
-        System.out.println("depth " + depthLimit);
         this.depthLimit = depthLimit;
     }
     

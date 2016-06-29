@@ -180,6 +180,7 @@ public class GameManager {
                 case 2: downTeamWins++;  break;
                 case 0: draws++; break;
             }
+            System.out.println("jogo " + i);
         }
         gui.showResults("Upper Team wins: " + upperTeamWins + 
                 "\nDown Team wins: " + downTeamWins + 
@@ -235,6 +236,7 @@ public class GameManager {
     public int playGame(GameState game){
         Boolean validPlay = true;
         for (int i = 0; i < 10; i++) {
+            System.out.println("ronda " + i);
             game.updateGameState();
             for (int j = 0; j < 4; j++) {
                 Player player = players.get(game.getActivePlayerNumber() - 1);
@@ -244,7 +246,6 @@ public class GameManager {
                     game.updateGameState();
 
                 } while (!validPlay);
-
             }
         }
         if(game.getTeam1().getFinalScore() == game.getTeam2().getFinalScore()){
@@ -254,6 +255,7 @@ public class GameManager {
         } else {
             return 2;
         }
+        
     }
     
     public void configureAgent(Agent agent, int roundsLimit, int handsLimit, int algorithm){
