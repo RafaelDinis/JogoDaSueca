@@ -8,7 +8,6 @@ package gameManager;
 import agent.Agent;
 import agent.GameAlgorithm;
 import common.Move;
-import static java.lang.Double.max;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;

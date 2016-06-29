@@ -21,7 +21,7 @@ public class Agent {
         random = new Random();
         //alfabeta = new AlphaBeta();
         randomAlgorithm = new RandomAlgorithm();
-        useAlfabeta();
+        //useAlfabeta();
     }
 
     public void setCurrentState(GameState state, LinkedList<Card> cards) {

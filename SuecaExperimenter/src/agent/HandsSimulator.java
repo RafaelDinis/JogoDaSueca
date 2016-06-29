@@ -40,6 +40,8 @@ public class HandsSimulator extends GameAlgorithm<AgentCurrentState> {
      */
     @Override
     public Move takeDecision(AgentCurrentState currentState, Round round) {
+        setAlphaBetaNumHands();
+        setAlphaBetaNumRounds();
         int numOfAgentPossibleMoves = currentState.getAgentCards().size();
         double[] sums = new double[numOfAgentPossibleMoves];
         double[] values = new double[numOfAgentPossibleMoves];
@@ -66,6 +68,14 @@ public class HandsSimulator extends GameAlgorithm<AgentCurrentState> {
     @Override
     public void setSearchDepth(int depthLimit) {
         alphaBeta.setSearchDepth(depthLimit);
+    }
+    
+    public void setAlphaBetaNumRounds(){
+        alphaBeta.setNumRounds(numRounds);
+    }
+    
+    public void setAlphaBetaNumHands(){
+        alphaBeta.setHandsLimit(handsLimit);
     }
 
     public int getMaxIndex(double[] sums, int possibleMoves) {
