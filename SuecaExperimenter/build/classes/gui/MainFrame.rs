@@ -1,2 +1,0 @@
-gui.RunButton_actionAdapter
-gui.MainFrame

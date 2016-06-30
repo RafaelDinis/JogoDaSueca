@@ -69,7 +69,7 @@ public class Agent {
      */    
     public void setHandsLimit(int handsLimit) {
         algorithm.setHandsLimit(handsLimit);
-        System.out.println("hands " + algorithm.handsLimit);
+        //System.out.println("hands " + algorithm.handsLimit);
     }
     
     /**
@@ -79,7 +79,7 @@ public class Agent {
      */    
     public void setSearchRoundLimit(int roundsLimit) {
         algorithm.setNumRounds(roundsLimit);
-        System.out.println("rounds " + algorithm.numRounds);
+        //System.out.println("rounds " + algorithm.numRounds);
     }
 
     public GameAlgorithm getAlgorithm() {

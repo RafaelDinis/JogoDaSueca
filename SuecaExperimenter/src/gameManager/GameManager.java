@@ -173,14 +173,15 @@ public class GameManager {
     
     public void run(int numGames){
         for (int i = 0; i < numGames; i++) {
+            System.out.println("jogo " + i);
+            gui.showResults("Jogo " + i);
             GameState game = prepareGame();
-            int result = playGame(game);
+            int result = playGame(game, i);
             switch(result){
                 case 1: upperTeamWins++; break;
                 case 2: downTeamWins++;  break;
                 case 0: draws++; break;
-            }
-            System.out.println("jogo " + i);
+            }   
         }
         gui.showResults("Upper Team wins: " + upperTeamWins + 
                 "\nDown Team wins: " + downTeamWins + 
@@ -233,10 +234,11 @@ public class GameManager {
         
     }
     
-    public int playGame(GameState game){
+    public int playGame(GameState game, int gameNum){
         Boolean validPlay = true;
         for (int i = 0; i < 10; i++) {
-            System.out.println("ronda " + i);
+            System.out.println("ronda "+i);
+            gui.showResults("Ronda " + i + "do jogo " + gameNum);
             game.updateGameState();
             for (int j = 0; j < 4; j++) {
                 Player player = players.get(game.getActivePlayerNumber() - 1);

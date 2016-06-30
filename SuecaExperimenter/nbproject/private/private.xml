@@ -5,19 +5,19 @@
             <url>src/gameManager/GameManager.java</url>
             <bookmark id="1">
                 <name/>
-                <line>192</line>
+                <line>193</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/agent/AlphaBeta.java</file>
             <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/gui/MainFrame.java</file>
-            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/model/Player.java</file>
+            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/agent/Agent.java</file>
+            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/gui/ExperimentsManagerGUI.java</file>
             <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/model/GameState.java</file>
-            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/agent/GameAlgorithm.java</file>
             <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/gameManager/GameManager.java</file>
+            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/agent/RandomAlgorithm.java</file>
         </group>
     </open-files>
 </project-private>
