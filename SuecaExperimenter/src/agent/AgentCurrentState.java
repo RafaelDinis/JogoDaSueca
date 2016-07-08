@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import model.Card;
 import model.CardPlayed;
+import model.CardProb;
 import model.GameState;
 import model.Player;
 import model.Round;
@@ -149,26 +150,25 @@ public class AgentCurrentState extends AgentState {
                         guessedOpponent1Cards.add(card);
                     }
                 } else {
-                    int[] playersIds = currentPlayer.getGameHistory().getCardsTogive().get(card.getSuit());
-                    HashMap<Integer, Double> cardToPlayerProb = new HashMap<>();
-
-                    for (int j = 0; j < playersIds.length; j++) {
-                        //probabilidade para ser calculada depois conforme o historico de jogo para agora é igual para todos os jogadores
-                        double prob = 1.0 / playersIds.length;
-                        cardToPlayerProb.put(playersIds[j], prob);
-                    }
-
+                    
+                    CardProb c = currentPlayer.getGameHistory().getCard(card);
+                    HashMap<Integer, Double> cardToPlayerProb = c.getProbabilities();
+                    
                     Random generator = new Random();
                     double number = generator.nextDouble() * 1.0;
                     double sum = 0;
+                    //int x = nextNumber(currentPlayer.getGameHistory().getCard(card).getPlayer());
                     int x = 0;
+                    //System.out.println("cenas" + cardToPlayerProb);
+                    int[] playersIds = getIds(cardToPlayerProb);
+                    int idPlayerFinal = 0;
+                    //System.out.println("cenas" + cardToPlayerProb);
                     while (number > sum) {
                         int id = playersIds[x];
                         sum = sum + cardToPlayerProb.get(id);
                         x++;
                     }
-
-                    int idPlayerFinal = playersIds[x - 1];
+                    
                     if ((currentPlayer.getId() % 2) == (idPlayerFinal % 2)) {
                         guessedTeammateCards.add(card);
                     } else {
@@ -194,4 +194,14 @@ public class AgentCurrentState extends AgentState {
         }
         return current;
     }
+    private int[] getIds(HashMap<Integer, Double> probabilities) {
+        int[] ids = new int[probabilities.size()];
+        int i = 0;
+        for (int key : probabilities.keySet()) {
+            ids[i] = key;
+            i++;
+        }
+        return ids;
+    }
+    
 }

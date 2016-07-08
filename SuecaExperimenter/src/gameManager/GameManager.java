@@ -246,7 +246,6 @@ public class GameManager {
                     Move move = player.play(game.getRounds().get(game.getCurrentRound()));
                     validPlay = game.playCard(move.getCard());
                     game.updateGameState();
-
                 } while (!validPlay);
             }
         }

@@ -5,9 +5,11 @@
  */
 package model;
 
+import common.SuecaState;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,69 +18,32 @@ import java.util.List;
  */
 public class GameHistory {
 
-    private HashMap<Suit, int[]> cardsToGive;
+    //private HashMap<Suit, int[]> cardsToGive;
+    private int playerId;
     private Card trumpCard;
+    private LinkedList<CardProb> cardsToGive;
 
     public GameHistory(int id) {
-        cardsToGive = new HashMap<>();
-        initializeCardsToGive(id);
+        playerId = id;
+        cardsToGive = new LinkedList();
+        //initializeCardsToGive(id);
     }
 
     public GameHistory() {
 
     }
 
-    private void initializeCardsToGive(int id) {
-        int[] players = new int[3];
-        int j = 0;
-        for (int i = 1; i < 5; i++) {
-            if (i != id) {
-                players[j] = i;
-                j++;
-            }
+    
+    public void initializeCardsToGive(int id, LinkedList<Card> cards) {
+        for(Card card : cards){
+            CardProb c = new CardProb(card);
+            c.initializeProbabilities(id);
+            cardsToGive.add(c);
         }
-        cardsToGive.put(Suit.CLUBS, players);
-
-        players = new int[3];
-        j = 0;
-        for (int i = 1; i < 5; i++) {
-            if (i != id) {
-                players[j] = i;
-                j++;
-            }
-        }
-        cardsToGive.put(Suit.HEARTS, players);
-
-        players = new int[3];
-        j = 0;
-        for (int i = 1; i < 5; i++) {
-            if (i != id) {
-                players[j] = i;
-                j++;
-            }
-        }
-        cardsToGive.put(Suit.SPADES, players);
-
-        players = new int[3];
-        j = 0;
-        for (int i = 1; i < 5; i++) {
-            if (i != id) {
-                players[j] = i;
-                j++;
-            }
-        }
-        cardsToGive.put(Suit.DIAMONDS, players);
     }
 
-    public HashMap<Suit, int[]> getCardsTogive() {
-        return cardsToGive;
-    }
 
-    public void setCardsTogive(HashMap<Suit, int[]> cardsTogive) {
-        this.cardsToGive = cardsTogive;
-    }
-
-    public void removePlayerFromCardsToGive(CardPlayed c, Suit s) {
+    /*public void removePlayerFromCardsToGive(CardPlayed c, Suit s) {
         int[] playersIds = cardsToGive.get(s);
         int[] playersFinal = new int[3];
         int j = 0;
@@ -97,7 +62,7 @@ public class GameHistory {
         } else {
             cardsToGive.put(s, playersFinal);
         }
-    }
+    }*/
 
     public Card getTrumpCard() {
         return trumpCard;
@@ -107,6 +72,25 @@ public class GameHistory {
         this.trumpCard = trumpCard;
     }
 
+    public LinkedList<CardProb> getCardsToGive() {
+        return cardsToGive;
+    }
+
+    public void setCardsToGive(LinkedList<CardProb> cardsToGive) {
+        this.cardsToGive = cardsToGive;
+    }
+    
+    public CardProb getCard(Card card){
+        for(CardProb c : cardsToGive){
+            if(c.getCard().getCard().equals(card.getCard()) && c.getCard().getSuit().equals(card.getSuit())){
+                return c;
+            }
+        }
+        return null;
+    }
+    
+    
+/*
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
@@ -180,12 +164,13 @@ public class GameHistory {
         clone.put(Suit.SPADES, playersFinal);
 
         return clone;
-    }
+    }*/
 
     @Override
     protected GameHistory clone(){
         GameHistory clone = new GameHistory();
-        clone.setCardsTogive(copyHashMap());
+        clone.playerId = this.playerId;
+        clone.setCardsToGive((LinkedList<CardProb>) cardsToGive.clone());
         clone.setTrumpCard(trumpCard.clone());
         return clone;
     }

@@ -24,15 +24,15 @@ public class MainFrame extends JFrame implements ExperimentsManagerGUI {
     private GameManager gameManager;
     private String[] algorithmNames = {"Random Algorithm", "Alpha-beta"};
     private JButton runButton = new JButton("Run");
-    private JTextField upperTeamRoundsAhead = new JTextField("4");
-    private JTextField upperTeamHands = new JTextField("100");
+    private JTextField upperTeamRoundsAhead = new JTextField("1");
+    private JTextField upperTeamHands = new JTextField("10");
     private JComboBox upperTeamAlgorithms = new JComboBox(algorithmNames);
 
-    private JTextField downTeamRoundsAhead = new JTextField("4");
-    private JTextField downTeamHands = new JTextField("100");
+    private JTextField downTeamRoundsAhead = new JTextField("1");
+    private JTextField downTeamHands = new JTextField("10");
     private JComboBox downTeamAlgorithms = new JComboBox(algorithmNames);
 
-    private JTextField numGames = new JTextField("100");
+    private JTextField numGames = new JTextField("10");
 
     private JTextArea resultsArea = new JTextArea(15, 50);
 

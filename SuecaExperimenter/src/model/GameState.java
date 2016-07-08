@@ -5,6 +5,7 @@
  */
 package model;
 
+import agent.Heuristic;
 import common.SuecaState;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -173,7 +174,7 @@ public class GameState extends SuecaState {
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory(c);
+            updateGameHistory(c, rounds.get(currentRound));
             nextPlayer();
         } else if (validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
@@ -183,7 +184,7 @@ public class GameState extends SuecaState {
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory(c);
+            updateGameHistory(c, rounds.get(currentRound));
             nextPlayer();
         } else {
             //System.out.println("\nINVALID CARD");
@@ -274,7 +275,7 @@ public class GameState extends SuecaState {
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory(c);
+            updateGameHistory(c, rounds.get(currentRound));
             nextPlayer();
         } else if (super.validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
@@ -285,7 +286,7 @@ public class GameState extends SuecaState {
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory(c);
+            updateGameHistory(c, rounds.get(currentRound));
             nextPlayer();
         } else {
             //System.out.println("\nINVALID CARD");
@@ -364,18 +365,38 @@ public class GameState extends SuecaState {
         return null;
     }
 
-    private void updateGameHistory(CardPlayed c) {
-        if (!c.getCard().getSuit().equals(rounds.get(currentRound).getRoundSuit())) {
+    private void updateGameHistory(CardPlayed c, Round round) {
+        
+        Player p1 = getTeam1().getPlayer1();
+        for(Heuristic h : p1.getObservationHeuristics()){
+            h.analyze(p1.getGameHistory().getCardsToGive(), c, round);
+        }
+        
+        Player p2 = getTeam1().getPlayer2();
+        for(Heuristic h : p2.getObservationHeuristics()){
+            h.analyze(p2.getGameHistory().getCardsToGive(), c, round);
+        }
+        
+        Player p3 = getTeam2().getPlayer1();
+        for(Heuristic h : p2.getObservationHeuristics()){
+            h.analyze(p3.getGameHistory().getCardsToGive(), c, round);
+        }    
+        
+        Player p4 = getTeam2().getPlayer2();
+        for(Heuristic h : p2.getObservationHeuristics()){
+            h.analyze(p4.getGameHistory().getCardsToGive(), c, round);
+        }        
+        /*if (!c.getCard().getSuit().equals(rounds.get(currentRound).getRoundSuit())) {
             Suit s = rounds.get(currentRound).getRoundSuit();
             playerDidntAssist(c, s);
-        }
+        }*/
     }
 
     private void playerDidntAssist(CardPlayed c, Suit s) {
-        getTeam1().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c, s);
+        /*getTeam1().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c, s);
         getTeam1().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c, s);
         getTeam2().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c, s);
-        getTeam2().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c, s);
+        getTeam2().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c, s);*/
 
     }
 

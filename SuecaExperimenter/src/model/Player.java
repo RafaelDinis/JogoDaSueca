@@ -8,6 +8,8 @@ package model;
 import agent.Agent;
 import agent.AgentCurrentState;
 import agent.HandsSimulator;
+import agent.Heuristic;
+import common.SuecaState;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +31,17 @@ public class Player extends Agent {
         this.team = team;
         cards = new LinkedList<>();
         this.gameHistory = new GameHistory(id);
+        LinkedList<Card> cards = (LinkedList<Card>) SuecaState.getAllCards().clone();
+        LinkedList<Card> list = (LinkedList<Card>) cards.clone();
+        
+        for (Card c : this.cards) {
+            for (Card p : list) {
+                if (c.getCard().equals(p.getCard()) && c.getSuit().equals(p.getSuit())) {
+                    cards.remove(p);
+                }
+            }
+        }
+        gameHistory.initializeCardsToGive(id, cards);
     }
 
     public String getName() {
@@ -104,6 +117,7 @@ public class Player extends Agent {
         Player p = new Player(id, name, team);
         p.setCards((LinkedList<Card>) cards.clone());
         p.setGameHistory(gameHistory.clone());
+        p.setObservationHeuristics((LinkedList<Heuristic>) getObservationHeuristics().clone());
         /*if (getAlgorithm() instanceof HandsSimulator) {
             p.setHandsLimit(getAlgorithm().getHandsLimit());
             p.setSearchRoundLimit(getAlgorithm().getNumRounds());

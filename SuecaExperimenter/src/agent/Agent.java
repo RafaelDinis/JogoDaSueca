@@ -6,6 +6,9 @@ import java.util.Random;
 import model.Card;
 import model.GameState;
 import model.Round;
+import observationHeuristics.DrySuit;
+import observationHeuristics.FreeCardsFromSuit;
+import observationHeuristics.GivePointsRoundLost;
 
 public class Agent {
 
@@ -15,13 +18,19 @@ public class Agent {
     private RandomAlgorithm randomAlgorithm;
     protected AgentCurrentState currentState;
     private Random random;
+    private LinkedList<Heuristic> observationHeuristics;
 
     public Agent() {
         handsSimulator = new HandsSimulator();
         random = new Random();
-        //alfabeta = new AlphaBeta();
         randomAlgorithm = new RandomAlgorithm();
-        //useAlfabeta();
+        observationHeuristics = new LinkedList<>();
+        DrySuit drySuit = new DrySuit();
+        FreeCardsFromSuit freeCardsFromSuit = new FreeCardsFromSuit();
+        GivePointsRoundLost givePointsRoundLost = new GivePointsRoundLost();
+        observationHeuristics.add(drySuit);
+        //observationHeuristics.add(freeCardsFromSuit);
+        //observationHeuristics.add(givePointsRoundLost);
     }
 
     public void setCurrentState(GameState state, LinkedList<Card> cards) {
@@ -89,6 +98,15 @@ public class Agent {
     public void setAlgorithm(GameAlgorithm algorithm) {
         this.algorithm = algorithm;
     }
+
+    public LinkedList<Heuristic> getObservationHeuristics() {
+        return observationHeuristics;
+    }
+
+    public void setObservationHeuristics(LinkedList<Heuristic> observationHeuristics) {
+        this.observationHeuristics = observationHeuristics;
+    }
+    
     
 
 }
