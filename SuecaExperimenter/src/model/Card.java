@@ -16,10 +16,6 @@ public class Card {
     private int value;
     private int weight;
 
-    public Card() {
-
-    }
-
     public Suit getSuit() {
         return suit;
     }

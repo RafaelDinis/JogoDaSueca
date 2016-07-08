@@ -2,12 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/gameManager/GameManager.java</file>
-            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/model/GameState.java</file>
-            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/gui/MainFrame.java</file>
-            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/gui/ExperimentsManagerGUI.java</file>
-            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/agent/Agent.java</file>
-            <file>file:/C:/Users/Rafael/Desktop/ProjetoFinalEI/JogoDaSueca/SuecaExperimenter/src/agent/RandomAlgorithm.java</file>
+            <file>file:/C:/Users/Yeezus/Documents/NetBeansProjects/JogoDaSueca/SuecaExperimenter/src/model/GameState.java</file>
+            <file>file:/C:/Users/Yeezus/Documents/NetBeansProjects/JogoDaSueca/SuecaExperimenter/src/agent/Agent.java</file>
+            <file>file:/C:/Users/Yeezus/Documents/NetBeansProjects/JogoDaSueca/SuecaExperimenter/src/agent/GameAlgorithm.java</file>
+            <file>file:/C:/Users/Yeezus/Documents/NetBeansProjects/JogoDaSueca/SuecaExperimenter/src/agent/AlphaBeta.java</file>
+            <file>file:/C:/Users/Yeezus/Documents/NetBeansProjects/JogoDaSueca/SuecaExperimenter/src/gameManager/GameManager.java</file>
+            <file>file:/C:/Users/Yeezus/Documents/NetBeansProjects/JogoDaSueca/SuecaExperimenter/src/agent/HandsSimulator.java</file>
         </group>
     </open-files>
 </project-private>

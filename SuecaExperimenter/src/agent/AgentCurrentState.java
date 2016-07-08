@@ -203,5 +203,9 @@ public class AgentCurrentState extends AgentState {
         }
         return ids;
     }
-    
+
+    public GameState getGame() {
+        return game;
+    }
+        
 }
