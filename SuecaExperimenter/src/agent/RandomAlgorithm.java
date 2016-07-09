@@ -19,6 +19,7 @@ public class RandomAlgorithm extends GameAlgorithm<AgentCurrentState> {
     /**
      * Chooses randomly from the moves that can be played in the current state.
      * @param currentState
+     * @param round
      * @return 
      */    
     @Override

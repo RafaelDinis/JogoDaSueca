@@ -5,7 +5,7 @@
  */
 package model;
 
-import agent.Heuristic;
+import agent.ObservationHeuristic;
 import common.SuecaState;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -171,6 +171,8 @@ public class GameState extends SuecaState {
             activePlayer.getCards().remove(card);
             CardPlayed c = new CardPlayed(card, activePlayer);
             playedCards.add(c);
+            System.out.println("PLAYER ->" + activePlayer.getName());
+            System.out.println("CARD ->" + card.toString());
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -181,6 +183,8 @@ public class GameState extends SuecaState {
             activePlayer.getCards().remove(card);
             CardPlayed c = new CardPlayed(card, activePlayer);
             playedCards.add(c);
+            System.out.println("PLAYER ->" + activePlayer.getName());
+            System.out.println("CARD ->" + card.toString());
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
@@ -203,10 +207,11 @@ public class GameState extends SuecaState {
         CardPlayed winnerCard = rounds.get(currentRound).getWinnerCard(this.trump);
         int score = rounds.get(currentRound).getRoundScore();
         winnerCard.getPlayer().getTeam().addScore(score);
-
-        //System.out.println("WINNER TEAM: " + winnerCard.getPlayer().getTeam().toString());
+        
+        System.out.println(this.trump.toString());
+        System.out.println("WINNER TEAM: " + winnerCard.getPlayer().getTeam().toString());
         //System.out.println("WINNER CARD: " + winnerCard.getCard().toString());
-        //System.out.println("ROUND SCORE : " + score);
+        System.out.println("ROUND SCORE : " + score);
 
         if (currentRound == 9) {
             endGame();
@@ -368,22 +373,22 @@ public class GameState extends SuecaState {
     private void updateGameHistory(CardPlayed c, Round round) {
         
         Player p1 = getTeam1().getPlayer1();
-        for(Heuristic h : p1.getObservationHeuristics()){
+        for(ObservationHeuristic h : p1.getObservationHeuristics()){
             h.analyze(p1.getGameHistory().getCardsToGive(), c, round);
         }
         
         Player p2 = getTeam1().getPlayer2();
-        for(Heuristic h : p2.getObservationHeuristics()){
+        for(ObservationHeuristic h : p2.getObservationHeuristics()){
             h.analyze(p2.getGameHistory().getCardsToGive(), c, round);
         }
         
         Player p3 = getTeam2().getPlayer1();
-        for(Heuristic h : p2.getObservationHeuristics()){
+        for(ObservationHeuristic h : p2.getObservationHeuristics()){
             h.analyze(p3.getGameHistory().getCardsToGive(), c, round);
         }    
         
         Player p4 = getTeam2().getPlayer2();
-        for(Heuristic h : p2.getObservationHeuristics()){
+        for(ObservationHeuristic h : p2.getObservationHeuristics()){
             h.analyze(p4.getGameHistory().getCardsToGive(), c, round);
         }        
         /*if (!c.getCard().getSuit().equals(rounds.get(currentRound).getRoundSuit())) {

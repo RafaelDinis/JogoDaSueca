@@ -25,51 +25,49 @@ public class GameManager {
     public static final int RANDOM_ALGORITHM = 1;
     public static final int ALPHA_BETA = 2;
     private ExperimentsManagerGUI gui;
-    
+
     private int upperTeamRoundsAhead;
     private int upperTeamHands;
     private int upperTeamAlgorithm;
-    
+
     private int downTeamRoundsAhead;
     private int downTeamHands;
     private int downTeamAlgorithm;
-    
-    
+
     private int upperTeamWins;
     private int downTeamWins;
     private int draws;
-    
-    
+
     private Team team1;
     private Player player1;
     private Player player2;
-    
-    private Team team2;    
+
+    private Team team2;
     private Player player3;
     private Player player4;
-    
+
     private LinkedList<Player> players;
-    
-    public GameManager(ExperimentsManagerGUI gui){
+
+    public GameManager(ExperimentsManagerGUI gui) {
         this.gui = gui;
         upperTeamWins = 0;
         downTeamWins = 0;
         draws = 0;
-                
+
     }
-    
-    public void setUpperTeamConfiguration(int upperTeamRoundsAhead, int upperTeamHands, int upperTeamAlgorithm){
+
+    public void setUpperTeamConfiguration(int upperTeamRoundsAhead, int upperTeamHands, int upperTeamAlgorithm) {
         this.upperTeamRoundsAhead = upperTeamRoundsAhead;
         this.upperTeamHands = upperTeamHands;
         this.upperTeamAlgorithm = upperTeamAlgorithm;
     }
-    
-    public void setDownTeamConfiguration(int downTeamRoundsAhead, int downTeamHands, int downTeamAlgorithm){
+
+    public void setDownTeamConfiguration(int downTeamRoundsAhead, int downTeamHands, int downTeamAlgorithm) {
         this.downTeamRoundsAhead = downTeamRoundsAhead;
         this.downTeamHands = downTeamHands;
         this.downTeamAlgorithm = downTeamAlgorithm;
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -123,8 +121,7 @@ public class GameManager {
         System.out.println(player2.getGameHistory().toString());
         System.out.println(player3.getGameHistory().toString());
         System.out.println(player4.getGameHistory().toString());*/
-        
-        /*for (int i = 0; i < 10; i++) {
+ /*for (int i = 0; i < 10; i++) {
             System.out.println("\nTRUMP is " + game.getTrump().toString());
             System.out.println("CURRENT ROUND : " + (game.getCurrentRound() + 1));
             for (int j = 0; j < 4; j++) {
@@ -170,35 +167,39 @@ public class GameManager {
         }
 
     }*/
-    
-    public void run(int numGames){
+    public void run(int numGames) {
         for (int i = 0; i < numGames; i++) {
             System.out.println("jogo " + i);
             gui.showResults("Jogo " + i);
             GameState game = prepareGame();
+            System.out.println("trunfo " + game.getTrump().toString());
             int result = playGame(game, i);
-            switch(result){
-                case 1: upperTeamWins++; break;
-                case 2: downTeamWins++;  break;
-                case 0: draws++; break;
-            }   
+            switch (result) {
+                case 1:
+                    upperTeamWins++;
+                    break;
+                case 2:
+                    downTeamWins++;
+                    break;
+                case 0:
+                    draws++;
+                    break;
+            }
         }
-        gui.showResults("Upper Team wins: " + upperTeamWins + 
-                "\nDown Team wins: " + downTeamWins + 
-                "\ndraws: " + draws);
+        gui.showResults("Upper Team wins: " + upperTeamWins
+                + "\nDown Team wins: " + downTeamWins
+                + "\ndraws: " + draws);
         upperTeamWins = 0;
         downTeamWins = 0;
         draws = 0;
     }
-    
-    public GameState prepareGame(){
+
+    public GameState prepareGame() {
         team1 = new Team();
         team2 = new Team();
 
         player1 = new Player(1, "gajo1", team1);
         player2 = new Player(3, "gajo2", team1);
-        player1.useAlfabeta();
-        player2.useAlfabeta();
         team1.setPlayer1(player1);
         team1.setPlayer2(player2);
         team1.setName("equipa1");
@@ -207,15 +208,11 @@ public class GameManager {
 
         player3 = new Player(2, "gajo3", team2);
         player4 = new Player(4, "gajo4", team2);
-        player3.useRandomAlgorithm();
-        player4.useRandomAlgorithm();
         team2.setPlayer1(player3);
         team2.setPlayer2(player4);
         team2.setName("equipa2");
         configureAgent(player3, downTeamRoundsAhead, downTeamHands, downTeamAlgorithm);
         configureAgent(player4, downTeamRoundsAhead, downTeamHands, downTeamAlgorithm);
-        
-        
 
         players = new LinkedList<>();
         players.add(player1);
@@ -225,19 +222,19 @@ public class GameManager {
 
         GameState game = new GameState(team1, team2);
 
-        player1.getGameHistory().setTrumpCard(game.getTrumpCard());        
-        player2.getGameHistory().setTrumpCard(game.getTrumpCard());        
-        player3.getGameHistory().setTrumpCard(game.getTrumpCard());        
+        player1.getGameHistory().setTrumpCard(game.getTrumpCard());
+        player2.getGameHistory().setTrumpCard(game.getTrumpCard());
+        player3.getGameHistory().setTrumpCard(game.getTrumpCard());
         player4.getGameHistory().setTrumpCard(game.getTrumpCard());
-        
+
         return game;
-        
+
     }
-    
-    public int playGame(GameState game, int gameNum){
+
+    public int playGame(GameState game, int gameNum) {
         Boolean validPlay = true;
         for (int i = 0; i < 10; i++) {
-            System.out.println("ronda "+i);
+            System.out.println("ronda " + i);
             gui.showResults("Ronda " + i + "do jogo " + gameNum);
             game.updateGameState();
             for (int j = 0; j < 4; j++) {
@@ -249,24 +246,24 @@ public class GameManager {
                 } while (!validPlay);
             }
         }
-        if(game.getTeam1().getFinalScore() == game.getTeam2().getFinalScore()){
+        if (game.getTeam1().getFinalScore() == game.getTeam2().getFinalScore()) {
             return 0;
-        } else if(game.getTeam1().getFinalScore() > game.getTeam2().getFinalScore()){
+        } else if (game.getTeam1().getFinalScore() > game.getTeam2().getFinalScore()) {
             return 1;
         } else {
             return 2;
         }
-        
+
     }
-    
-    public void configureAgent(Agent agent, int roundsLimit, int handsLimit, int algorithm){
+
+    public void configureAgent(Agent agent, int roundsLimit, int handsLimit, int algorithm) {
         if (algorithm == RANDOM_ALGORITHM) {
             agent.useRandomAlgorithm();
-        } else { 
+        } else {
             agent.useAlfabeta();
             agent.setSearchRoundLimit(roundsLimit);
             agent.setHandsLimit(handsLimit);
         }
-    }    
+    }
 
 }

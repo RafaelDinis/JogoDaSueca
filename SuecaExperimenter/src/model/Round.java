@@ -32,7 +32,7 @@ public class Round {
     public Player getWinnerPlayer() {
         return winnerPlayer;
     }
-    
+
     public boolean isTrumpPlayed() {
         return trumpPlayed;
     }
@@ -68,9 +68,6 @@ public class Round {
     public void setRoundScore(int roundScore) {
         this.roundScore = roundScore;
     }
-    
-    
-    
 
     public CardPlayed getWinnerCard(Suit trump) {
         CardPlayed winnerCard = new CardPlayed(new Card(), null);
@@ -78,6 +75,9 @@ public class Round {
 
         if (trumpPlayed) {
             winnerCard = getHighestTrump(trump);
+            this.winnerTeam = winnerCard.getPlayer().getTeam();
+            this.winnerPlayer = winnerCard.getPlayer();
+            return winnerCard;
         }
 
         for (CardPlayed card : cards) {
@@ -96,7 +96,7 @@ public class Round {
 
         for (CardPlayed card : cards) {
             if (card.getCard().getSuit() == trump) {
-                if (card.getCard().getWeight()>= winnerCard.getCard().getWeight()) {
+                if (card.getCard().getWeight() >= winnerCard.getCard().getWeight()) {
                     winnerCard = card;
                 }
             }
@@ -112,10 +112,10 @@ public class Round {
         this.roundScore = score;
         return score;
     }
-    
-    public String getCardsToString(){
+
+    public String getCardsToString() {
         StringBuilder string = new StringBuilder();
-        for(CardPlayed c:cards){
+        for (CardPlayed c : cards) {
             string.append(c.getCard().toString() + "      ");
         }
         return string.toString();
@@ -129,9 +129,7 @@ public class Round {
         r.setTrumpPlayed(trumpPlayed);
         r.setRoundScore(roundScore);
         r.setRoundNumber(roundNumber);
-        return r; 
+        return r;
     }
-    
-    
 
 }

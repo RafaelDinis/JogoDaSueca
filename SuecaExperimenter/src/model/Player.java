@@ -8,7 +8,7 @@ package model;
 import agent.Agent;
 import agent.AgentCurrentState;
 import agent.HandsSimulator;
-import agent.Heuristic;
+import agent.ObservationHeuristic;
 import common.SuecaState;
 import java.util.LinkedList;
 import java.util.List;
@@ -117,7 +117,7 @@ public class Player extends Agent {
         Player p = new Player(id, name, team);
         p.setCards((LinkedList<Card>) cards.clone());
         p.setGameHistory(gameHistory.clone());
-        p.setObservationHeuristics((LinkedList<Heuristic>) getObservationHeuristics().clone());
+        p.setObservationHeuristics((LinkedList<ObservationHeuristic>) getObservationHeuristics().clone());
         /*if (getAlgorithm() instanceof HandsSimulator) {
             p.setHandsLimit(getAlgorithm().getHandsLimit());
             p.setSearchRoundLimit(getAlgorithm().getNumRounds());

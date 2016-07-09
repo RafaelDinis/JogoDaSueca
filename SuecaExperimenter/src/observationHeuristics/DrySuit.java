@@ -5,7 +5,7 @@
  */
 package observationHeuristics;
 
-import agent.Heuristic;
+import agent.ObservationHeuristic;
 import java.util.HashMap;
 import java.util.LinkedList;
 import model.CardPlayed;
@@ -16,7 +16,7 @@ import model.Round;
  *
  * @author Rafael
  */
-public class DrySuit extends Heuristic {
+public class DrySuit extends ObservationHeuristic {
 
     @Override
     public LinkedList<CardProb> analyze(LinkedList<CardProb> cards, CardPlayed card, Round round) {

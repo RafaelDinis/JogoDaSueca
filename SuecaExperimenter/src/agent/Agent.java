@@ -1,7 +1,9 @@
 package agent;
 
 import common.Move;
-import decisionHeuristics.HasAnAceAndThreeMoreCards;
+import decisionHeuristics.HasAnAceAndTwoMoreCards;
+import decisionHeuristics.HasNoAcePlaysNoValueNotTrumpCard;
+import decisionHeuristics.PlayTrumpWhenRoundHasTenPointsOrMore;
 import java.util.LinkedList;
 import java.util.Random;
 import model.Card;
@@ -19,7 +21,7 @@ public class Agent {
     private RandomAlgorithm randomAlgorithm;
     protected AgentCurrentState currentState;
     private Random random;
-    private LinkedList<Heuristic> observationHeuristics;
+    private LinkedList<ObservationHeuristic> observationHeuristics;
     private LinkedList<DecisionHeuristic> decisionHeuristics;
 
     public Agent() {
@@ -32,10 +34,15 @@ public class Agent {
         FreeCardsFromSuit freeCardsFromSuit = new FreeCardsFromSuit();
         GivePointsRoundLost givePointsRoundLost = new GivePointsRoundLost();
         observationHeuristics.add(drySuit);
-        HasAnAceAndThreeMoreCards aceHeuristic = new HasAnAceAndThreeMoreCards();
-        decisionHeuristics.add(aceHeuristic);
         //observationHeuristics.add(freeCardsFromSuit);
         //observationHeuristics.add(givePointsRoundLost);
+        HasNoAcePlaysNoValueNotTrumpCard noAceHeuristic = new HasNoAcePlaysNoValueNotTrumpCard();
+        HasAnAceAndTwoMoreCards aceHeuristic = new HasAnAceAndTwoMoreCards();
+        PlayTrumpWhenRoundHasTenPointsOrMore trumpHeuristic = new PlayTrumpWhenRoundHasTenPointsOrMore();
+        decisionHeuristics.add(noAceHeuristic);
+        decisionHeuristics.add(aceHeuristic);
+        decisionHeuristics.add(trumpHeuristic);
+
     }
 
     public void setCurrentState(GameState state, LinkedList<Card> cards) {
@@ -47,11 +54,15 @@ public class Agent {
     }
 
     public Move play(Round round) {
-        for (DecisionHeuristic d : decisionHeuristics) {
-            Move m = d.analyze(currentState.getAgentCards(), round, currentState.getGame());
-            if (m != null) {
-                System.out.println(m.getCard().toString());
-                return m;
+        if (algorithm == handsSimulator) {
+            int i = 0;
+            for (DecisionHeuristic d : decisionHeuristics) {
+                i++;
+                Move m = d.analyze(currentState.getAgentCards(), round, currentState.getGame());
+                if (m != null) {
+                    System.out.println("heuristica " + i);
+                    return m;
+                }
             }
         }
         return algorithm.takeDecision(currentState, round);
@@ -114,11 +125,11 @@ public class Agent {
         this.algorithm = algorithm;
     }
 
-    public LinkedList<Heuristic> getObservationHeuristics() {
+    public LinkedList<ObservationHeuristic> getObservationHeuristics() {
         return observationHeuristics;
     }
 
-    public void setObservationHeuristics(LinkedList<Heuristic> observationHeuristics) {
+    public void setObservationHeuristics(LinkedList<ObservationHeuristic> observationHeuristics) {
         this.observationHeuristics = observationHeuristics;
     }
 

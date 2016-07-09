@@ -14,7 +14,7 @@ import model.Round;
  *
  * @author Rafael
  */
-public abstract class Heuristic {
+public abstract class ObservationHeuristic {
     
     public abstract LinkedList<CardProb> analyze(LinkedList<CardProb> cards, CardPlayed card, Round round);
     

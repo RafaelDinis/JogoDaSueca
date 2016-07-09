@@ -18,20 +18,20 @@ import model.Round;
  *
  * @author Yeezus
  */
-public class HasAnAceAndThreeMoreCards extends DecisionHeuristic{
+public class HasAnAceAndTwoMoreCards extends DecisionHeuristic {
 
     @Override
     public Move analyze(LinkedList<Card> agentCards, Round round, GameState g) {
-        int i = 0;
         for (Card c : agentCards) {
             if (round.getCards().isEmpty()) {
                 if (c.getCard() == PossibleCards.ACE && c.getSuit() != g.getTrump()) {
-                    i = getCardSuitCount(c, agentCards);
-                    if (i < 5) {
+                    if (getCardSuitCount(c, agentCards) < 4 && getNumPlayedCardsFromSuit(c, agentCards) <= 3) {
                         return new Move(c, round);
                     }
                 }
-            } else if (c.getCard() == PossibleCards.ACE && c.getSuit() == round.getRoundSuit() && !checkTrumpWasPlayed(round, g) && round.getRoundNumber() < 5) {
+            } else if (c.getCard() == PossibleCards.ACE && c.getSuit() == round.getRoundSuit()
+                    && !checkTrumpWasPlayed(round, g) && round.getRoundNumber() < 5 && getCardSuitCount(c, agentCards) < 4
+                    && getNumPlayedCardsFromSuit(c, agentCards) <= 3) {
                 return new Move(c, round);
             }
         }
@@ -50,6 +50,16 @@ public class HasAnAceAndThreeMoreCards extends DecisionHeuristic{
     private int getCardSuitCount(Card c, LinkedList<Card> agentCards) {
         int i = 0;
         for (Card c1 : agentCards) {
+            if (c1.getSuit() == c.getSuit()) {
+                i++;
+            }
+        }
+        return i;
+    }
+
+    private int getNumPlayedCardsFromSuit(Card c, LinkedList<Card> playedCards) {
+        int i = 0;
+        for (Card c1 : playedCards) {
             if (c1.getSuit() == c.getSuit()) {
                 i++;
             }
