@@ -25,9 +25,7 @@ public class RandomAlgorithm extends GameAlgorithm<AgentCurrentState> {
     @Override
     public Move takeDecision(AgentCurrentState currentState, Round round) {
         LinkedList<Move> possibleMoves = currentState.getAgentPossibleMoves(round);
-        //return currentState.getHigherCard(possibleMoves);
-        Random r = new Random();
-        
+        Random r = new Random();        
         return possibleMoves.get(r.nextInt(possibleMoves.size()));
     }
     

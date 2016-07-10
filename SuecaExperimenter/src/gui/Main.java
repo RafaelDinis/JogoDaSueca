@@ -11,9 +11,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
 
     public Main() {
-
         MainFrame frame = new MainFrame();
-
         // Center the window
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = frame.getSize();

@@ -5,6 +5,7 @@
  */
 package agent;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import model.CardPlayed;
 import model.CardProb;
@@ -18,4 +19,13 @@ public abstract class ObservationHeuristic {
     
     public abstract LinkedList<CardProb> analyze(LinkedList<CardProb> cards, CardPlayed card, Round round);
     
+    public int[] getIds(HashMap<Integer, Double> probabilities) {
+        int[] ids = new int[probabilities.size()];
+        int i = 0;
+        for (Integer key : probabilities.keySet()) {
+            ids[i] = key;
+            i++;
+        }
+        return ids;
+    }
 }

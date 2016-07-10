@@ -35,27 +35,31 @@ public class GameState extends SuecaState {
         rounds = new LinkedList<>();
         shuffleDeck();
         giveCards();
-        
-        Random r = new Random();        
-        this.activePlayerNumber = r.nextInt(4-1) + 1;
-        switch(activePlayerNumber){
-            case 1 : activePlayer = team1.getPlayer1(); 
+
+        Random r = new Random();
+        this.activePlayerNumber = r.nextInt(4 - 1) + 1;
+        switch (activePlayerNumber) {
+            case 1:
+                activePlayer = team1.getPlayer1();
                 break;
-            case 2 : activePlayer = team2.getPlayer1();
+            case 2:
+                activePlayer = team2.getPlayer1();
                 break;
-            case 3 : activePlayer = team1.getPlayer2();
+            case 3:
+                activePlayer = team1.getPlayer2();
                 break;
-            case 4 : activePlayer = team2.getPlayer2();
+            case 4:
+                activePlayer = team2.getPlayer2();
                 break;
         }
         int num = (Math.random() <= 0.5) ? 1 : 2;
-        if(num == 1){
+        if (num == 1) {
             trumpCard = activePlayer.getCards().getFirst();
-        } else{
+        } else {
             trumpCard = activePlayer.getCards().getLast();
         }
         this.trump = trumpCard.getSuit();
-        
+
         this.currentRound = 0;
         rounds.add(new Round(currentRound));
     }
@@ -171,33 +175,26 @@ public class GameState extends SuecaState {
             activePlayer.getCards().remove(card);
             CardPlayed c = new CardPlayed(card, activePlayer);
             playedCards.add(c);
-            System.out.println("PLAYER ->" + activePlayer.getName());
-            System.out.println("CARD ->" + card.toString());
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory(c, rounds.get(currentRound));
+            updateGameHistory(c, rounds.get(currentRound), activePlayerNumber);
             nextPlayer();
         } else if (validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             activePlayer.getCards().remove(card);
             CardPlayed c = new CardPlayed(card, activePlayer);
             playedCards.add(c);
-            System.out.println("PLAYER ->" + activePlayer.getName());
-            System.out.println("CARD ->" + card.toString());
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory(c, rounds.get(currentRound));
+            updateGameHistory(c, rounds.get(currentRound), activePlayerNumber);
             nextPlayer();
         } else {
-            //System.out.println("\nINVALID CARD");
-            //System.out.println("CARD ->" + card.toString() + "\n");
             return false;
         }
 
         if (rounds.get(currentRound).getCards().size() == 4) {
-            //System.out.println("ROUND CARDS --> " + rounds.get(currentRound).getCardsToString());
             endRound();
         }
         return true;
@@ -208,11 +205,6 @@ public class GameState extends SuecaState {
         int score = rounds.get(currentRound).getRoundScore();
         winnerCard.getPlayer().getTeam().addScore(score);
         
-        System.out.println(this.trump.toString());
-        System.out.println("WINNER TEAM: " + winnerCard.getPlayer().getTeam().toString());
-        //System.out.println("WINNER CARD: " + winnerCard.getCard().toString());
-        System.out.println("ROUND SCORE : " + score);
-
         if (currentRound == 9) {
             endGame();
         }
@@ -237,17 +229,12 @@ public class GameState extends SuecaState {
                 this.activePlayerNumber = 4;
             }
         }
-        //System.out.println(currentRound);
         currentRound++;
         rounds.add(new Round(currentRound));
-        //System.out.println("\n nova ronda \n");
     }
 
     private void endGame() {
-        /*System.out.println("\nGAME END");
-        System.out.println("Team1 score: " + team1.getFinalScore());
-        System.out.println("Team2 score: " + team2.getFinalScore());
-        System.exit(0);*/
+        
     }
 
     @Override
@@ -273,29 +260,25 @@ public class GameState extends SuecaState {
         if (rounds.get(currentRound).getCards().isEmpty()) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
             rounds.get(currentRound).setRoundSuit(card.getSuit());
-            //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
             CardPlayed c = new CardPlayed(card, activePlayer);
             playedCards.add(c);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory(c, rounds.get(currentRound));
+            updateGameHistory(c, rounds.get(currentRound), activePlayerNumber);
             nextPlayer();
         } else if (super.validateCard(card, rounds.get(currentRound).getRoundSuit(), activePlayer)) {
             rounds.get(currentRound).getCards().add(new CardPlayed(card, activePlayer));
-            //activePlayer.removeCardFromHand(card);
             activePlayer.getCards().remove(card);
             CardPlayed c = new CardPlayed(card, activePlayer);
             playedCards.add(c);
             if (card.getSuit() == trump) {
                 rounds.get(currentRound).setTrumpPlayed(true);
             }
-            updateGameHistory(c, rounds.get(currentRound));
+            updateGameHistory(c, rounds.get(currentRound), activePlayerNumber);
             nextPlayer();
         } else {
-            //System.out.println("\nINVALID CARD");
-            //System.out.println("CARD ->" + card.toString() + "\n");
             return false;
         }
 
@@ -308,14 +291,7 @@ public class GameState extends SuecaState {
     private void endRoundSimulation() {
         CardPlayed winnerCard = rounds.get(currentRound).getWinnerCard(this.trump);
         int score = rounds.get(currentRound).getRoundScore();
-        //winnerCard.getPlayer().getTeam().addScore(score);
-
-        /*System.out.println("WINNER TEAM: " + winnerCard.getPlayer().getTeam().toString());
-        System.out.println("WINNER CARD: " + winnerCard.getCard().toString());
-        System.out.println("ROUND SCORE : " + score);*/
         if (currentRound == 9) {
-            //System.out.println("ACABOU O JOGO");
-            //endGame();
 
         }
         nextRound();
@@ -370,39 +346,18 @@ public class GameState extends SuecaState {
         return null;
     }
 
-    private void updateGameHistory(CardPlayed c, Round round) {
-        
+    private void updateGameHistory(CardPlayed c, Round round, int activePlayer) {        
         Player p1 = getTeam1().getPlayer1();
-        for(ObservationHeuristic h : p1.getObservationHeuristics()){
-            h.analyze(p1.getGameHistory().getCardsToGive(), c, round);
-        }
+        p1.runObservationHeuristics(c, round, p1.getGameHistory().getCardsToGive());
         
         Player p2 = getTeam1().getPlayer2();
-        for(ObservationHeuristic h : p2.getObservationHeuristics()){
-            h.analyze(p2.getGameHistory().getCardsToGive(), c, round);
-        }
+        p2.runObservationHeuristics(c, round, p2.getGameHistory().getCardsToGive());
         
         Player p3 = getTeam2().getPlayer1();
-        for(ObservationHeuristic h : p2.getObservationHeuristics()){
-            h.analyze(p3.getGameHistory().getCardsToGive(), c, round);
-        }    
+        p1.runObservationHeuristics(c, round, p3.getGameHistory().getCardsToGive());
         
         Player p4 = getTeam2().getPlayer2();
-        for(ObservationHeuristic h : p2.getObservationHeuristics()){
-            h.analyze(p4.getGameHistory().getCardsToGive(), c, round);
-        }        
-        /*if (!c.getCard().getSuit().equals(rounds.get(currentRound).getRoundSuit())) {
-            Suit s = rounds.get(currentRound).getRoundSuit();
-            playerDidntAssist(c, s);
-        }*/
-    }
-
-    private void playerDidntAssist(CardPlayed c, Suit s) {
-        /*getTeam1().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c, s);
-        getTeam1().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c, s);
-        getTeam2().getPlayer1().getGameHistory().removePlayerFromCardsToGive(c, s);
-        getTeam2().getPlayer2().getGameHistory().removePlayerFromCardsToGive(c, s);*/
-
+        p4.runObservationHeuristics(c, round, p4.getGameHistory().getCardsToGive());
     }
 
 }

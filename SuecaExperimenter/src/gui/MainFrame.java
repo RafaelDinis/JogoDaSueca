@@ -145,17 +145,8 @@ public class MainFrame extends JFrame implements ExperimentsManagerGUI {
 
     public void jRunButton_actionPerformed(ActionEvent e) {
         runButton.setEnabled(false);
-
         gameManager.setUpperTeamConfiguration(Integer.parseInt(upperTeamRoundsAhead.getText()), Integer.parseInt(upperTeamHands.getText()), (upperTeamAlgorithms.getSelectedIndex() == 0) ? GameManager.RANDOM_ALGORITHM : GameManager.ALPHA_BETA);
         gameManager.setDownTeamConfiguration(Integer.parseInt(downTeamRoundsAhead.getText()), Integer.parseInt(downTeamHands.getText()), (downTeamAlgorithms.getSelectedIndex() == 0) ? GameManager.RANDOM_ALGORITHM : GameManager.ALPHA_BETA);
-        /*experimentsManager.setUpperPlayerConfiguration(
-                Integer.parseInt(upperPlayerDepth.getText()), Integer.parseInt(upperPlayerHands.getText()), Integer.parseInt(upperPlayerSeed.getText()),
-                (upperPlayerAlgorithms.getSelectedIndex() == 0) ? GameManager.RANDOM_ALGORITHM : GameManager.ALPHA_BETA);
-
-        experimentsManager.setDownPlayerConfiguration(
-                Integer.parseInt(downPlayerDepth.getText()), Integer.parseInt(downPlayerHands.getText()), Integer.parseInt(downPlayerSeed.getText()),
-                (downPlayerAlgorithms.getSelectedIndex() == 0) ? GameManager.RANDOM_ALGORITHM : GameManager.ALPHA_BETA);*/
-
         gameManager.run(Integer.parseInt(numGames.getText()));
     }
 

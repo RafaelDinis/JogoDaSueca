@@ -46,13 +46,7 @@ public class HandsSimulator extends GameAlgorithm<AgentCurrentState> {
         double[] sums = new double[numOfAgentPossibleMoves];
         double[] values = new double[numOfAgentPossibleMoves];
         LinkedList<AgentSearchState> sucessors = null;
-
-        /*if (currentState.getNumberOfOpponentPossiblePieces() == currentState.getNumberOfOpponentPieces()) {
-            //case 2
-            AgentSearchState state = currentState.getAgentSearchState(currentState.getOpponentPossiblePieces());
-            return alphaBeta.takeDecision(state);
-        } else {*/
-        //case 1
+        
         LinkedList<AgentSearchState> states = currentState.buildGuessedCurrentStates(handsLimit);
         for (AgentSearchState state : states) {
             sucessors = state.getSucessors();

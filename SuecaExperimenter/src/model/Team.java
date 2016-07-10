@@ -67,7 +67,7 @@ public class Team {
 
     @Override
     public String toString() {
-        return getPlayer1().getName() + ", " + getPlayer2().getName() /*+ ", score:" + getFinalScore()*/;
+        return getPlayer1().getName() + ", " + getPlayer2().getName();
     } 
 
     @Override

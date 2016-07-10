@@ -97,9 +97,6 @@ public class Player extends Agent {
         return false;
     }
 
-    /*public void removeCardFromHand(Card card) {
-        this.cards.remove(card);
-    }*/
     public String getCardToString() {
         StringBuilder string = new StringBuilder();
         int i = 1;
@@ -118,11 +115,6 @@ public class Player extends Agent {
         p.setCards((LinkedList<Card>) cards.clone());
         p.setGameHistory(gameHistory.clone());
         p.setObservationHeuristics((LinkedList<ObservationHeuristic>) getObservationHeuristics().clone());
-        /*if (getAlgorithm() instanceof HandsSimulator) {
-            p.setHandsLimit(getAlgorithm().getHandsLimit());
-            p.setSearchRoundLimit(getAlgorithm().getNumRounds());
-        }*/
-        //p.setCurrentState(currentState.clone());
         return p;
     }
 

@@ -150,10 +150,11 @@ public class AgentCurrentState extends AgentState {
                         guessedOpponent1Cards.add(card);
                     }
                 } else {
-                    
+
                     CardProb c = currentPlayer.getGameHistory().getCard(card);
                     HashMap<Integer, Double> cardToPlayerProb = c.getProbabilities();
-                    
+                    //System.out.println("probs " + cardToPlayerProb.toString());
+
                     Random generator = new Random();
                     double number = generator.nextDouble() * 1.0;
                     double sum = 0;
@@ -163,26 +164,30 @@ public class AgentCurrentState extends AgentState {
                     int[] playersIds = getIds(cardToPlayerProb);
                     int idPlayerFinal = 0;
                     //System.out.println("cenas" + cardToPlayerProb);
-                    while (number > sum) {
-                        int id = playersIds[x];
-                        sum = sum + cardToPlayerProb.get(id);
-                        x++;
+                    try {
+                        while (number > sum || x < playersIds.length) {
+                            int id = playersIds[x];
+                            sum = sum + cardToPlayerProb.get(id);
+                            x++;
+                        }
+                    } catch (Exception ArrayIndexOutOfBoundsException) {
+                        System.out.println("x " + x);
+                        System.out.println("playerIds " + playersIds.length);
+                        System.out.println("sum " + sum);
+                        System.out.println("number " + number);
                     }
-                    
+
                     if ((currentPlayer.getId() % 2) == (idPlayerFinal % 2)) {
                         guessedTeammateCards.add(card);
+                    } else if (nextNumber(currentPlayer.getId()) == idPlayerFinal) {
+                        guessedOpponent1Cards.add(card);
                     } else {
-                        if (nextNumber(currentPlayer.getId()) == idPlayerFinal) {
-                            guessedOpponent1Cards.add(card);
-                        } else {
-                            guessedOpponent2Cards.add(card);
-                        }
+                        guessedOpponent2Cards.add(card);
                     }
                 }
             }
             guessedCurrentStates.add(getAgentSearchState(guessedOpponent1Cards, guessedOpponent2Cards, guessedTeammateCards));
         }
-
         return guessedCurrentStates;
     }
 
@@ -194,6 +199,7 @@ public class AgentCurrentState extends AgentState {
         }
         return current;
     }
+
     private int[] getIds(HashMap<Integer, Double> probabilities) {
         int[] ids = new int[probabilities.size()];
         int i = 0;
@@ -207,5 +213,5 @@ public class AgentCurrentState extends AgentState {
     public GameState getGame() {
         return game;
     }
-        
+
 }

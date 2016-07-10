@@ -7,6 +7,8 @@ import decisionHeuristics.PlayTrumpWhenRoundHasTenPointsOrMore;
 import java.util.LinkedList;
 import java.util.Random;
 import model.Card;
+import model.CardPlayed;
+import model.CardProb;
 import model.GameState;
 import model.Round;
 import observationHeuristics.DrySuit;
@@ -34,7 +36,7 @@ public class Agent {
         FreeCardsFromSuit freeCardsFromSuit = new FreeCardsFromSuit();
         GivePointsRoundLost givePointsRoundLost = new GivePointsRoundLost();
         observationHeuristics.add(drySuit);
-        //observationHeuristics.add(freeCardsFromSuit);
+        observationHeuristics.add(freeCardsFromSuit);
         //observationHeuristics.add(givePointsRoundLost);
         HasNoAcePlaysNoValueNotTrumpCard noAceHeuristic = new HasNoAcePlaysNoValueNotTrumpCard();
         HasAnAceAndTwoMoreCards aceHeuristic = new HasAnAceAndTwoMoreCards();
@@ -55,17 +57,22 @@ public class Agent {
 
     public Move play(Round round) {
         if (algorithm == handsSimulator) {
-            int i = 0;
             for (DecisionHeuristic d : decisionHeuristics) {
-                i++;
                 Move m = d.analyze(currentState.getAgentCards(), round, currentState.getGame());
                 if (m != null) {
-                    System.out.println("heuristica " + i);
                     return m;
                 }
             }
         }
         return algorithm.takeDecision(currentState, round);
+    }
+    
+    public void runObservationHeuristics(CardPlayed c, Round round, LinkedList<CardProb> cards){
+        if (algorithm == handsSimulator) {
+            for (ObservationHeuristic o : observationHeuristics) {
+                o.analyze(cards, c, round);
+            }
+        }
     }
 
     public void removeCardFromHand(Card card) {
@@ -114,7 +121,6 @@ public class Agent {
      */
     public void setSearchRoundLimit(int roundsLimit) {
         algorithm.setNumRounds(roundsLimit);
-        //System.out.println("rounds " + algorithm.numRounds);
     }
 
     public GameAlgorithm getAlgorithm() {

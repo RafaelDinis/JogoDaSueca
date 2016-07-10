@@ -33,39 +33,17 @@ public class AgentSearchState extends AgentState {
         LinkedList<Card> cards = (LinkedList<Card>) currentPlayer.getCards().clone();
         for (Card c : cards) {
             if (validateCard(c, game.getRounds().get(game.getCurrentRound()).getRoundSuit(), currentPlayer)) {
-                //System.out.println("sucessor for round " + game.getCurrentRound() + " card played -> " + c.toString());
-                //if(!(game.getCurrentRound() == 0 && c.getSuit().equals(game.getTrump()))){
                 GameState g = game.clone();
-                //System.out.println(g.getRounds().equals(game.getRounds()));
-                //System.out.println(g.getRounds().toString());
-                //System.out.println(game.getRounds().toString());
                 g.playCardSimulation(c);
                 AgentSearchState sucessor = new AgentSearchState(g, g.getActivePlayer());
-                // currentPlayer.getCards().remove(c);
                 sucessor.move = new Move(c, g.getRounds().get(g.getCurrentRound()));
                 sucessors.add(sucessor);
-                //}
             }
         }
         return sucessors;
     }
 
     public double evaluate() {
-        return getWinner();
-    }
-
-    private double getWinner() {
-        //double agentTeamScore = 0;
-        //double opponentTeamScore = 0;                
-        /*if(game.getTeam1().belongsToTeam(currentPlayer)){
-         return currentPlayer.getTeam().getFinalScore() > game.getTeam2().getFinalScore();
-         }
-        
-         if(game.getTeam2().belongsToTeam(currentPlayer)){
-         return currentPlayer.getTeam().getFinalScore() > game.getTeam1().getFinalScore();
-         }
-         return true;*/
-
         if (game.getTeam1().belongsToTeam(currentPlayer)) {
 
             if (currentPlayer.getTeam().getFinalScore() > 60) {
@@ -92,13 +70,7 @@ public class AgentSearchState extends AgentState {
         }
         return 0;
     }
-
-    /*
-     @Override
-     protected AgentSearchState clone() {
-     return new AgentSearchState(game, currentPlayer, opponent1Cards, opponent2Cards, teammateCards, agentCards);
-     }
-     */
+    
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
