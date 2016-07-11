@@ -164,18 +164,18 @@ public class AgentCurrentState extends AgentState {
                     int[] playersIds = getIds(cardToPlayerProb);
                     int idPlayerFinal = 0;
                     //System.out.println("cenas" + cardToPlayerProb);
-                    try {
+                    //try {
                         while (number > sum || x < playersIds.length) {
                             int id = playersIds[x];
                             sum = sum + cardToPlayerProb.get(id);
                             x++;
                         }
-                    } catch (Exception ArrayIndexOutOfBoundsException) {
+                    /*} catch (Exception ArrayIndexOutOfBoundsException) {
                         System.out.println("x " + x);
                         System.out.println("playerIds " + playersIds.length);
                         System.out.println("sum " + sum);
                         System.out.println("number " + number);
-                    }
+                    }*/
 
                     if ((currentPlayer.getId() % 2) == (idPlayerFinal % 2)) {
                         guessedTeammateCards.add(card);

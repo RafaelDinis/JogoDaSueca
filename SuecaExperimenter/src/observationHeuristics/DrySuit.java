@@ -19,54 +19,73 @@ import model.Round;
 public class DrySuit extends ObservationHeuristic {
 
     @Override
-    public LinkedList<CardProb> analyze(LinkedList<CardProb> cards, CardPlayed card, Round round) {
+    public LinkedList<CardProb> analyze(LinkedList<CardProb> cards, CardPlayed card, Round round, LinkedList<CardPlayed> playedCards) {
         double probToSplit = 0.0;
-        if (!card.getCard().getSuit().equals(round.getRoundSuit())) {
-            for (CardProb c : cards) {
-                if (c.getCard().getSuit().equals(round.getRoundSuit())) {
-                    HashMap<Integer, Double> probabilities = (HashMap<Integer, Double>) c.getProbabilities().clone();
-                    int[] ids = getIds(probabilities);
-                    if (checkEqualProbabilities(probabilities, ids)) {
-                        for (int i = 0; i < ids.length; i++) {
-                            if (ids[i] == card.getPlayer().getId()) {
-                                probToSplit = probabilities.get(card.getPlayer().getId());
-                                probabilities.remove(ids[i]);
-                                //UPDATE DOS OUTROS
-                                if (ids.length == 3) {
-                                    for (Integer key : probabilities.keySet()) {
-                                        probabilities.put(key, 0.5);
-                                    }
-                                } else if (ids.length == 3) {
-                                    for (Integer key : probabilities.keySet()) {
-                                        probabilities.put(key, 1.0);
-                                    }
-                                }
-                            }
+        if (!round.getCards().isEmpty()) {
+            if (card.getCard().getSuit() != round.getRoundSuit()) {
+                for (CardProb c : cards) {
+                    if (c.getCard().getSuit() == round.getRoundSuit()) {
+                        HashMap<Integer, Double> probabilities = (HashMap<Integer, Double>) c.getProbabilities().clone();
+                        int[] ids = getIds(probabilities);
+                        if(ids.length==1 || !probabilities.containsKey(card.getPlayer().getId())){
+                            //System.out.println("sai");
+                            return cards;
                         }
-                    } else {
-                        for (int i = 0; i < ids.length; i++) {
-                            if (ids[i] == card.getPlayer().getId()) {
-                                if (ids.length == 3) {
-                                    probToSplit = probabilities.get(card.getPlayer().getId());
+                        /*System.out.println("DRYSUIT");
+                        System.out.println("card " + card.getCard().getSuit());
+                        System.out.println("round " + round.getRoundSuit() + " " + round.getCards().size());
+                        
+                        System.out.println("probs iniciais " + probabilities.toString());
+                        System.out.println("id " +card.getPlayer().getId());*/
+
+                        if (checkEqualProbabilities(probabilities, ids)) {
+                            for (int i = 0; i < ids.length; i++) {
+                                if (ids[i] == card.getPlayer().getId()) {
+                                    probToSplit = probabilities.get(ids[i]);
                                     probabilities.remove(ids[i]);
-                                    double prob = probToSplit * 0.5;
-                                    //UPDATE DOS OUTROS
-                                    for (Integer key : probabilities.keySet()) {
-                                        probabilities.put(key, probabilities.get(key) + prob);
+                                    if (ids.length == 3) {
+                                        for (Integer key : probabilities.keySet()) {
+                                            if (key != ids[i]) {
+                                                probabilities.put(key, 0.5);
+                                            }
+                                        }
+                                    } else {
+                                        for (Integer key : probabilities.keySet()) {
+                                            if (key != ids[i]) {
+                                                probabilities.put(key, 1.0);
+                                            }
+                                        }
                                     }
                                 }
-                                else if (ids.length == 2) {
-                                    for (Integer key : probabilities.keySet()) {
-                                        probabilities.put(key, 1.0);
+                            }
+                        } else {
+                            for (int i = 0; i < ids.length; i++) {
+                                if (ids[i] == card.getPlayer().getId()) {
+                                    if (ids.length == 3) {
+                                        probToSplit = probabilities.get(ids[i]);
+                                        probabilities.remove(ids[i]);
+                                        double prob = probToSplit * 0.5;
+                                        for (Integer key : probabilities.keySet()) {
+                                            if (key != ids[i]) {
+                                                double probAux = probabilities.get(key);
+                                                probabilities.put(key, probAux + prob);
+                                            }
+                                        }
+                                    } else if (ids.length == 2) {
+                                        for (Integer key : probabilities.keySet()) {
+                                            if (key != ids[i]) {
+                                                probabilities.put(key, 1.0);
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
+                        c.setProbabilities(probabilities);
+                        //System.out.println("probs finais " + probabilities.toString() + "\n");
                     }
-                    c.setProbabilities(probabilities);
                 }
             }
-            return cards;
         }
         return cards;
 

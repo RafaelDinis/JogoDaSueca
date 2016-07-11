@@ -1,9 +1,9 @@
 package agent;
 
 import common.Move;
-import decisionHeuristics.HasAnAceAndTwoMoreCards;
-import decisionHeuristics.HasNoAcePlaysNoValueNotTrumpCard;
-import decisionHeuristics.PlayTrumpWhenRoundHasTenPointsOrMore;
+import decisionRules.HasAnAceAndTwoMoreCards;
+import decisionRules.HasNoAcePlaysNoValueNotTrumpCard;
+import decisionRules.PlayTrumpWhenRoundHasTenPointsOrMore;
 import java.util.LinkedList;
 import java.util.Random;
 import model.Card;
@@ -24,7 +24,7 @@ public class Agent {
     protected AgentCurrentState currentState;
     private Random random;
     private LinkedList<ObservationHeuristic> observationHeuristics;
-    private LinkedList<DecisionHeuristic> decisionHeuristics;
+    private LinkedList<DecisionRule> decisionHeuristics;
 
     public Agent() {
         handsSimulator = new HandsSimulator();
@@ -35,9 +35,10 @@ public class Agent {
         DrySuit drySuit = new DrySuit();
         FreeCardsFromSuit freeCardsFromSuit = new FreeCardsFromSuit();
         GivePointsRoundLost givePointsRoundLost = new GivePointsRoundLost();
-        observationHeuristics.add(drySuit);
         observationHeuristics.add(freeCardsFromSuit);
-        //observationHeuristics.add(givePointsRoundLost);
+        observationHeuristics.add(drySuit);        
+        observationHeuristics.add(givePointsRoundLost);
+        
         HasNoAcePlaysNoValueNotTrumpCard noAceHeuristic = new HasNoAcePlaysNoValueNotTrumpCard();
         HasAnAceAndTwoMoreCards aceHeuristic = new HasAnAceAndTwoMoreCards();
         PlayTrumpWhenRoundHasTenPointsOrMore trumpHeuristic = new PlayTrumpWhenRoundHasTenPointsOrMore();
@@ -57,7 +58,7 @@ public class Agent {
 
     public Move play(Round round) {
         if (algorithm == handsSimulator) {
-            for (DecisionHeuristic d : decisionHeuristics) {
+            for (DecisionRule d : decisionHeuristics) {
                 Move m = d.analyze(currentState.getAgentCards(), round, currentState.getGame());
                 if (m != null) {
                     return m;
@@ -67,10 +68,10 @@ public class Agent {
         return algorithm.takeDecision(currentState, round);
     }
     
-    public void runObservationHeuristics(CardPlayed c, Round round, LinkedList<CardProb> cards){
+    public void runObservationHeuristics(CardPlayed c, Round round, LinkedList<CardProb> cards, LinkedList<CardPlayed> playedCards){
         if (algorithm == handsSimulator) {
             for (ObservationHeuristic o : observationHeuristics) {
-                o.analyze(cards, c, round);
+                o.analyze(cards, c, round, playedCards);
             }
         }
     }

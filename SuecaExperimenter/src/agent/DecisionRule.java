@@ -17,7 +17,7 @@ import model.Round;
  *
  * @author Rafael
  */
-public abstract class DecisionHeuristic {
+public abstract class DecisionRule {
     
     public abstract Move analyze(LinkedList<Card> agentCards, Round round, GameState g);
     

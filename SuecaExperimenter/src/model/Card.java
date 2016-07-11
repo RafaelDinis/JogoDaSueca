@@ -70,6 +70,13 @@ public class Card {
                 break;
         }
     }
+    
+    public boolean hasValue(){
+        if(value > 0){
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public String toString() {

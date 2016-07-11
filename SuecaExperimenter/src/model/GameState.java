@@ -204,7 +204,7 @@ public class GameState extends SuecaState {
         CardPlayed winnerCard = rounds.get(currentRound).getWinnerCard(this.trump);
         int score = rounds.get(currentRound).getRoundScore();
         winnerCard.getPlayer().getTeam().addScore(score);
-        
+
         if (currentRound == 9) {
             endGame();
         }
@@ -234,7 +234,7 @@ public class GameState extends SuecaState {
     }
 
     private void endGame() {
-        
+
     }
 
     @Override
@@ -346,18 +346,26 @@ public class GameState extends SuecaState {
         return null;
     }
 
-    private void updateGameHistory(CardPlayed c, Round round, int activePlayer) {        
+    private void updateGameHistory(CardPlayed c, Round round, int activePlayer) {
         Player p1 = getTeam1().getPlayer1();
-        p1.runObservationHeuristics(c, round, p1.getGameHistory().getCardsToGive());
-        
+        if (p1.getId() != activePlayer) {
+            p1.runObservationHeuristics(c, round, p1.getGameHistory().getCardsToGive(), (LinkedList<CardPlayed>) playedCards.clone());
+        }
+
         Player p2 = getTeam1().getPlayer2();
-        p2.runObservationHeuristics(c, round, p2.getGameHistory().getCardsToGive());
-        
+        if (p2.getId() != activePlayer) {
+            p2.runObservationHeuristics(c, round, p2.getGameHistory().getCardsToGive(), (LinkedList<CardPlayed>) playedCards.clone());
+        }
+
         Player p3 = getTeam2().getPlayer1();
-        p1.runObservationHeuristics(c, round, p3.getGameHistory().getCardsToGive());
-        
+        if (p3.getId() != activePlayer) {
+            p1.runObservationHeuristics(c, round, p3.getGameHistory().getCardsToGive(), (LinkedList<CardPlayed>) playedCards.clone());
+        }
+
         Player p4 = getTeam2().getPlayer2();
-        p4.runObservationHeuristics(c, round, p4.getGameHistory().getCardsToGive());
+        if (p4.getId() != activePlayer) {
+            p4.runObservationHeuristics(c, round, p4.getGameHistory().getCardsToGive(), (LinkedList<CardPlayed>) playedCards.clone());
+        }
     }
 
 }

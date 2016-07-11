@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package decisionHeuristics;
+package decisionRules;
 
-import agent.DecisionHeuristic;
+import agent.DecisionRule;
 import common.Move;
 import java.util.LinkedList;
 import model.Card;
@@ -18,7 +18,7 @@ import model.Round;
  *
  * @author Yeezus
  */
-public class HasAnAceAndTwoMoreCards extends DecisionHeuristic {
+public class HasAnAceAndTwoMoreCards extends DecisionRule {
 
     @Override
     public Move analyze(LinkedList<Card> agentCards, Round round, GameState g) {

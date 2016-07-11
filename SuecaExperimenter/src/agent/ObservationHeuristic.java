@@ -17,7 +17,7 @@ import model.Round;
  */
 public abstract class ObservationHeuristic {
     
-    public abstract LinkedList<CardProb> analyze(LinkedList<CardProb> cards, CardPlayed card, Round round);
+    public abstract LinkedList<CardProb> analyze(LinkedList<CardProb> cards, CardPlayed card, Round round, LinkedList<CardPlayed> playedCards);
     
     public int[] getIds(HashMap<Integer, Double> probabilities) {
         int[] ids = new int[probabilities.size()];
