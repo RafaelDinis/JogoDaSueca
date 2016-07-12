@@ -32,7 +32,7 @@ public class MainFrame extends JFrame implements ExperimentsManagerGUI {
     private JTextField downTeamHands = new JTextField("10");
     private JComboBox downTeamAlgorithms = new JComboBox(algorithmNames);
 
-    private JTextField numGames = new JTextField("1");
+    private JTextField numGames = new JTextField("100");
 
     private JTextArea resultsArea = new JTextArea(15, 50);
 

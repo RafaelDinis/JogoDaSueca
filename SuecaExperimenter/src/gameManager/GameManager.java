@@ -132,15 +132,6 @@ public class GameManager {
     }
 
     public int playGame(GameState game, int gameNum) {
-        /*double prbtisplit = 0.05;
-        double resultado = (1.0/3.0)-0.05;
-        double prob1 = (1.0/3.0)+ (prbtisplit*0.5);
-        double prob2 = (1.0/3.0)+ (prbtisplit*0.5);
-        
-        System.out.println("resultado: " + resultado);
-        System.out.println("prob1: " + prob1);
-        System.out.println("prob2: " + prob2);*/
-        
         Boolean validPlay = true;
         for (int i = 0; i < 10; i++) {
             System.out.println("ronda " + i);

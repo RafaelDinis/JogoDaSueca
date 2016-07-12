@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class GameHistory {
 
-    //private HashMap<Suit, int[]> cardsToGive;
     private int playerId;
     private Card trumpCard;
     private LinkedList<CardProb> cardsToGive;
@@ -26,7 +25,6 @@ public class GameHistory {
     public GameHistory(int id) {
         playerId = id;
         cardsToGive = new LinkedList();
-        //initializeCardsToGive(id);
     }
 
     public GameHistory() {

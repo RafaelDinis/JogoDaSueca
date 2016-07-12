@@ -28,16 +28,8 @@ public class DrySuit extends ObservationHeuristic {
                         HashMap<Integer, Double> probabilities = (HashMap<Integer, Double>) c.getProbabilities().clone();
                         int[] ids = getIds(probabilities);
                         if(ids.length==1 || !probabilities.containsKey(card.getPlayer().getId())){
-                            //System.out.println("sai");
                             return cards;
                         }
-                        /*System.out.println("DRYSUIT");
-                        System.out.println("card " + card.getCard().getSuit());
-                        System.out.println("round " + round.getRoundSuit() + " " + round.getCards().size());
-                        
-                        System.out.println("probs iniciais " + probabilities.toString());
-                        System.out.println("id " +card.getPlayer().getId());*/
-
                         if (checkEqualProbabilities(probabilities, ids)) {
                             for (int i = 0; i < ids.length; i++) {
                                 if (ids[i] == card.getPlayer().getId()) {
@@ -82,7 +74,6 @@ public class DrySuit extends ObservationHeuristic {
                             }
                         }
                         c.setProbabilities(probabilities);
-                        //System.out.println("probs finais " + probabilities.toString() + "\n");
                     }
                 }
             }

@@ -33,17 +33,10 @@ public class FreeCardsFromSuit extends ObservationHeuristic {
 
                     int[] ids = getIds(probabilities);
                     if (ids.length == 1 || !probabilities.containsKey(card.getPlayer().getId())) {
-                        //System.out.println("sai");
                         return cards;
                     }
                     for (int i = 0; i < ids.length; i++) {
                         if (ids[i] == card.getPlayer().getId()) {
-                            /*System.out.println("FREE CARDS FROM SUIT");
-                            System.out.println("card " + card.getCard().getSuit());
-                            System.out.println("round " + round.getRoundSuit() + " " + round.getCards().size());
-
-                            System.out.println("probs iniciais " + probabilities.toString());
-                            System.out.println("id " +card.getPlayer().getId());*/
 
                             probAux = probabilities.get(ids[i]);
                             probToSplit = probToRemove;
@@ -70,9 +63,6 @@ public class FreeCardsFromSuit extends ObservationHeuristic {
                                     }
                                 }
                             } else {
-                                //System.out.println("probAux " + probAux);
-                                //System.out.println("id " + ids[i]);
-
                                 probabilities.put(ids[i], probAux);
                                 if (ids.length == 3) {
                                     for (Integer key : probabilities.keySet()) {
@@ -85,7 +75,6 @@ public class FreeCardsFromSuit extends ObservationHeuristic {
                                 } else {
                                     for (Integer key : probabilities.keySet()) {
                                         if (key != ids[i]) {
-                                            //System.out.println("entrou \n");
                                             probAux = probabilities.get(key);
                                             probAux = probAux + probToSplit;
                                             probabilities.put(key, probAux);
@@ -93,8 +82,6 @@ public class FreeCardsFromSuit extends ObservationHeuristic {
                                     }
                                 }
                             }
-
-                            //System.out.println("probs finais " + probabilities.toString() + "\n");
                         }
                     }
 

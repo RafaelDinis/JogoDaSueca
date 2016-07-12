@@ -153,29 +153,18 @@ public class AgentCurrentState extends AgentState {
 
                     CardProb c = currentPlayer.getGameHistory().getCard(card);
                     HashMap<Integer, Double> cardToPlayerProb = c.getProbabilities();
-                    //System.out.println("probs " + cardToPlayerProb.toString());
 
                     Random generator = new Random();
                     double number = generator.nextDouble() * 1.0;
                     double sum = 0;
-                    //int x = nextNumber(currentPlayer.getGameHistory().getCard(card).getPlayer());
                     int x = 0;
-                    //System.out.println("cenas" + cardToPlayerProb);
                     int[] playersIds = getIds(cardToPlayerProb);
                     int idPlayerFinal = 0;
-                    //System.out.println("cenas" + cardToPlayerProb);
-                    //try {
-                        while (number > sum || x < playersIds.length) {
-                            int id = playersIds[x];
-                            sum = sum + cardToPlayerProb.get(id);
-                            x++;
-                        }
-                    /*} catch (Exception ArrayIndexOutOfBoundsException) {
-                        System.out.println("x " + x);
-                        System.out.println("playerIds " + playersIds.length);
-                        System.out.println("sum " + sum);
-                        System.out.println("number " + number);
-                    }*/
+                    while (number > sum || x < playersIds.length) {
+                        int id = playersIds[x];
+                        sum = sum + cardToPlayerProb.get(id);
+                        x++;
+                    }
 
                     if ((currentPlayer.getId() % 2) == (idPlayerFinal % 2)) {
                         guessedTeammateCards.add(card);
